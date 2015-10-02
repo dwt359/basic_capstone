@@ -1,0 +1,64 @@
+<!-- This is the home page. -->
+<!-- User sign up/login logic is managed here -->
+<div id="homePage" ng-controller="HomePageCtrl">
+  <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
+      <h1 layout-align-gt-sm="center" class="md-toolbar-tools"><b>CARPOOL APP</b></h1>
+      <!--
+      <md-button ng-click="showLogin($event)">LOGIN</md-button>
+      <md-button ng-click="showSignup($event)">SIGN UP</md-button>
+      -->
+  </md-toolbar>
+  <div id="outer-wrapper">
+      <md-content layout="column" layout-align="center center" flex class="md-padding" id="home-content">
+
+        <!-- Section 1 -->
+
+        <!-- This part appears on mobile -->
+        <div class="section" id="home-section" hide-gt-sm layout="row" layout-align="center center">
+          <div layout="column" flex="60" hide-gt-sm layout-align="center">
+            <img src="/assets/img/car.png" style="object-fit: contain;">
+          </div>
+        </div>
+
+        <!-- This part appears on computer -->
+        <div class="section" id="home-section" hide-sm layout="row" layout-align="center left">
+          <div layout="column" flex="60" layout-align="center">
+            <img src="/assets/img/car.png" style="object-fit: contain;">
+          </div >
+
+          <div layout="column" flex="40"layout-align="center">
+            <div layout="row" layout-align="center center" style="color: #E9E9E9;">
+              <h1 id="signup-title">Sign Up Now</h1>
+            </div>
+            <div layout="row" layout-align="center center">
+              <md-card id="signup-form">
+                <md-card-content>
+                  <form name="signupForm" ng-controller="SignupCtrl" ng-submit="verifySignup()">
+                    <div layout="column">
+                      <md-input-container>
+                        <label>Username:</label>
+                        <input type="text" ng-model = "signupData.username">
+                      </md-input-container>
+                      <md-input-container flex>
+                        <label>Password:</label>
+                        <input type="password" ng-model = "signupData.password">
+                      </md-input-container>
+                      <md-input-container flex>
+                        <label>Email:</label>
+                        <input type="email" ng-model = "signupData.email">
+                      </md-input-container>
+                      <md-button type="submit" class="md-accent md-raised">Sign Up</md-button>
+                    </div>
+                  </form>
+                </md-card-content>
+              </md-card>
+            </div>
+            <div layout="row" layout-align="center center">
+              <md-button ng-click="showLogin($event)">Or login</md-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </md-content>
+  </div>
+</div>

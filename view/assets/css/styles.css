@@ -1,0 +1,66 @@
+@font-face {
+  font-family: coolFont;
+  src: url(../libs/coolFont.ttf);
+}
+
+#signup-title{
+  text-shadow: 2px 2px 3px #404040, -2px -2px 3px #404040;
+}
+
+div{
+  font-family: coolFont;
+}
+
+.inner{
+  flex: 0 1 auto;
+  display: flex;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  background-color: rgba(255,255,255,0);
+}
+
+.content-wrapper {
+  position: relative;
+}
+
+md-content.md-padding {
+    margin: 0px;
+    padding: 0px;
+}
+
+.section{
+  box-sizing: border-box;
+  min-height: 90%;
+  width: 100%;
+  padding: 0px 20px 0px 20px;
+}
+
+#signup-form{
+  background-color: rgba(233,233,233,0.83);
+}
+
+.fit{
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.card-title{
+  text-align: center;
+  margin: 0px;
+  color: white;
+  font-size: 20px;
+}
+
+#home-section{
+  background: url("../img/street-background.png") no-repeat center center fixed;
+  background-size: 100% auto;
+  background-position: left;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#outer-wrapper{
+  overflow: auto !important;
+}
