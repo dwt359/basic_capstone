@@ -6,7 +6,7 @@ $routes = array(
 
 $get = explode('/', $_GET['route']);
 $handlerRoute = array_shift($get);
-$get = array_filter($get, '!empty');
+$get = array_filter($get, 'checkEmpty');
 $post = $_POST;
 
 if(!isset($routes[$handlerRoute])){
@@ -14,4 +14,8 @@ if(!isset($routes[$handlerRoute])){
 }
 else {
     require_once("handlers/".$routes[$handlerRoute].".php");
+}
+
+function checkEmpty($var){
+    return (!empty($var));
 }
