@@ -22,6 +22,9 @@ else {
         case 'POST':
             $handler->post($post);
             break;
+        default:
+            http_response_code(400);
+            break;
     }
 }
 
