@@ -1,2 +1,2 @@
 <?php
-echo json_encode($destination);
+echo json_encode($get);

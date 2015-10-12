@@ -4,8 +4,10 @@ $routes = array(
     'test' => 'testHandler'
 );
 
-$destination = explode('/', $_GET['route']);
-$handlerRoute = $destination[0];
+$get = explode('/', $_GET['route']);
+$handlerRoute = $get[0];
+$get = array_shift($get);
+$post = $_POST;
 
 if(!isset($routes[$handlerRoute])){
     http_response_code(400);
