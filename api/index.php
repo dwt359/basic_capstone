@@ -14,6 +14,15 @@ if(!isset($routes[$handlerRoute])){
 }
 else {
     require_once("handlers/".$routes[$handlerRoute].".php");
+    $handler = new $handlerRoute;
+    switch($_SERVER['REQUEST_METHOD']){
+        case 'GET':
+            $handler->get($get);
+            break;
+        case 'POST':
+            $handler->post($post);
+            break;
+    }
 }
 
 function checkEmpty($var){
