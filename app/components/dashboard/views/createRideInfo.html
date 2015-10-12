@@ -1,0 +1,52 @@
+<md-content layout="row" layout-align="center center" flex class="md-padding" id="home-content">
+  <div class="section" id="dashboard-start" layout="row" layout-align="center center">
+    <div layout="column" layout-align="center">
+      <md-card id="form">
+        <md-card-content>
+          <form>
+            <div layout="row">
+              <md-input-container>
+                <label>Starting City</label>
+                <input type="text" ng-model="starting.city">
+              </md-input-container>
+              <md-input-container>
+                <label>Starting State</label>
+                <input type="text" ng-model="starting.state">
+              </md-input-container>
+            </div>
+
+            <div layout="row">
+              <md-input-container>
+                <label>Ending City</label>
+                <input type="text" ng-model="ending.city">
+              </md-input-container>
+              <md-input-container>
+                <label>Ending State</label>
+                <input type="text" ng-model="ending.state">
+              </md-input-container>
+            </div>
+
+            <div layout="row">
+              <md-input-container>
+                <label>Departure Date: </label>
+                <input type="date" ng-model="departureDate">
+              </md-input-container>
+              <md-input-container>
+                <label>Returning Date: </label>
+                <input type="date" ng-model="returningDate">
+              </md-input-container>
+            </div>
+
+            <div layout="row" layout-align="center center">
+              <md-button type="submit" class="md-accent md-raised">Set pricing</md-button>
+            </div>
+          </form>
+        </md-card-content>
+      </md-card>
+    </div>
+
+    <div layout="column" flex="50" layout-align="center">
+      <img src="/assets/img/us_map.jpg" style="object-fit: contain; height: 50%;">
+    </div >
+  </div>
+</md-content>
