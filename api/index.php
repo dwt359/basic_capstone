@@ -5,8 +5,7 @@ $routes = array(
 );
 
 $get = explode('/', $_GET['route']);
-$handlerRoute = $get[0];
-$get = array_shift($get);
+$handlerRoute = array_shift($get);
 $post = $_POST;
 
 if(!isset($routes[$handlerRoute])){
