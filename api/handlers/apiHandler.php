@@ -6,7 +6,7 @@ abstract class apiHandler {
     public $db = null;
 
     public function __construct(){
-        $db = connect();
+        $this->db = connect();
     }
 
     abstract public function get($get);
