@@ -2,7 +2,7 @@
 function connect()
 {
     $servername = "localhost";
-    $username = "dwt359";
+    $username = "root";
     $password = "Ojnad1992";
     $schema = "rideshare";
 
