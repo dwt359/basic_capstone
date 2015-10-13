@@ -33,7 +33,7 @@ function DialogController($scope, $mdDialog){
   };
 };
 
-theApp.controller('LoginCtrl', function($scope, $location, $rootScope, $http){
+theApp.controller('LoginCtrl', function($scope, $location, $rootScope, $mdDialog, $http){
   $scope.loginData = {};
 
   $scope.verifyLogin = function(){
@@ -43,6 +43,7 @@ theApp.controller('LoginCtrl', function($scope, $location, $rootScope, $http){
       console.log("Login successful!");
       $rootScope.loggedInUser = $scope.loginData.username;
       $location.path('/dashboard');
+      $mdDialog.cancel();
     }
 
     else{
