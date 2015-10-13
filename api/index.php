@@ -7,8 +7,7 @@ $routes = array(
 $getRaw = explode('/', $_GET['route']);
 $handlerRoute = array_shift($getRaw);
 $get = array();
-for($i = 0; $i < count($get)-1; $i += 2){
-    echo $i;
+for($i = 0; $i < count($getRaw)-1; $i += 2){
     $get[$getRaw[$i]] = $getRaw[$i+1];
 }
 $post = $_POST;
