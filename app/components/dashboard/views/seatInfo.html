@@ -1,0 +1,30 @@
+<md-card id="form">
+  <div style="align:left;">
+    <div class="exit-button-wrapper">
+      <md-icon class="seat-button" ng-click="removeSeat($index)" md-svg-src="/assets/img/clear.svg" flex="25"></md-icon>
+    </div>
+  </div>
+  <md-card-content>
+
+    <div layout="row">
+      <md-input-container flex-gt-md="100" flex-md="90" flex-sm="75">
+        <label>Name:</label>
+        <input type="text" ng-model="seat.name">
+      </md-input-container>
+    </div>
+
+    <div layout="row">
+      <md-input-container flex-gt-md="100" flex-md="90" flex-sm="75">
+        <label>Price:</label>
+        <input type="number" ng-model="seat.price">
+      </md-input-container>
+    </div>
+
+    <div layout="row">
+      <md-input-container flex-gt-md="100" flex-md="90" flex-sm="75">
+        <label>Description:</label>
+        <input type="text" ng-model="seat.description">
+      </md-input-container>
+    </div>
+
+  </md-card-content>
