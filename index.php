@@ -2,7 +2,8 @@
   <head>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
-	<link rel="stylesheet" href="assets/css/styles.css">
+	  <link rel="stylesheet" href="assets/css/styles.css">
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
     <meta name="viewport" content="initial-scale=1" />
   </head>
   <body layout="column" ng-app="theApp">
@@ -26,6 +27,9 @@
     <script src="app/components/dashboard/dashboardCtrl.js"></script>
     <script src="app/shared/facebookLogin.js"></script>
       <script src="app/components/facebook/fbCtrl.js"></script>
+
+    <!-- Directives -->
+    <script src="app/components/dashboard/dashboardDirectives.js"></script>
 
   </body>
 </html>

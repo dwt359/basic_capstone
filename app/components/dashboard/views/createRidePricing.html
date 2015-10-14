@@ -1,36 +1,14 @@
 <md-content layout="row" layout-align="center center" flex class="md-padding" id="home-content">
-  <div class="section" id="dashboard-start" layout="row" layout-align="center center">
-    <div layout="column" layout-align="center">
-      <md-card id="form">
-        <md-card-content>
-          <form>
-            <div layout="row">
-              <md-input-container>
-                <label>Seat 1</label>
-                <input type="number" ng-model="starting.city">
-              </md-input-container>
-              <md-input-container>
-                <label>Seat 2</label>
-                <input type="number" ng-model="starting.state">
-              </md-input-container>
+  <div class="section" id="dashboard-start" layout-align="center">
+    <div layout-align="center">
+          <form layout="row" layout-align="center left" layout-wrap>
+            <div ng-repeat="seat in seats" flex-gt-sm="33" flex-sm="50">
+              <div>
+                <seat-info></seat-info>
+              </div>
             </div>
-
-            <div layout="row">
-              <md-input-container>
-                <label>Seat 3</label>
-                <input type="number" ng-model="ending.city">
-              </md-input-container>
-              <md-input-container>
-                <label>Seat 4</label>
-                <input type="number" ng-model="ending.state">
-              </md-input-container>
-            </div>
-
-            <div layout="row" layout-align="center center">
-              <md-button type="submit" class="md-accent md-raised">Finish</md-button>
-            </div>
+            <md-icon class="seat-button" ng-click="addSeat(seats.length)" md-svg-src="/assets/img/add_icon.svg" flex-gt-sm="33" flex-sm="50"></md-icon>
+            <div flex></div>
           </form>
-        </md-card-content>
-      </md-card>
     </div>
 </md-content>

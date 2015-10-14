@@ -91,10 +91,20 @@ md-icon.md-default-theme{
 
 #dashboard-start{
   background-color: #C0C0C0;
+  overflow: auto;
 }
 
 #step1{
   background-color: #FF7043;
+}
+
+.seat-button{
+  outline: 0;
+}
+
+.exit-button-wrapper{
+  display: inline-block;
+  border-radius: 5%;
 }
 
 #home-section{
