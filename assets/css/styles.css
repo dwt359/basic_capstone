@@ -102,6 +102,27 @@ md-icon.md-default-theme{
   outline: 0;
 }
 
+.md-button.md-default-theme.login-with-facebook{
+  background-color: #3b5998;
+  color: white;
+  border-radius: 20px;
+
+}
+
+.md-button.md-default-theme.login-with-facebook:hover{
+  background-color: #3b5998;
+  color: white;
+  border-radius: 20px;
+
+}
+
+.md-button.md-default-theme.login-with-facebook:focus{
+  background-color: #3b5998;
+  color: white;
+  border-radius: 20px;
+
+}
+
 .exit-button-wrapper{
   display: inline-block;
   border-radius: 5%;
