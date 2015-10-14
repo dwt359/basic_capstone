@@ -108,3 +108,8 @@ md-icon.md-default-theme{
 #outer-wrapper{
   overflow: auto !important;
 }
+
+#facebook-button {
+    background-color: #3B5998;
+    color: white;
+}

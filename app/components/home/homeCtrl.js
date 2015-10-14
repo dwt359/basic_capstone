@@ -35,7 +35,6 @@ function DialogController($scope, $mdDialog){
 
 theApp.controller('LoginCtrl', function($scope, $location, $rootScope, $mdDialog, $http){
   $scope.loginData = {};
-
   $scope.verifyLogin = function(){
 
     //This is where username and password will be verified

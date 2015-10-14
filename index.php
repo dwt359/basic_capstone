@@ -24,6 +24,8 @@
     <script src="app/shared/app.js"></script>
     <script src="app/components/home/homeCtrl.js"></script>
     <script src="app/components/dashboard/dashboardCtrl.js"></script>
+    <script src="app/shared/facebookLogin.js"></script>
+      <script src="app/components/facebook/fbCtrl.js"></script>
 
   </body>
 </html>
