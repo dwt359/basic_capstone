@@ -143,15 +143,14 @@ md-icon.md-default-theme{
   overflow: auto !important;
 }
 
-<<<<<<< HEAD
 #facebook-button {
     background-color: #3B5998;
     color: white;
 }
-=======
+
 .profilePicture{
     vertical-align: middle;
     position: relative;
     top: 6;
 }
->>>>>>> jacobs-chill-branch
+
