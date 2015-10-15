@@ -142,3 +142,9 @@ md-icon.md-default-theme{
 #outer-wrapper{
   overflow: auto !important;
 }
+
+.profilePicture{
+    vertical-align: middle;
+    position: relative;
+    top: 6;
+}

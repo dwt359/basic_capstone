@@ -10,6 +10,12 @@ theApp.config(function($stateProvider, $urlRouterProvider){
       templateUrl: 'app/components/home/views/homeView.html'
     })
 
+  .state('profile', {
+      url: '/profile',
+      templateUrl:
+      'app/components/profile/views/profile.html'
+  })
+
     .state('dashboard', {
       url: '/dashboard',
       abstract: true,
@@ -41,6 +47,8 @@ theApp.config(function($stateProvider, $urlRouterProvider){
           url:'/pricing',
           templateUrl: 'app/components/dashboard/views/createRidePricing.html'
         })
+  
+        
 
 });
 

@@ -1,0 +1,16 @@
+<div id="homePage" ng-controller="profileCtrl">
+  <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
+      <h1 layout-align="left" class="md-toolbar-tools"><b>PROFILE</b></h1>
+      <img class="profilePicture" src="{{authData.facebook.profileImageURL}}" height="50px" width="50px">
+      </img>
+      <md-button ng-click="viewProfile()">{{authData.facebook.displayName}}</md-button>
+      <md-button ng-click="logout()">LOGOUT</md-button>
+  </md-toolbar>
+  <div id="outer-wrapper">
+      <div ui-view>
+          <img class="profilePicture" src="{{authData.facebook.profileImageURL}}" height="300px" width="300px">
+          </img>  
+      
+      </div>
+  </div>
+</div>

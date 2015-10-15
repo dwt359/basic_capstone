@@ -21,6 +21,12 @@ startState: 'MO', endCity: 'Seattle', endState: 'WA'}];
     }
   }
 
+  
+  $scope.viewProfile = function() {
+      $state.go('^.^.profile');
+      
+  } 
+  
   $scope.logout = function(){
 
     //More janky routing crap
