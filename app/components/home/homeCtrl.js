@@ -34,8 +34,24 @@ function DialogController($scope, $mdDialog){
 };
 
 theApp.controller('LoginCtrl', function($scope, $location, $rootScope, $mdDialog, $http){
-  $scope.loginData = {};
 
+  var ref = new Firebase("https://hitchdatabase.firebaseio.com");
+
+  $scope.loginWithFacebook = function(){
+    ref.authWithOAuthPopup("facebook", function(error, authData) {
+      if (error) {
+        console.log("Login Failed!", error);
+      }
+      if (!error) {
+        console.log("Authenticated successfully with payload:", authData);
+        $rootScope.authData = authData;
+        $location.path('/dashboard');
+        $mdDialog.cancel();
+      }
+    });
+  }
+
+  $scope.loginData = {};
   $scope.verifyLogin = function(){
 
     //This is where username and password will be verified

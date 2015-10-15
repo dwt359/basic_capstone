@@ -1,16 +1,29 @@
+<script>
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1641802092772505";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+
 <md-dialog aria-label="test">
-  <form name="loginForm" ng-controller="LoginCtrl" ng-submit="verifyLogin()">
+  <form name="loginForm" ng-controller="LoginCtrl">
     <md-dialog-content>
       <div layout="column">
+        <md-button type="submit" ng-click="loginWithFacebook()" class="login-with-facebook">Login with Facebook</md-button>
         <md-input-container>
           <label>Username:</label>
           <input type="text" ng-model="loginData.username">
         </md-input-container>
         <md-input-container flex>
-          <label>Password</label>
+          <label>Password:</label>
           <input type="password" ng-model="loginData.password">
         </md-input-container>
         <md-button type="submit" class="md-accent md-raised">Login</md-button>
+        
+          
     </md-dialog-content>
   </form>
 </md-dialog>
