@@ -9,7 +9,7 @@
 </script>
 
 <md-dialog aria-label="test">
-  <form name="loginForm" ng-controller="fbCtrl">
+  <form name="loginForm" ng-controller="LoginCtrl">
     <md-dialog-content>
       <div layout="column">
         <md-button type="submit" ng-click="loginWithFacebook()" class="login-with-facebook">Login with Facebook</md-button>
@@ -22,8 +22,7 @@
           <input type="password" ng-model="loginData.password">
         </md-input-container>
         <md-button type="submit" class="md-accent md-raised">Login</md-button>
-        <div id="fb-root"></div>
-           <md-button id="facebook-button" class="md-raised" ng-click="login()">Login with Facebook</md-button>
+        
           
     </md-dialog-content>
   </form>

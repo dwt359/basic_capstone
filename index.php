@@ -25,7 +25,6 @@
     <script src="app/shared/app.js"></script>
     <script src="app/components/home/homeCtrl.js"></script>
     <script src="app/components/dashboard/dashboardCtrl.js"></script>    
-      
     <script src="app/components/profile/profileCtrl.js"></script>
 
     <!-- Directives -->
