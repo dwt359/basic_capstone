@@ -25,8 +25,12 @@
     <script src="app/shared/app.js"></script>
     <script src="app/components/home/homeCtrl.js"></script>
     <script src="app/components/dashboard/dashboardCtrl.js"></script>
+<<<<<<< HEAD:index.php
     <script src="app/shared/facebookLogin.js"></script>
       <script src="app/components/facebook/fbCtrl.js"></script>
+=======
+    <script src="app/components/profile/profileCtrl.js"></script>
+>>>>>>> jacobs-chill-branch:index.html
 
     <!-- Directives -->
     <script src="app/components/dashboard/dashboardDirectives.js"></script>

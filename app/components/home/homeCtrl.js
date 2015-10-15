@@ -41,7 +41,8 @@ theApp.controller('LoginCtrl', function($scope, $location, $rootScope, $mdDialog
     ref.authWithOAuthPopup("facebook", function(error, authData) {
       if (error) {
         console.log("Login Failed!", error);
-      } else {
+      }
+      if (!error) {
         console.log("Authenticated successfully with payload:", authData);
         $rootScope.authData = authData;
         $location.path('/dashboard');
