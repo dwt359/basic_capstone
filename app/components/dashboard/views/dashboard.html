@@ -3,8 +3,10 @@
 <div id="homePage" ng-controller="dashboardCtrl">
   <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
       <h1 layout-align="left" class="md-toolbar-tools"><b>DASHBOARD</b></h1>
+      <img class="profilePicture" src="{{authData.facebook.profileImageURL}}">
+      </img>
+      <md-button ng-click="viewProfile()">{{authData.facebook.displayName}}</md-button>
       <md-button ng-click="logout()">LOGOUT</md-button>
-      <md-button ng-click="viewProfile()">PROFILE</md-button>
   </md-toolbar>
   <div id="outer-wrapper">
         <div ui-view></div>

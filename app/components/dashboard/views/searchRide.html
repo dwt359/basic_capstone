@@ -1,43 +1,40 @@
-<md-content layout="row" layout-align="center center" flex class="md-padding" id="home-content">
-  <div class="section" id="dashboard-start" layout="row" layout-align="center center">
+<md-content layout="row" flex class="md-padding" id="home-content">
+  <div class="section" id="dashboard-start" layout="column" layout-align="center top">
 
-    <div layout="column" layout-align="center">
-      <md-card id="form">
-        <md-card-content>
+    <div layout="row" layout-align="center">
+      <md-card>
+        <md-card-content id="find-ride-form">
           <form>
             <div layout="row">
-              <md-input-container>
-                <label>Starting City</label>
-                <input type="text" ng-model="starting.city">
-              </md-input-container>
-              <md-input-container>
-                <label>Starting State</label>
-                <input type="text" ng-model="starting.state">
-              </md-input-container>
-            </div>
+              <div layout="column">
+                  <md-input-container id="find-ride-form">
+                    <label>Starting City</label>
+                    <input type="text" ng-model="starting.city">
+                  </md-input-container>
+                  <md-input-container id="find-ride-form">
+                    <label>Starting State</label>
+                    <input type="text" ng-model="starting.state">
+                  </md-input-container>
+              </div>
 
-            <div layout="row">
-              <md-input-container>
-                <label>Ending City</label>
-                <input type="text" ng-model="ending.city">
-              </md-input-container>
-              <md-input-container>
-                <label>Ending State</label>
-                <input type="text" ng-model="ending.state">
-              </md-input-container>
-            </div>
+              <div layout="column">
+                <md-input-container id="find-ride-form">
+                  <label>Ending City</label>
+                  <input type="text" ng-model="ending.city">
+                </md-input-container>
+                <md-input-container id="find-ride-form">
+                  <label>Ending State</label>
+                  <input type="text" ng-model="ending.state">
+                </md-input-container>
+              </div>
 
-            <div layout="row">
-              <md-input-container>
-                <label>Departure Date: </label>
-                <input type="date" ng-model="departureDate">
-              </md-input-container>
-              <md-input-container>
-                <label>Returning Date: </label>
-                <input type="date" ng-model="returningDate">
-              </md-input-container>
-            </div>
-
+              <div layout="column" layout-align="center center">
+                <md-input-container id="find-ride-form" style="max-height: 171px;">
+                  <label>Departure Date: </label>
+                  <input type="date" ng-model="departureDate">
+                </md-input-container>
+              </div>
+          </div>
             <div layout="row" layout-align="center center">
               <md-button type="submit" class="md-accent md-raised">Search</md-button>
             </div>
@@ -45,10 +42,5 @@
         </md-card-content>
       </md-card>
     </div>
-
-    <div layout="column" flex="50" layout-align="center">
-      <img src="/assets/img/us_map.jpg" style="object-fit: contain; height: 50%;">
-    </div >
-
   </div>
 </md-content>
