@@ -42,10 +42,6 @@ md-content.md-padding {
   padding: 10px;
 }
 
-md-input-container #find-ride-form{
-  padding: 2px 2px 2px 2px;
-}
-
 #find-ride-form{
   background-color: rgba(233,233,233,0.83);
   padding: 0px 16px 0px 16px;
@@ -152,9 +148,6 @@ md-icon.md-default-theme{
     vertical-align: middle;
     position: relative;
     top: 6;
-    height: 50px; 
+    height: 50px;
     width: 50px;
 }
-
-
-
