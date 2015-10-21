@@ -1,6 +1,6 @@
 @font-face {
-  font-family: coolFont;
-  src: url(../libs/coolFont.ttf);
+  font-family: ProximaNova-Bold;
+  src: url(../libs/ProximaNova-Bold.ttf);
 }
 
 #signup-title{
@@ -8,7 +8,7 @@
 }
 
 div{
-  font-family: coolFont;
+  font-family: ProximaNova-Bold;
 }
 
 .inner{
@@ -60,7 +60,7 @@ md-input-container #find-ride-form{
   text-align: center;
   margin: 0px;
   color: white;
-  font-size: 20px;
+  font-size: 30px;
 }
 
 .dashboard-button a{
@@ -132,7 +132,7 @@ md-icon.md-default-theme{
 }
 
 #home-section{
-  background: url("../img/street-background.png") no-repeat center center fixed;
+  background: url("../img/city.jpg") no-repeat center center fixed;
   background-size: 100% auto;
   background-position: left;
   background-size: cover;
@@ -152,5 +152,9 @@ md-icon.md-default-theme{
     vertical-align: middle;
     position: relative;
     top: 6;
+    height: 50px; 
+    width: 50px;
 }
+
+
 
