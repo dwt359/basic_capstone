@@ -21,10 +21,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
 
+    <!-- The app and its services! -->
+    <script src="app/shared/app.js"></script>
+    
     <!-- Project controllers -->
     <script src="app/shared/app.js"></script>
-    <script src="app/components/home/homeCtrl.js"></script>
-    <script src="app/components/dashboard/dashboardCtrl.js"></script>    
+    <script src="app/components/home/HomeCtrl.js"></script>
+    <script src="app/components/home/LoginCtrl.js"></script>
+    <script src="app/components/dashboard/dashboardCtrl.js"></script>
     <script src="app/components/profile/profileCtrl.js"></script>
 
     <!-- Directives -->

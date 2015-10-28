@@ -1,8 +1,10 @@
-theApp.controller('dashboardCtrl', ['$scope', '$state',  function($scope, $state){
+theApp.controller('dashboardCtrl',  ['$scope', '$state', 'LoginAuth', 'UserData',
+                                    function($scope, $state, LoginAuth, UserData){
 
   $scope.seats = [{name: 'Seat', description:'', price: 0.00}];
+  $scope.seatLimit = 6;
 
-  //This will be queried!
+  //This will be queried! (for testing purposes)
   $scope.rides = [{driver: 'Jacob', seats: [{name: 'Passenger seat', description: 'Cool!', price: '10.00'},
 {name: 'Bitch seat', description: 'Have fun!', price: '5.00'}], description: 'Awesomest ride ever!', startCity: 'Columbia',
 startState: 'MO', endCity: 'Chicago', endState: 'IL'}, {driver: 'Dan', seats: [{name: 'Cool seat!', description: 'Cool!', price: '9.00'},
@@ -16,20 +18,23 @@ startState: 'MO', endCity: 'Seattle', endState: 'WA'}];
   }
 
   $scope.addSeat = function(i){
-    if($scope.seats.length < 10){
+    if($scope.seats.length < $scope.seatLimit){
       $scope.seats.push({name: 'New Seat', description:'', price: 0.00});
     }
   }
 
-  
+
   $scope.viewProfile = function() {
       $state.go('^.^.profile');
-      
-  } 
-  
+  }
+
+  $scope.getUserData = function(){
+    return UserData.getData();
+  }
+
   $scope.logout = function(){
 
-    //More janky routing crap
+    LoginAuth.logout();
     if($state.is('dashboard.begin')){
       $state.go('home');
     }
