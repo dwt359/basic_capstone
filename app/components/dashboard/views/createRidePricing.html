@@ -7,7 +7,8 @@
                 <seat-info></seat-info>
               </div>
             </div>
-            <md-icon class="seat-button" ng-click="addSeat(seats.length)" md-svg-src="/assets/img/add_icon.svg" flex-gt-sm="33" flex-sm="50"></md-icon>
+            <md-icon class="seat-button" ng-show="seats.length < seatLimit" ng-click="addSeat(seats.length)" 
+                  md-svg-src="/assets/img/add_icon.svg" flex-gt-sm="33" flex-sm="50"></md-icon>
             <div flex></div>
           </form>
     </div>

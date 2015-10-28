@@ -3,7 +3,7 @@
   <form name="loginForm" ng-controller="LoginCtrl">
     <md-dialog-content>
       <div layout="column">
-        <md-button type="submit" ng-click="loginWithFacebook()" class="login-with-facebook">Login with Facebook</md-button>
+        <md-button ng-click="loginWithFacebook()" class="login-with-facebook">Login with Facebook</md-button>
         <md-input-container>
           <label>Username</label>
           <input type="text" ng-model="loginData.username">

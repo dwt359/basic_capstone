@@ -47,8 +47,8 @@ theApp.config(function($stateProvider, $urlRouterProvider){
           url:'/pricing',
           templateUrl: 'app/components/dashboard/views/createRidePricing.html'
         })
-  
-        
+
+
 
 });
 
@@ -63,6 +63,72 @@ theApp.config(function($mdThemingProvider){
       {
         'default': '400',
       });
-  });
+});
 
+theApp.factory('UserData', function(){
+  var data;
+  var savedData = localStorage.getItem('user');
+  var loggedIn = false;
 
+  if(savedData != null){
+    data = JSON.parse(savedData);
+    loggedIn = true;
+  }
+
+  return{
+    getData: function(){
+      return data;
+    },
+
+    isLoggedIn: function(){
+      return loggedIn;
+    },
+
+    setData: function(newData){
+      data = newData;
+
+      if(localStorage.getItem('user') != null){
+        localStorage.clear();
+      }
+
+      localStorage.setItem('user', JSON.stringify(data));
+      loggedIn = true;
+    },
+
+    clearData: function(){
+      if(localStorage.getItem('user') != null){
+        loggedIn = false;
+        localStorage.clear();
+      }
+    }
+
+  }
+
+});
+
+//This is for the facebook login stuff
+theApp.factory('LoginAuth', ['$state', '$mdDialog', 'UserData', function($state, $mdDialog, UserData){
+    var ref = new Firebase("https://hitchdatabase.firebaseio.com");
+    var currentUser;
+
+    return{
+      login: function(){
+        ref.authWithOAuthPopup("facebook", function(error, authData) {
+          if (error) {
+            //console.log("Login Failed!", error);
+          }
+          if (!error) {
+            //console.log("Authenticated successfully with payload:", authData);
+            UserData.setData(authData);
+            $state.go('dashboard.begin');
+            $mdDialog.cancel();
+          }
+        });
+      },
+
+      logout: function(){
+        UserData.clearData();
+      }
+    };
+
+  }]);
