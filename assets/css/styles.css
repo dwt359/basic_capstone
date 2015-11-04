@@ -151,3 +151,15 @@ md-icon.md-default-theme{
     height: 50px;
     width: 50px;
 }
+
+.md-tabs.md-default-theme.md-accent md-tabs-wrapper {
+   backface-color: #242661; 
+}
+
+#dashboard-start {
+  background: url("../img/satinweave.png") no-repeat center center fixed;
+  background-size: 100% auto;
+  background-position: left;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
