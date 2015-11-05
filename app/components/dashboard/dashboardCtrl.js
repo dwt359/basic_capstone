@@ -12,11 +12,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$state', 'LoginAuth', 'UserData'
 
   var ref = new Firebase('https://hitchdatabase.firebaseio.com/trips');
   //This will be queried! (for testing purposes)
-  $scope.rides = [{driver: 'Jacob', seats: [{name: 'Passenger seat', description: 'Cool!', price: '10.00'},
-{name: 'Bitch seat', description: 'Have fun!', price: '5.00'}], description: 'Awesomest ride ever!', startCity: 'Columbia',
-startState: 'MO', endCity: 'Chicago', endState: 'IL'}, {driver: 'Dan', seats: [{name: 'Cool seat!', description: 'Cool!', price: '9.00'},
-{name: 'Middle seat', description: ':P', price: '6.00'}], description: 'Daddy Dans Sedan!', startCity: 'St Louis',
-startState: 'MO', endCity: 'Seattle', endState: 'WA'}];
+  $scope.rides = [];
 
 
 
@@ -83,6 +79,11 @@ startState: 'MO', endCity: 'Seattle', endState: 'WA'}];
     var long2 = $scope.getLng(gmapurl2);
 
     $scope.initMap(lat1, lat2, long1, long2);
+
+    //the rides that match that query
+    var startCity = $scope.getAdd(gmapurl1).replace(', USA', '');
+    $scope.endCity = $scope.getAdd(gmapurl2).replace(', USA', '');
+    $scope.rides = $firebaseArray(ref.child(startCity));
   }
 
   $scope.getLat = function(url){
