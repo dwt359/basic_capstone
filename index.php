@@ -11,7 +11,7 @@
 
     <!-- Rando dependencies -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 
     <!-- Angular Material Dependencies -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
@@ -23,7 +23,7 @@
 
     <!-- The app and its services! -->
     <script src="app/shared/app.js"></script>
-    
+
     <!-- Project controllers -->
     <script src="app/shared/app.js"></script>
     <script src="app/components/home/HomeCtrl.js"></script>

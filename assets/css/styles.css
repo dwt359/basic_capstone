@@ -11,6 +11,19 @@ div{
   font-family: ProximaNova-Bold;
 }
 
+#ride-list-container{
+  margin: 5px;
+  padding: 5px;
+  height: 300px;
+}
+
+#map {
+  margin: 5px;
+  padding: 5px;
+  height: 300px;
+  width: 500px;
+}
+
 .inner{
   flex: 0 1 auto;
   display: flex;
@@ -153,7 +166,7 @@ md-icon.md-default-theme{
 }
 
 .md-tabs.md-default-theme.md-accent md-tabs-wrapper {
-   backface-color: #242661; 
+   backface-color: #242661;
 }
 
 #dashboard-start {
