@@ -1,4 +1,4 @@
-var theApp = angular.module('theApp', ['ui.router','ngMaterial']);
+var theApp = angular.module('theApp', ['ui.router','ngMaterial', 'firebase']);
 
 //Routing stuff
 theApp.config(function($stateProvider, $urlRouterProvider){

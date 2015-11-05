@@ -1,9 +1,9 @@
-theApp.controller('dashboardCtrl',  ['$scope', '$state', 'LoginAuth', 'UserData',
-                                    function($scope, $state, LoginAuth, UserData){
+theApp.controller('dashboardCtrl',  ['$scope', '$state', 'LoginAuth', 'UserData', '$firebaseArray', function($scope, $state, LoginAuth, UserData, $firebaseArray){
 
   $scope.seats = [{name: 'Seat', description:'', price: 0.00}];
   $scope.seatLimit = 6;
 
+  var ref = new Firebase('https://hitchdatabase.firebaseio.com/trips');
   //This will be queried! (for testing purposes)
   $scope.rides = [{driver: 'Jacob', seats: [{name: 'Passenger seat', description: 'Cool!', price: '10.00'},
 {name: 'Bitch seat', description: 'Have fun!', price: '5.00'}], description: 'Awesomest ride ever!', startCity: 'Columbia',
