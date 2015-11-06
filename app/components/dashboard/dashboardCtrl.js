@@ -81,9 +81,13 @@ theApp.controller('dashboardCtrl',  ['$scope', '$state', 'LoginAuth', 'UserData'
     $scope.initMap(lat1, lat2, long1, long2);
 
     //the rides that match that query
-    var startCity = $scope.getAdd(gmapurl1).replace(', USA', '');
-    $scope.endCity = $scope.getAdd(gmapurl2).replace(', USA', '');
-    $scope.rides = $firebaseArray(ref.child(startCity));
+    var startCity = $scope.getAdd(gmapurl1).replace(', USA', '').replace('.', '');
+    var endCity = $scope.getAdd(gmapurl2).replace(', USA', '').replace('.', '');
+    console.log(startCity);
+    console.log(endCity);
+    $scope.rides = $firebaseArray(ref.child(startCity).child(endCity));
+    console.dir($scope.rides);
+
   }
 
   $scope.getLat = function(url){
