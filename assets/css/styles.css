@@ -19,7 +19,7 @@ div{
 #map {
   margin: 5px;
   padding: 5px;
-  max-height: 88.5vh;
+  max-height: 100%;
 }
 
 .inner{
@@ -43,7 +43,7 @@ md-content.md-padding {
 
 .section{
   box-sizing: border-box;
-  min-height: 100vh;
+  height: 90vh;
   width: 100%;
   padding: 0px 20px 0px 20px;
 }
