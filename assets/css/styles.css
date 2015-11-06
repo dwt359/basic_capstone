@@ -14,14 +14,12 @@ div{
 #ride-list-container{
   margin: 5px;
   padding: 5px;
-  height: 300px;
 }
 
 #map {
   margin: 5px;
   padding: 5px;
-  height: 300px;
-  width: 500px;
+  max-height: 88.5vh;
 }
 
 .inner{
@@ -95,7 +93,7 @@ md-icon.md-default-theme{
 }
 
 .dashboard-button{
-  background-color: #FF7043;
+  background-color: #FFA726;
   width: 200px;
   height: 175px;
   margin: 0px 25px 25px 25px;
@@ -106,7 +104,7 @@ md-icon.md-default-theme{
 }
 
 #dashboard-start{
-  background-color: #C0C0C0;
+  background-color: #EEEEEE;
   overflow: auto;
 }
 
@@ -170,9 +168,9 @@ md-icon.md-default-theme{
 }
 
 #dashboard-start {
-  background: url("../img/satinweave.png") no-repeat center center fixed;
+  /*background: url("../img/satinweave.png") no-repeat center center fixed;
   background-size: 100% auto;
   background-position: left;
   background-size: cover;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat;*/
 }
