@@ -84,8 +84,8 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
     GoogleMaps.initMap(lat1, lat2, long1, long2);
 
     //the rides that match that query
-    var startCity = $scope.getAdd(gmapurl1).replace(', USA', '').replace('.', '');
-    var endCity = $scope.getAdd(gmapurl2).replace(', USA', '').replace('.', '');
+    var startCity = GoogleMaps.getAdd(gmapurl1).replace(', USA', '').replace('.', '');
+    var endCity = GoogleMaps.getAdd(gmapurl2).replace(', USA', '').replace('.', '');
     $scope.rides = $firebaseArray(ref.child(startCity).child(endCity));
 
   }
