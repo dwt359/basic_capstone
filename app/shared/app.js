@@ -59,9 +59,9 @@ theApp.config(function($mdThemingProvider){
         'default': '800',
         'hue-1': '500'
       })
-    .accentPalette('orange',
+    .accentPalette('light-blue',
       {
-        'default': '400',
+        'default': '900',
       });
 });
 

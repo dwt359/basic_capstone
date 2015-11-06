@@ -1,21 +1,35 @@
-<div id="homePage" ng-controller="profileCtrl">
+<div id="homePage" layout="column" ng-controller="profileCtrl">
+
   <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
       <h1 layout-align="left" class="md-toolbar-tools"><b>PROFILE</b></h1>
       <md-button ng-click="viewDashboard()">DASHBOARD</md-button>
       <md-button ng-click="logout()">LOGOUT</md-button>
   </md-toolbar>
-    <div id="outer-wrapper">
-        <div ui-view>
-            <img src="{{getUserData().facebook.profileImageURL}}" height="300px" width="300px"></img>
+    
+    
+    <md-content class="md-padding">
+    <div class="section" id="dashboard-start" layout="row" layout-align="center center">
+        <div id="outer-wrapper" flex="60" layout="row" layout-fill layout-align="center center">
 
-        <md-input-container>
-          <label>{{getUserData().facebook.displayName}}</label>
-          <input type="text" ng-model="loginData.username" disabled value="{{getUserData().facebook.displayName}}">
-        </md-input-container>
+            <div flex="20">
+                <img src="{{getUserData().facebook.profileImageURL}}"></img>
+            </div>
+            <div flex="60">
+                <md-input-container>
+                    <input type="text">{{getUserData().facebook.cachedUserProfile.first_name}}</input>
+
+                    <label>{{getUserData().facebook.cachedUserProfile.gender}}</label>
+                    <md-button ng-click="openFacebook()" class="login-with-facebook">Facebook</md-button>
+
+                </md-input-container>
+            </div>
+        </div>
+    </div>
+    </md-content>
+</div>
         
-        <!--<div ng-controller="AppCtrl" ng-cloak>-->
-  <md-content class="md-padding">
-    <md-tabs id="profileMenu" class="md-accent" md-selected="data.selectedIndex" md-align-tabs="{{data.bottom ? 'bottom' : 'top'}}">
+    <!--
+        <md-tabs id="profileMenu" class="md-accent" md-selected="data.selectedIndex" md-align-tabs="{{data.bottom ? 'bottom' : 'top'}}">
       <md-tab id="tab1">
         <md-tab-label>Current Rides Posted</md-tab-label>
         <md-tab-body>
@@ -33,9 +47,12 @@
         </md-tab-body>
       </md-tab>
     </md-tabs>
-  </md-content>
-    </div>
-
+  
 
         </div>
+
     </div>
+</md-content>
+  
+</div>
+-->
