@@ -181,13 +181,13 @@ md-icon.md-default-theme{
     width: 50px;
 }
 
-#profilePicture {
-    zoom: 1;
-    display: block;
-    height: auto;
-    max-height: 100%;
-    width: auto;
-    max-width: 100%;   
+#profileAvatar {
+    vertical-align: middle;
+    position: relative;
+    height: 64px;
+    width: 64px; 
+    margin-right: 10px;
+  
 }
 
 .dialogColumns {
