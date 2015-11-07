@@ -1,6 +1,6 @@
 @font-face {
-  font-family: ProximaNova-Bold;
-  src: url(../libs/ProximaNova-Bold.ttf);
+  font-family: ProximaNova-Regular;
+  src: url(../libs/ProximaNova-Regular.ttf);
 }
 
 #signup-title{
@@ -8,7 +8,7 @@
 }
 
 div{
-  font-family: ProximaNova-Bold;
+  font-family: ProximaNova-Regular;
 }
 
 .inner{
