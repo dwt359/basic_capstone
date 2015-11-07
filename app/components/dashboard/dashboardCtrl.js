@@ -1,5 +1,5 @@
-theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth', 'UserData', 'GoogleMaps', '$firebaseArray',
-                                    function($scope, $timeout, $state, LoginAuth, UserData, GoogleMaps, $firebaseArray){
+theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth', 'UserData', 'GoogleMaps', '$firebaseArray', '$mdDialog',
+                                    function($scope, $timeout, $state, LoginAuth, UserData, GoogleMaps, $firebaseArray, $mdDialog){
 
   //$timeout(GoogleMaps.loadDefault(), 3000);
 
@@ -34,6 +34,21 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
 
   $scope.viewProfile = function() {
       $state.go('^.^.profile');
+  }
+  
+  $scope.viewDashboard = function() {
+        $state.go('home');    
+        
+  }
+  
+  $scope.showProfile = function(ev){
+    $mdDialog.show({
+      controller: DialogController,
+      templateUrl: 'app/components/profile/views/profileFormTmpl.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true,
+    });
   }
 
   $scope.getUserData = function(){

@@ -1,6 +1,6 @@
 @font-face {
-  font-family: ProximaNova-Bold;
-  src: url(../libs/ProximaNova-Bold.ttf);
+  font-family: ProximaNova-Regular;
+  src: url(../libs/ProximaNova-Regular.ttf);
 }
 
 #signup-title{
@@ -8,7 +8,7 @@
 }
 
 div{
-  font-family: ProximaNova-Bold;
+  font-family: ProximaNova-Regular;
 }
 
 #ride-list-container{
@@ -77,8 +77,8 @@ md-content.md-padding {
 
 .dashboard-button a{
   display: block;
-  width: 150px;
-  height: 125px;
+  width: 250px;
+  height: 225px;
   padding: 25px;
   text-decoration: none;
   color: black;
@@ -98,7 +98,6 @@ md-icon.md-default-theme{
 }
 
 .dashboard-button{
-  background-color: #FFA726;
   width: 200px;
   height: 175px;
   margin: 0px 25px 25px 25px;
@@ -160,6 +159,10 @@ md-icon.md-default-theme{
     color: white;
 }
 
+.hitch_button {
+    font-size: 20px;   
+}
+
 .profilePicture{
     vertical-align: middle;
     position: relative;
@@ -168,14 +171,28 @@ md-icon.md-default-theme{
     width: 50px;
 }
 
-.md-tabs.md-default-theme.md-accent md-tabs-wrapper {
-   backface-color: #242661;
+#profilePicture {
+    zoom: 1;
+    display: block;
+    height: auto;
+    max-height: 100%;
+    width: auto;
+    max-width: 100%;   
 }
 
-#dashboard-start {
-  /*background: url("../img/satinweave.png") no-repeat center center fixed;
-  background-size: 100% auto;
-  background-position: left;
-  background-size: cover;
-  background-repeat: no-repeat;*/
+.dialogColumns {
+    margin: 15px;   
+}
+
+#profile_dialog {
+    width: 650px;
+}
+
+.sidenav_btn {
+    text-align: left; 
+    margin: 0px 0px;
+}
+
+#profileDisplayName {
+    text-transform: uppercase;
 }

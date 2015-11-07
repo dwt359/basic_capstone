@@ -1,0 +1,33 @@
+
+<md-dialog aria-label="test">
+  <form name="profileForm" ng-controller="profileCtrl">
+    <md-dialog-content>
+        <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
+            <h1 id="profileDisplayName" layout-align="left" class="md-toolbar-tools">{{getUserData().facebook.displayName}}</h1>
+        </md-toolbar>
+        <div id="profile_dialog">
+
+        <div layout="column" style="height:400px;">
+            <section layout="row" flex>
+            <div layout="row" flex>
+                <div class="dialogColumns" layout="column" flex="25">
+                    <div id="profilePicture">
+                        <img src="{{getUserData().facebook.profileImageURL}}"></img>
+                    </div>
+                        <md-button class="md-accent sidenav_btn"><b>Reviews</b></md-button>
+                        <md-button class="md-accent sidenav_btn"><b>Rides</b></md-button>
+                        <md-button class="md-accent sidenav_btn"><b>Vehicles</b></md-button>
+                        <md-button ng-click="openFacebook()" class="md-accent sidenav_btn"><b>Facebook</b></md-button>
+                        
+                </div>
+                <div class="dialogColumns" layout="column" flex="75">
+            
+                </div>
+            </div>
+            </section>
+        </div>
+        </div>
+    </md-dialog-content>
+
+  </form>
+</md-dialog>
