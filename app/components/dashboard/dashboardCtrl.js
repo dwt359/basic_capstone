@@ -1,5 +1,5 @@
-theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth', 'UserData', 'GoogleMaps',
-                                    function($scope, $timeout, $state, LoginAuth, UserData, GoogleMaps){
+theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth', 'UserData', 'GoogleMaps', '$firebaseArray',
+                                    function($scope, $timeout, $state, LoginAuth, UserData, GoogleMaps, $firebaseArray){
 
   //$timeout(GoogleMaps.loadDefault(), 3000);
 
@@ -13,12 +13,9 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   $scope.seats = [{name: 'Seat', description:'', price: 0.00}];
   $scope.seatLimit = 6;
 
+  var ref = new Firebase('https://hitchdatabase.firebaseio.com/trips');
   //This will be queried! (for testing purposes)
-  $scope.rides = [{driver: 'Jacob', seats: [{name: 'Passenger seat', description: 'Cool!', price: '10.00'},
-{name: 'Bitch seat', description: 'Have fun!', price: '5.00'}], description: 'Awesomest ride ever!', startCity: 'Columbia',
-startState: 'MO', endCity: 'Chicago', endState: 'IL'}, {driver: 'Dan', seats: [{name: 'Cool seat!', description: 'Cool!', price: '9.00'},
-{name: 'Middle seat', description: ':P', price: '6.00'}], description: 'Daddy Dans Sedan!', startCity: 'St Louis',
-startState: 'MO', endCity: 'Seattle', endState: 'WA'}];
+  $scope.rides = [];
 
 
 
@@ -85,6 +82,13 @@ startState: 'MO', endCity: 'Seattle', endState: 'WA'}];
     var long2 = GoogleMaps.getLng(gmapurl2);
 
     GoogleMaps.initMap(lat1, lat2, long1, long2);
+
+    //the rides that match that query
+    var startCity = GoogleMaps.getAdd(gmapurl1).replace(', USA', '').replace('.', '');
+    var endCity = GoogleMaps.getAdd(gmapurl2).replace(', USA', '').replace('.', '');
+    $scope.rides = $firebaseArray(ref.child(startCity).child(endCity));
+
+
   }
 
 
