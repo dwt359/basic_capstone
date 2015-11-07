@@ -59,26 +59,28 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
 
   $scope.retrievePassengerTripData = function(){
     var profileData = $scope.getProfileData();
-    profileData.$loaded().then(function(){
+    profileData.$loaded().then(function() {
       $scope.tripData = [];
       var trips = profileData.passenger_trips;
       var item = [];
       var person = [];
-      angular.forEach(trips, function(trip, id){
-        item.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
-        item[id].$loaded().then(function(){
-          var startTime = new Date(item[id].start_time);
-          var pad = '00';
-          item[id].start_time = (startTime.getMonth()+1) + '/' + startTime.getDate() + '/' + startTime.getFullYear() + ' at ' + startTime.getHours() + ':' + pad.substring(0, pad.length - startTime.getMinutes().toString().length) + startTime.getMinutes().toString();
-          item[id].from = trip.from;
-          item[id].to = trip.to;
-          person.push($firebaseObject(userRef.child(item[id].user)));
-          person[id].$loaded().then(function(){
-            item[id].img_url = person[id].img_url;
-            $scope.tripData.push(item[id]);
+      if (!!trips.length){
+        angular.forEach(trips, function (trip, id) {
+          item.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
+          item[id].$loaded().then(function () {
+            var startTime = new Date(item[id].start_time);
+            var pad = '00';
+            item[id].start_time = (startTime.getMonth() + 1) + '/' + startTime.getDate() + '/' + startTime.getFullYear() + ' at ' + startTime.getHours() + ':' + pad.substring(0, pad.length - startTime.getMinutes().toString().length) + startTime.getMinutes().toString();
+            item[id].from = trip.from;
+            item[id].to = trip.to;
+            person.push($firebaseObject(userRef.child(item[id].user)));
+            person[id].$loaded().then(function () {
+              item[id].img_url = person[id].img_url;
+              $scope.tripData.push(item[id]);
+            });
           });
         });
-      });
+      }
     });
   }
 

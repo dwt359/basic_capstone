@@ -14,6 +14,7 @@ div{
 #ride-list-container{
   margin: 5px;
   padding: 5px;
+  max-height: 65%;
   overflow-y: scroll;
 }
 
@@ -53,7 +54,8 @@ md-content.md-padding {
 
 .section{
   box-sizing: border-box;
-  height: 90vh;
+  max-height: calc(100vh - 64px);
+  height: calc(100vh - 64px);
   width: 100%;
   padding: 0px 20px 0px 20px;
 }
