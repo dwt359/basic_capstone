@@ -1,5 +1,5 @@
-theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth', 'UserData', 'GoogleMaps', '$firebaseArray',
-                                    function($scope, $timeout, $state, LoginAuth, UserData, GoogleMaps, $firebaseArray){
+theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth', 'UserData', 'GoogleMaps', '$firebaseArray', '$firebaseObject',
+                                    function($scope, $timeout, $state, LoginAuth, UserData, GoogleMaps, $firebaseArray, $firebaseObject){
 
   //$timeout(GoogleMaps.loadDefault(), 3000);
 
@@ -12,7 +12,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   $scope.seats = [{name: 'Seat', description:'', price: 0.00}];
   $scope.seatLimit = 6;
 
-  var ref = new Firebase('https://hitchdatabase.firebaseio.com/trips');
+  var tripRef = new Firebase('https://hitchdatabase.firebaseio.com/trips');
   //This will be queried! (for testing purposes)
   $scope.rides = [];
 
@@ -37,6 +37,23 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
 
   $scope.getProfileData = function(){
     return UserData.getProfileData();
+  }
+
+  $scope.retrievePassengerTripData = function(){
+    var profileData = $scope.getProfileData();
+    profileData.$loaded().then(function(){
+      $scope.tripData = [];
+      var trips = profileData.passenger_trips;
+      var item = [];
+      angular.forEach(trips, function(trip, id){
+        item.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
+        item[id].$loaded().then(function(){
+          item[id].from = trip.from;
+          item[id].to = trip.to;
+          $scope.tripData.push(item[id]);
+        });
+      });
+    });
   }
 
   $scope.getUserData = function(){
@@ -89,7 +106,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
     //the rides that match that query
     var startCity = GoogleMaps.getAdd(gmapurl1).replace(', USA', '').replace('.', '');
     var endCity = GoogleMaps.getAdd(gmapurl2).replace(', USA', '').replace('.', '');
-    $scope.rides = $firebaseArray(ref.child(startCity).child(endCity));
+    $scope.rides = $firebaseArray(tripRef.child(startCity).child(endCity));
 
 
   }

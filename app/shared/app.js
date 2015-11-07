@@ -100,7 +100,7 @@ theApp.factory('UserData', ['$firebaseObject', function($firebaseObject){
       }
 
       localStorage.setItem('firebase:session::hitchdatabase', JSON.stringify(data));
-      profileData = $firebaseObject(ref.child('firebase:session::hitchdatabase').child(data.facebook.id));
+      profileData = $firebaseObject(ref.child('users').child(data.facebook.id));
       loggedIn = true;
     },
 
