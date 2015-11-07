@@ -188,6 +188,11 @@ md-icon.md-default-theme{
     width: 650px;
 }
 
+#review_dialog {
+    width: 400px;
+    
+}
+
 .sidenav_btn {
     text-align: left; 
     margin: 0px 0px;

@@ -1,0 +1,45 @@
+<md-dialog aria-label="test">
+  <form name="profileForm" ng-controller="profileCtrl">
+    <md-dialog-content>
+        <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
+            <h1 id="profileDisplayName" layout-align="left" class="md-toolbar-tools">REVIEW YOUR RIDE</h1>
+        </md-toolbar>
+        <div id="review_dialog">
+
+        <div layout="column" style="height:450px;">
+            <section layout="column" flex>
+            
+            
+                <md-input-container>
+                    <label>Starting City</label>
+                    <input type="text" ng-model="starting.city">
+                </md-input-container>
+                <md-input-container>
+                    <label>Ending City</label>
+                    <input type="text" ng-model="ending.city">
+                </md-input-container>
+                <md-input-container>
+                    <label>Date</label>
+                    <input type="date" ng-model="departureDate">
+                </md-input-container>
+                <md-input-container>
+                    <label>Driver</label>
+                    <input type="text" ng-model="driverInfo">
+                </md-input-container>
+                <md-input-container>
+                    <label>Rating</label>
+                    <input type="text" ng-model="driverInfo">
+                </md-input-container>
+                <md-input-container>
+                    <label>Comments</label>
+                    <textarea ng-model="comment"></textarea>
+                </md-input-container> 
+            <md-button class="md-accent" ng-click="saveReview()">SAVE</md-button>
+      
+            </section>
+          
+        </div>
+        </div>
+        </md-dialog-content>
+    </form>
+</md-dialog>

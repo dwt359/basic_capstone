@@ -111,5 +111,15 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   $scope.setSeats = function(){
 
   }
+  
+  $scope.showReviewForm = function(ev){
+    $mdDialog.show({
+    controller: DialogController,
+    templateUrl: 'app/components/dashboard/views/reviewFormTmpl.html',
+    parent: angular.element(document.body),
+    targetEvent: ev,
+    clickOutsideToClose: true,
+    });
+  };
 
 }]);
