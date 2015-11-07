@@ -175,6 +175,8 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   $scope.showReviewForm = function(ev, fid){
     $scope.initReview = $firebaseObject(userRef.child(fid));
     $scope.reviewOptions = [1,2,3,4,5];
+    var userId = $scope.getUserData().facebook.id;
+    $scope.review = $firebaseObject(userRef.child(fid).child('reviews').child(userId));
     $mdDialog.show({
       controller: DialogController,
       scope: $scope,
