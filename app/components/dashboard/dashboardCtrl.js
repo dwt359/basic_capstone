@@ -1,20 +1,20 @@
-theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth', 'UserData', 'GoogleMaps', '$firebaseArray', '$mdDialog',
-                                    function($scope, $timeout, $state, LoginAuth, UserData, GoogleMaps, $firebaseArray, $mdDialog){
+
+theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth', 'UserData', 'GoogleMaps', '$firebaseArray', '$firebaseObject', '$mdDialog',                                    function($scope, $timeout, $state, LoginAuth, UserData, GoogleMaps, $firebaseArray, $firebaseObject, $mdDialog){
 
   //$timeout(GoogleMaps.loadDefault(), 3000);
 
   $scope.states = ('AL AZ AR CA CO CT DE FL GA ID IL IN IA KS KY LA ME MD MA MI MN MS ' +
             'MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI ' +
             'WY').split(' ').map(function (state) { return { abbrev: state }; });
-
   $scope.starting = {city: "", state: ""};
   $scope.ending = {city: "", state: ""};
 
   $scope.seats = [{name: 'Seat', description:'', price: 0.00}];
   $scope.seatLimit = 6;
 
-  var ref = new Firebase('https://hitchdatabase.firebaseio.com/trips');
-  //This will be queried! (for testing purposes)
+  var ref = new Firebase('https://hitchdatabase.firebaseio.com');
+  var tripRef = ref.child('trips');
+  var userRef = ref.child('users');
   $scope.rides = [];
 
 
@@ -51,6 +51,64 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
     });
   }
 
+  $scope.getProfileData = function(){
+    return UserData.getProfileData();
+  }
+
+  $scope.retrievePassengerTripData = function(){
+    var profileData = $scope.getProfileData();
+    profileData.$loaded().then(function(){
+      $scope.tripData = [];
+      var trips = profileData.passenger_trips;
+      var item = [];
+      var person = [];
+      angular.forEach(trips, function(trip, id){
+        item.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
+        item[id].$loaded().then(function(){
+          var startTime = new Date(item[id].start_time);
+          var pad = '00';
+          item[id].start_time = (startTime.getMonth()+1) + '/' + startTime.getDate() + '/' + startTime.getFullYear() + ' at ' + startTime.getHours() + ':' + pad.substring(0, pad.length - startTime.getMinutes().toString().length) + startTime.getMinutes().toString();
+          item[id].from = trip.from;
+          item[id].to = trip.to;
+          person.push($firebaseObject(userRef.child(item[id].user)));
+          person[id].$loaded().then(function(){
+            item[id].img_url = person[id].img_url;
+            $scope.tripData.push(item[id]);
+          });
+        });
+      });
+    });
+  }
+
+  $scope.getProfileData = function(){
+    return UserData.getProfileData();
+  }
+
+  $scope.retrievePassengerTripData = function(){
+    var profileData = $scope.getProfileData();
+    profileData.$loaded().then(function(){
+      $scope.tripData = [];
+      var trips = profileData.passenger_trips;
+      var item = [];
+      var person = [];
+      angular.forEach(trips, function(trip, id){
+        item.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
+        item[id].$loaded().then(function(){
+          var startTime = new Date(item[id].start_time);
+          var pad = '00';
+          item[id].start_time = (startTime.getMonth()+1) + '/' + startTime.getDate() + '/' + startTime.getFullYear() + ' at ' + startTime.getHours() + ':' + pad.substring(0, pad.length - startTime.getMinutes().toString().length) + startTime.getMinutes().toString();
+          item[id].from = trip.from;
+          item[id].to = trip.to;
+          person.push($firebaseObject(userRef.child(item[id].user)));
+          person[id].$loaded().then(function(){
+            item[id].img_url = person[id].img_url;
+            $scope.tripData.push(item[id]);
+          });
+        });
+      });
+    });
+  }
+
   $scope.getUserData = function(){
     return UserData.getData();
   }
@@ -66,7 +124,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
         $state.go('^.^.home');
     }
 
-    if($state.is('dashboard.give.info') || $state.is('dashboard.give.pricing')){
+    if($state.is('dashboard.post.info') || $state.is('dashboard.post.pricing')){
       $state.go('^.^.^.home');
     }
   }
@@ -101,7 +159,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
     //the rides that match that query
     var startCity = GoogleMaps.getAdd(gmapurl1).replace(', USA', '').replace('.', '');
     var endCity = GoogleMaps.getAdd(gmapurl2).replace(', USA', '').replace('.', '');
-    $scope.rides = $firebaseArray(ref.child(startCity).child(endCity));
+    $scope.rides = $firebaseArray(tripRef.child(startCity).child(endCity));
 
 
   }
