@@ -105,6 +105,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
           item[id].start_time = (startTime.getMonth()+1) + '/' + startTime.getDate() + '/' + startTime.getFullYear() + ' at ' + startTime.getHours() + ':' + pad.substring(0, pad.length - startTime.getMinutes().toString().length) + startTime.getMinutes().toString();
           item[id].from = trip.from;
           item[id].to = trip.to;
+          item[id].is_reviewed = trip.is_reviewed;
           person.push($firebaseObject(userRef.child(item[id].user)));
           person[id].$loaded().then(function(){
             item[id].img_url = person[id].img_url;
