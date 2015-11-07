@@ -39,12 +39,12 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   $scope.viewProfile = function() {
       $state.go('^.^.profile');
   }
-  
+
   $scope.viewDashboard = function() {
-        $state.go('home');    
-        
+        $state.go('home');
+
   }
-  
+
   $scope.showProfile = function(ev){
     $mdDialog.show({
       controller: DialogController,
@@ -52,6 +52,19 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
       parent: angular.element(document.body),
       targetEvent: ev,
       clickOutsideToClose: true,
+    });
+  }
+
+  $scope.showPayment = function(ev, ride, i){
+    $mdDialog.show({
+      controller: PaymentDialogController,
+      templateUrl: 'app/components/dashboard/views/find/payment.php',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true,
+      locals: {
+        ride: ride
+      }
     });
   }
 
@@ -186,3 +199,16 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   };
 
 }]);
+
+function PaymentDialogController($scope, $mdDialog, ride){
+  $scope.ride = ride;
+  $scope.hide = function() {
+    $mdDialog.hide();
+  };
+  $scope.cancel = function() {
+    $mdDialog.cancel();
+  };
+  $scope.answer = function(answer){
+    $mdDialog.hide(answer);
+  };
+};
