@@ -1,21 +1,16 @@
-<md-content layout="row" layout-align="center center" flex class="md-padding" id="home-content">
+<md-content layout="row" layout-align="center center" flex class="md-padding" id="home-content" data-ng-init="retrievePassengerTripData()">
   <div class="section" id="dashboard-start" layout="row" layout-align="left center">
 
     <div layout="column" flex="75" layout-align="center center" >
-      <div layout="row">
-        <h1>What do you want to do?</h1>
-      </div>
       <div id="dashboard-home-grid" layout="row">
         <div class="dashboard-button">
             <a ui-sref="^.find">
-              <md-icon class="dashboard-icon" md-svg-src="/assets/img/magnifying_glass.svg"></md-icon>
-              <h3>Find ride! :D</h3>
+              <h3>FIND A RIDE</h3>
             </a>
         </div>
-        <div class="dashboard-button">
+        <div class="dashboard-button md-accent">
           <a ui-sref="^.post.info">
-            <md-icon class="dashboard-icon" md-svg-src="/assets/img/gift.svg"></md-icon>
-            <h3>Post ride! :D</h3>
+            <h3>POST A RIDE</h3>
           </a>
         </div>
       </div>
@@ -24,11 +19,11 @@
     <div layout="column" flex="25" layout-align="top">
       <md-list style="y-overflow: auto;">
         <md-subheader style="background-color: #424242; color: white;">Upcoming Rides</md-subheader>
-        <md-list-item class="md-2-line" ng-repeat="trip in getProfileData().passenger_trips">
+        <md-list-item class="md-2-line" ng-repeat="trip in tripData">
           <div layout="row">
-            <img ng-src="{{trip.image_url}}" class="md-avatar" />
+            <img ng-src="{{trip.img_url}}" class="md-avatar" />
             <div layout="column">
-              <h5 style="margin:2px;">Driver: {{trip.driver_name}}</h4>
+              <h5 style="margin:2px;">Driver: {{trip.name}}</h4>
               <h6 style="margin:2px;">Departing: {{trip.start_time}}</h4>
               <h6 style="margin:2px;">From: {{trip.from}}</h4>
               <h6 style="margin:2px;">To: {{trip.to}}</h4>

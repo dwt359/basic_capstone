@@ -1,5 +1,5 @@
-theApp.controller('profileCtrl', ['$scope', '$state', 'UserData', 'LoginAuth',
-                                  function($scope, $state, UserData, LoginAuth){
+theApp.controller('profileCtrl', ['$scope', '$state', 'UserData', 'LoginAuth', '$window', '$mdDialog',
+                                  function($scope, $state, UserData, LoginAuth, $window, $mdDialog){
 
     $scope.viewProfile = function() {
         $state.go('profile');
@@ -10,9 +10,15 @@ theApp.controller('profileCtrl', ['$scope', '$state', 'UserData', 'LoginAuth',
         
     }
 
+
+
     $scope.getUserData = function(){
     console.log(UserData.getData());
       return UserData.getData();
+    }
+    
+    $scope.openFacebook = function(){
+        $window.open($scope.getUserData().facebook.cachedUserProfile.link);        
     }
 
     $scope.logout = function(){
@@ -23,5 +29,16 @@ theApp.controller('profileCtrl', ['$scope', '$state', 'UserData', 'LoginAuth',
 
     }
 
+    $scope.showProfile = function(ev){
+    $mdDialog.show({
+      controller: DialogController,
+      templateUrl: 'app/components/profile/views/profileFormTmpl.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true,
+    });
+  };
+
+    
 
 }]);
