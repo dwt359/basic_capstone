@@ -7,52 +7,57 @@
   </md-toolbar>
     
     
-    <md-content class="md-padding">
+    <md-content class="md-padding" layout-padding>
     <div class="section" id="dashboard-start" layout="row" layout-align="center center">
         <div id="outer-wrapper" flex="60" layout="row" layout-fill layout-align="center center">
 
-            <div flex="20">
+            <div flex="35">
                 <img src="{{getUserData().facebook.profileImageURL}}"></img>
             </div>
-            <div flex="60">
-                <md-input-container>
-                    <input type="text">{{getUserData().facebook.cachedUserProfile.first_name}}</input>
-
-                    <label>{{getUserData().facebook.cachedUserProfile.gender}}</label>
-                    <md-button ng-click="openFacebook()" class="login-with-facebook">Facebook</md-button>
-
+            <div flex="65">
+                    <label>FIRST NAME:</label>
+                        <p>{{getUserData().facebook.cachedUserProfile.first_name}}</p>
                 </md-input-container>
-            </div>
-        </div>
-    </div>
-    </md-content>
-</div>
+                <md-input-container>
+                    <label>LAST NAME</label>
+                        <input disabled value="{{getUserData().facebook.cachedUserProfile.last_name}}"></input>
+                </md-input-container>
+                <md-input-container>
+                    <label>GENDER</label>
+                        <input disabled value="{{getUserData().facebook.cachedUserProfile.gender}}"></input>
+                </md-input-container>
+
         
-    <!--
-        <md-tabs id="profileMenu" class="md-accent" md-selected="data.selectedIndex" md-align-tabs="{{data.bottom ? 'bottom' : 'top'}}">
-      <md-tab id="tab1">
-        <md-tab-label>Current Rides Posted</md-tab-label>
-        <md-tab-body>
-        </md-tab-body>
-      </md-tab>
-      <md-tab id="tab2">
-        <md-tab-label>Reviews</md-tab-label>
-        <md-tab-body>
-        </md-tab-body>
-      </md-tab>
-      <md-tab id="tab3">
-        <md-tab-label>Vehicle Information</md-tab-label>
-        <md-tab-body>
+            <md-button ng-click="openFacebook()" class="login-with-facebook">Facebook</md-button>
 
-        </md-tab-body>
-      </md-tab>
-    </md-tabs>
-  
+            </div>
+        
+            <md-tabs id="profileMenu" class="md-accent" md-selected="data.selectedIndex" md-align-tabs="{{data.bottom ? 'bottom' : 'top'}}">
+          <md-tab id="tab1">
+            <md-tab-label>Current Rides Posted</md-tab-label>
+            <md-tab-body>
+            </md-tab-body>
+          </md-tab>
+          <md-tab id="tab2">
+            <md-tab-label>Reviews</md-tab-label>
+            <md-tab-body>
+            </md-tab-body>
+          </md-tab>
+          <md-tab id="tab3">
+            <md-tab-label>Vehicle Information</md-tab-label>
+            <md-tab-body>
 
+            </md-tab-body>
+          </md-tab>
+        </md-tabs>
         </div>
-
+   
+        
     </div>
 </md-content>
   
+
+<md-button ng-click="showProfile($event)">PROFILE</md-button>
+
 </div>
--->
+

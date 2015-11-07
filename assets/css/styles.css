@@ -61,8 +61,8 @@ md-content.md-padding {
 
 .dashboard-button a{
   display: block;
-  width: 150px;
-  height: 125px;
+  width: 250px;
+  height: 225px;
   padding: 25px;
   text-decoration: none;
   color: black;
@@ -143,6 +143,10 @@ md-icon.md-default-theme{
     color: white;
 }
 
+.hitch_button {
+    font-size: 20px;   
+}
+
 .profilePicture{
     vertical-align: middle;
     position: relative;
@@ -151,3 +155,24 @@ md-icon.md-default-theme{
     width: 50px;
 }
 
+#profilePicture {
+    zoom: 1;
+    display: block;
+    height: auto;
+    max-height: 100%;
+    width: auto;
+    max-width: 100%;   
+}
+
+.dialogColumns {
+    margin: 15px;   
+}
+
+#profile_dialog {
+    width: 650px;
+}
+
+.sidenav_btn {
+    text-align: left; 
+    margin: 0px 0px;
+}

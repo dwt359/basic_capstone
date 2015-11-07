@@ -1,5 +1,5 @@
-theApp.controller('profileCtrl', ['$scope', '$state', 'UserData', 'LoginAuth', '$window',
-                                  function($scope, $state, UserData, LoginAuth, $window){
+theApp.controller('profileCtrl', ['$scope', '$state', 'UserData', 'LoginAuth', '$window', '$mdDialog',
+                                  function($scope, $state, UserData, LoginAuth, $window, $mdDialog){
 
     $scope.viewProfile = function() {
         $state.go('profile');
@@ -29,5 +29,16 @@ theApp.controller('profileCtrl', ['$scope', '$state', 'UserData', 'LoginAuth', '
 
     }
 
+    $scope.showProfile = function(ev){
+    $mdDialog.show({
+      controller: DialogController,
+      templateUrl: 'app/components/profile/views/profileFormTmpl.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true,
+    });
+  };
+
+    
 
 }]);

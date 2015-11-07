@@ -27,6 +27,11 @@ startState: 'MO', endCity: 'Seattle', endState: 'WA'}];
   $scope.viewProfile = function() {
       $state.go('^.^.profile');
   }
+  
+  $scope.viewDashboard = function() {
+        $state.go('home');    
+        
+  }
 
   $scope.getUserData = function(){
     return UserData.getData();
