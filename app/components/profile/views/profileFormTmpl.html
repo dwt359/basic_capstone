@@ -1,30 +1,46 @@
-
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+  
 <md-dialog aria-label="test">
   <form name="profileForm" ng-controller="profileCtrl">
     <md-dialog-content>
-        <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
-            <h1 id="profileDisplayName" layout-align="left" class="md-toolbar-tools">{{getUserData().facebook.displayName}}</h1>
-        </md-toolbar>
+        <div layout="row">
+            <img id="profileAvatar" src="{{getUserData().facebook.profileImageURL}}" ng-click="openFacebook()"></img>
+
+            <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
+                <h1 id="profileDisplayName" layout-align="left" class="md-toolbar-tools">{{getUserData().facebook.displayName}}             </h1>
+            </md-toolbar>
+        </div>
         <div id="profile_dialog">
 
         <div layout="column" style="height:400px;">
-            <section layout="row" flex>
-            <div layout="row" flex>
-                <div class="dialogColumns" layout="column" flex="25">
-                    <div id="profilePicture">
-                        <img src="{{getUserData().facebook.profileImageURL}}"></img>
-                    </div>
-                        <md-button class="md-accent sidenav_btn"><b>Reviews</b></md-button>
-                        <md-button class="md-accent sidenav_btn"><b>Rides</b></md-button>
-                        <md-button class="md-accent sidenav_btn"><b>Vehicles</b></md-button>
-                        <md-button ng-click="openFacebook()" class="md-accent sidenav_btn"><b>Facebook</b></md-button>
-                        
-                </div>
-                <div class="dialogColumns" layout="column" flex="75">
-            
-                </div>
+          
+            <md-tabs class="tabs-left" md-selected="data.selectedIndex" md-align-tabs="{{data.bottom ? 'bottom' : 'top'}}">
+                        <md-tab id="tab1">
+                            <md-tab-label>REVIEWS</md-tab-label>
+                            <md-tab-body>
+                              View for Item #1 <br/>
+                              data.selectedIndex = 0;
+                            </md-tab-body>
+                        </md-tab>
+                        <md-tab id="tab2">
+                            <md-tab-label>RIDES</md-tab-label>
+                            <md-tab-body>
+                              View for Item #2 <br/>
+                              data.selectedIndex = 1;
+                            </md-tab-body>
+                        </md-tab>
+                        <md-tab id="tab3">
+                            <md-tab-label>VEHICLES</md-tab-label>
+                            <md-tab-body>
+                              View for Item #3 <br/>
+                              data.selectedIndex = 2;
+                            </md-tab-body>
+                        </md-tab>
+                        </md-tabs>
+                
+            <!--    
             </div>
-            </section>
+            </section>-->
         </div>
         </div>
     </md-dialog-content>
