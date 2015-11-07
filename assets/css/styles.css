@@ -192,3 +192,7 @@ md-icon.md-default-theme{
     text-align: left; 
     margin: 0px 0px;
 }
+
+#profileDisplayName {
+    text-transform: uppercase;
+}

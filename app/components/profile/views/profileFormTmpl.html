@@ -3,7 +3,7 @@
   <form name="profileForm" ng-controller="profileCtrl">
     <md-dialog-content>
         <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
-            <h1 layout-align="left" class="md-toolbar-tools"><b>{{getUserData().facebook.displayName}}</b></h1>
+            <h1 id="profileDisplayName" layout-align="left" class="md-toolbar-tools">{{getUserData().facebook.displayName}}</h1>
         </md-toolbar>
         <div id="profile_dialog">
 
