@@ -6,6 +6,10 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   $scope.states = ('AL AZ AR CA CO CT DE FL GA ID IL IN IA KS KY LA ME MD MA MI MN MS ' +
             'MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI ' +
             'WY').split(' ').map(function (state) { return { abbrev: state }; });
+
+
+  $scope.rating = [1, 2, 3, 4, 5]; 
+
   $scope.starting = {city: "", state: ""};
   $scope.ending = {city: "", state: ""};
   $scope.car = {mpg: "", seats: ""};
@@ -49,6 +53,19 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
       parent: angular.element(document.body),
       targetEvent: ev,
       clickOutsideToClose: true,
+    });
+  }
+
+  $scope.showPayment = function(ev, ride, i){
+    $mdDialog.show({
+      controller: PaymentDialogController,
+      templateUrl: 'app/components/dashboard/views/find/payment.php',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true,
+      locals: {
+        ride: ride
+      }
     });
   }
 
@@ -257,6 +274,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       async: false
     });
 
+<<<<<<< HEAD
     var gmapurl1 = "https://maps.googleapis.com/maps/api/geocode/json?address="+$scope.starting.city+"+"+$scope.starting.state+"&components=country:US&key=AIzaSyA6xJtLioC6VlWo0JIeq5BBwcqzljpt4Lg";
     var gmapurl2 = "https://maps.googleapis.com/maps/api/geocode/json?address="+$scope.ending.city+"+"+$scope.ending.state+"&components=country:US&key=AIzaSyA6xJtLioC6VlWo0JIeq5BBwcqzljpt4Lg";
 
@@ -339,5 +357,33 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
   $scope.setSeats = function(){
 
   }
+=======
+  $scope.showReviewForm = function(ev, fid){
+    $scope.initReview = $firebaseObject(userRef.child(fid));
+    $scope.reviewOptions = [1,2,3,4,5];
+    $mdDialog.show({
+      controller: DialogController,
+      scope: $scope,
+      preserveScope: true,
+      templateUrl: 'app/components/dashboard/views/reviewFormTmpl.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true
+    });
+  };
+>>>>>>> master
 
 }]);
+
+function PaymentDialogController($scope, $mdDialog, ride){
+  $scope.ride = ride;
+  $scope.hide = function() {
+    $mdDialog.hide();
+  };
+  $scope.cancel = function() {
+    $mdDialog.cancel();
+  };
+  $scope.answer = function(answer){
+    $mdDialog.hide(answer);
+  };
+};

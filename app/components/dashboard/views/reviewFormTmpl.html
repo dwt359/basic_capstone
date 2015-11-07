@@ -1,0 +1,43 @@
+<md-dialog aria-label="test">
+  <form name="reviewForm">
+    <md-dialog-content>
+        <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
+            <h1 id="profileDisplayName" layout-align="left" class="md-toolbar-tools">REVIEW YOUR RIDE</h1>
+        </md-toolbar>
+        <div id="review_dialog">
+
+        <div layout="column" style="height:450px;">
+            <section layout="column" flex>
+                <div layout="row">
+                    <img ng-src="{{initReview.img_url}}" class="md-avatar" />
+                    <div layout="column">
+                        <p style="margin:20px;">DRIVER: {{initReview.name}}</p>
+                    </div>
+                </div>
+              
+                    
+                <md-select placeholder="DRIVER ABILITY" aria-label="driver_abilities" ng-model="review.driver">
+                    <md-option ng-repeat="option in reviewOptions" value="{{option}}">{{option}}</md-option>
+                </md-select>
+                <md-select placeholder="COMFORT" aria-label="comfort" ng-model="review.comfort">
+                    <md-option ng-repeat="option in reviewOptions" value="{{option}}">{{option}}</md-option>
+                </md-select>
+                <md-select placeholder="PRICE FAIRNESS" aria-label="price_fairness" ng-model="review.price">
+                    <md-option ng-repeat="option in reviewOptions" value="{{option}}">{{option}}</md-option>
+                </md-select>
+                <md-select placeholder="OVERALL" aria-label="overall" ng-model="review.overall">
+                    <md-option ng-repeat="option in reviewOptions" value="{{option}}">{{option}}</md-option>
+                </md-select>
+                <md-input-container>
+                    <label>Comments</label>
+                    <textarea ng-model="comment" md-maxlength="250"></textarea>
+                </md-input-container> 
+            <md-button class="md-accent" ng-click="saveReview()">SAVE</md-button>
+      
+            </section>
+          
+        </div>
+        </div>
+        </md-dialog-content>
+    </form>
+</md-dialog>

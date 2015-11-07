@@ -2,13 +2,15 @@
 <!-- User sign up/login logic is managed here -->
 <div id="homePage" ng-controller="dashboardCtrl">
   <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
-      <md-button id="hitch_button" layout-align="left" class="md-toolbar-tools" ng-click="viewDashboard()">Hitch</md-button>
+      <md-button id="hitch_button" layout-align="left" ng-click="viewDashboard()">Hitch</md-button>
 
+      <div layout="row" layout-align="end" flex>
       <img class="profilePicture" src="{{getUserData().facebook.profileImageURL}}">
       </img>
-    
-        <md-button ng-click="showProfile($event)">{{getUserData().facebook.displayName}}</md-button>
+
+      <md-button ng-click="showProfile($event)">{{getUserData().facebook.displayName}}</md-button>
       <md-button ng-click="logout()">LOGOUT</md-button>
+      </div>
   </md-toolbar>
   <div id="outer-wrapper">
         <div ui-view></div>
