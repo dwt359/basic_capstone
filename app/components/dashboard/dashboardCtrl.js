@@ -65,6 +65,24 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
     $state.go('^.pricing')
   }
 
+  $scope.printUSA = function(){
+
+    var map = new google.maps.Map(document.getElementById("map"), {
+      scrollwheel: false,
+      //styles: styles,
+      //mapTypeId: google.maps.MapTypeId.TERRAIN
+    });
+    var geocoder = new google.maps.Geocoder();
+
+    geocoder.geocode({'address': 'US'}, function (results, status) {
+       var ne = results[0].geometry.viewport.getNorthEast();
+       var sw = results[0].geometry.viewport.getSouthWest();
+
+       map.fitBounds(results[0].geometry.viewport);
+    });
+
+}
+
   $scope.findRides = function(){
     $.ajaxSetup({
       async: false
@@ -75,7 +93,6 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
 
     var mapCity1 = GoogleMaps.getCity(gmapurl1);
     var mapCity2 = GoogleMaps.getCity(gmapurl2);
-
     //Do error checking
 
     //If there aren't errors:
@@ -83,14 +100,45 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
     var long1 = GoogleMaps.getLng(gmapurl1);
     var lat2 = GoogleMaps.getLat(gmapurl2);
     var long2 = GoogleMaps.getLng(gmapurl2);
+    var error = 1;
 
-    GoogleMaps.initMap(lat1, lat2, long1, long2);
+    if (mapCity1 == 0){
+      document.getElementById("error1").innerHTML = "Starting city is not valid.";
+      error = 0;
+    }
+    else {
+      document.getElementById("error1").innerHTML = "";
+    }
+    if (mapCity2 == 0) {
+      document.getElementById("error2").innerHTML = "Ending city is not valid.";
+      error = 0;
+    }
+    else {
+      document.getElementById("error2").innerHTML = "";
+    }
+    if ($scope.starting.state == ""){
+      document.getElementById("error3").innerHTML = "Please select a starting state.";
+      error = 0;
+    }
+    else{
+      document.getElementById("error3").innerHTML = "";
+    }
+    if ($scope.ending.state == ""){
+      document.getElementById("error4").innerHTML = "Please select an ending state.";
+      error = 0;
+    }
+    else{
+      document.getElementById("error4").innerHTML = "";
+    }
 
-    //the rides that match that query
-    var startCity = GoogleMaps.getAdd(gmapurl1).replace(', USA', '').replace('.', '');
-    var endCity = GoogleMaps.getAdd(gmapurl2).replace(', USA', '').replace('.', '');
-    $scope.rides = $firebaseArray(ref.child(startCity).child(endCity));
+    if (error != 0) {
+      GoogleMaps.initMap(lat1, lat2, long1, long2);
 
+      //the rides that match that query
+      var startCity = GoogleMaps.getAdd(gmapurl1).replace(', USA', '').replace('.', '');
+      var endCity = GoogleMaps.getAdd(gmapurl2).replace(', USA', '').replace('.', '');
+      $scope.rides = $firebaseArray(ref.child(startCity).child(endCity));
+    }
 
   }
 

@@ -183,6 +183,7 @@ theApp.factory('GoogleMaps', function(){
             return city;
           }
       });
+      return city;
     },
 
     initMap: function(lat1, lat2, lng1, lng2) {
