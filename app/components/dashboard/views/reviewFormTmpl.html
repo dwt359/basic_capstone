@@ -1,4 +1,4 @@
-<md-dialog aria-label="test">
+<md-dialog aria-label="test" data-ng-init="">
   <form name="reviewForm" ng-controller="dashboardCtrl">
     <md-dialog-content>
         <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
@@ -12,28 +12,28 @@
                     <label>Driver</label>
                     <input type="text" disabled ng-model="driverInfo">
                 </md-input-container>
-                <md-select placeholder="DRIVER ABILITY" aria-label="driver_abilities" ng-model="driver.rating">
+                <md-select placeholder="DRIVER ABILITY" aria-label="driver_abilities" ng-model="review.driver">
                     <md-option value="1">1</md-option>
                     <md-option value="2">2</md-option>
                     <md-option value="3">3</md-option>
                     <md-option value="4">4</md-option>
                     <md-option value="5">5</md-option>
                 </md-select>
-                <md-select placeholder="COMFORT" aria-label="comfort" ng-model="comfort.rating">
+                <md-select placeholder="COMFORT" aria-label="comfort" ng-model="review.comfort">
                     <md-option value="1">1</md-option>
                     <md-option value="2">2</md-option>
                     <md-option value="3">3</md-option>
                     <md-option value="4">4</md-option>
                     <md-option value="5">5</md-option>
                 </md-select>
-                <md-select placeholder="PRICE FAIRNESS" aria-label="price_fairness" ng-model="price.rating">
+                <md-select placeholder="PRICE FAIRNESS" aria-label="price_fairness" ng-model="review.price">
                     <md-option value="1">1</md-option>
                     <md-option value="2">2</md-option>
                     <md-option value="3">3</md-option>
                     <md-option value="4">4</md-option>
                     <md-option value="5">5</md-option>
                 </md-select>
-                <md-select placeholder="OVERALL" aria-label="overall" ng-model="overall.rating">
+                <md-select placeholder="OVERALL" aria-label="overall" ng-model="review.overall">
                     <md-option value="1">1</md-option>
                     <md-option value="2">2</md-option>
                     <md-option value="3">3</md-option>
