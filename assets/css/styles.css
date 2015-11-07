@@ -174,8 +174,9 @@ md-icon.md-default-theme{
     color: white;
 }
 
-.hitch_button {
+#hitch_button {
     font-size: 20px;
+    cursor: pointer;
 }
 
 .profilePicture{
