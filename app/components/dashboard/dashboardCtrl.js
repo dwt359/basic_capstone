@@ -8,10 +8,11 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
             'WY').split(' ').map(function (state) { return { abbrev: state }; });
 
 
-  $scope.rating = [1, 2, 3, 4, 5]; 
+  $scope.rating = [1, 2, 3, 4, 5];
 
   $scope.starting = {city: "", state: ""};
   $scope.ending = {city: "", state: ""};
+  $scope.car = {mpg: "", seats: ""};
 
   $scope.seats = [{name: 'Seat', description:'', price: 0.00}];
   $scope.seatLimit = 6;
@@ -154,6 +155,61 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
     $state.go('^.pricing')
   }
 
+  $scope.printUSA = function(){
+
+    var map = new google.maps.Map(document.getElementById("map"), {
+      scrollwheel: false,
+      //styles: styles,
+      //mapTypeId: google.maps.MapTypeId.TERRAIN
+    });
+    var geocoder = new google.maps.Geocoder();
+
+    geocoder.geocode({'address': 'US'}, function (results, status) {
+       var ne = results[0].geometry.viewport.getNorthEast();
+       var sw = results[0].geometry.viewport.getSouthWest();
+
+       map.fitBounds(results[0].geometry.viewport);
+    });
+
+}
+
+$scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
+  var LocationStart = {lat: lat1, lng: lng1};
+  var LocationEnd = {lat: lat2, lng: lng2};
+
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: LocationStart,
+    scrollwheel: false,
+    zoom: 7
+  });
+
+  var directionsDisplay = new google.maps.DirectionsRenderer({
+    map: map
+  });
+
+  // Set destination, origin and travel mode.
+  var request = {
+    destination: LocationEnd,
+    origin: LocationStart,
+    travelMode: google.maps.TravelMode.DRIVING
+  };
+
+  // Pass the directions request to the directions service.
+  var directionsService = new google.maps.DirectionsService();
+  directionsService.route(request, function(response, status) {
+    if (status == google.maps.DirectionsStatus.OK) {
+      // Display the route on the map.
+      directionsDisplay.setDirections(response);
+      //distance
+
+      var distance = response.routes[0].legs[0].distance.value;
+      $scope.distanceInfo(distance, mpg, seats, averagePrice);
+
+    }
+  });
+}
+
+
   $scope.findRides = function(){
     $.ajaxSetup({
       async: false
@@ -164,7 +220,6 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
 
     var mapCity1 = GoogleMaps.getCity(gmapurl1);
     var mapCity2 = GoogleMaps.getCity(gmapurl2);
-
     //Do error checking
 
     //If there aren't errors:
@@ -172,17 +227,136 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
     var long1 = GoogleMaps.getLng(gmapurl1);
     var lat2 = GoogleMaps.getLat(gmapurl2);
     var long2 = GoogleMaps.getLng(gmapurl2);
+    var error = 1;
 
-    GoogleMaps.initMap(lat1, lat2, long1, long2);
+    if (mapCity1 == 0){
+      document.getElementById("error1").innerHTML = "Starting city is not valid.";
+      error = 0;
+    }
+    else {
+      document.getElementById("error1").innerHTML = "";
+    }
+    if (mapCity2 == 0) {
+      document.getElementById("error2").innerHTML = "Ending city is not valid.";
+      error = 0;
+    }
+    else {
+      document.getElementById("error2").innerHTML = "";
+    }
+    if ($scope.starting.state == ""){
+      document.getElementById("error3").innerHTML = "Please select a starting state.";
+      error = 0;
+    }
+    else{
+      document.getElementById("error3").innerHTML = "";
+    }
+    if ($scope.ending.state == ""){
+      document.getElementById("error4").innerHTML = "Please select an ending state.";
+      error = 0;
+    }
+    else{
+      document.getElementById("error4").innerHTML = "";
+    }
 
-    //the rides that match that query
-    var startCity = GoogleMaps.getAdd(gmapurl1).replace(', USA', '').replace('.', '');
-    var endCity = GoogleMaps.getAdd(gmapurl2).replace(', USA', '').replace('.', '');
-    $scope.rides = $firebaseArray(tripRef.child(startCity).child(endCity));
+    if (error != 0) {
+      GoogleMaps.initMap(lat1, lat2, long1, long2);
 
+      //the rides that match that query
+      var startCity = GoogleMaps.getAdd(gmapurl1).replace(', USA', '').replace('.', '').trim();
+      var endCity = GoogleMaps.getAdd(gmapurl2).replace(', USA', '').replace('.', '').trim();
+      $scope.rides = $firebaseArray(tripRef.child(startCity).child(endCity));
+    }
 
   }
 
+  $scope.setPrice = function(){
+    $.ajaxSetup({
+      async: false
+    });
+
+
+    var gmapurl1 = "https://maps.googleapis.com/maps/api/geocode/json?address="+$scope.starting.city+"+"+$scope.starting.state+"&components=country:US&key=AIzaSyA6xJtLioC6VlWo0JIeq5BBwcqzljpt4Lg";
+    var gmapurl2 = "https://maps.googleapis.com/maps/api/geocode/json?address="+$scope.ending.city+"+"+$scope.ending.state+"&components=country:US&key=AIzaSyA6xJtLioC6VlWo0JIeq5BBwcqzljpt4Lg";
+
+    var mapCity1 = GoogleMaps.getCity(gmapurl1);
+    var mapCity2 = GoogleMaps.getCity(gmapurl2);
+    //Do error checking
+
+    //If there aren't errors:
+    var lat1 = GoogleMaps.getLat(gmapurl1);
+    var long1 = GoogleMaps.getLng(gmapurl1);
+    var lat2 = GoogleMaps.getLat(gmapurl2);
+    var long2 = GoogleMaps.getLng(gmapurl2);
+    var error = 1;
+
+    if (mapCity1 == 0){
+      document.getElementById("error1").innerHTML = "Starting city is not valid.";
+      error = 0;
+    }
+    else {
+      document.getElementById("error1").innerHTML = "";
+    }
+    if (mapCity2 == 0) {
+      document.getElementById("error2").innerHTML = "Ending city is not valid.";
+      error = 0;
+    }
+    else {
+      document.getElementById("error2").innerHTML = "";
+    }
+    if ($scope.starting.state == ""){
+      document.getElementById("error3").innerHTML = "Please select a starting state.";
+      error = 0;
+    }
+    else{
+      document.getElementById("error3").innerHTML = "";
+    }
+    if ($scope.ending.state == ""){
+      document.getElementById("error4").innerHTML = "Please select an ending state.";
+      error = 0;
+    }
+    else{
+      document.getElementById("error4").innerHTML = "";
+    }
+    if ($scope.car.mpg == "" || isNaN($scope.car.mpg) || $scope.car.mpg < 0.01){
+      document.getElementById("error5").innerHTML = "MPG is not valid.";
+      error = 0;
+    }
+    else{
+      document.getElementById("error5").innerHTML = "";
+    }
+    if ($scope.car.seats == ""){
+      document.getElementById("error6").innerHTML = "Please select number of seats for your car.";
+      error = 0;
+    }
+    else{
+      document.getElementById("error6").innerHTML = "";
+    }
+
+    if (error != 0) {
+      var gasUrl1 = "http://api.mygasfeed.com/stations/radius/"+lat1+"/"+long1+"/1/reg/Distance/1u129mrydk.json?";
+      var gasUrl2 = "http://api.mygasfeed.com/stations/radius/"+lat2+"/"+long2+"/1/reg/Distance/1u129mrydk.json?";
+      var price1 = 2.00;//parseFloat(GoogleMaps.getPrice(gasUrl1), 10);
+      var price2 = 3.40;//parseFloat(GoogleMaps.getPrice(gasUrl2), 10);
+      var averagePrice = (price1+price2)/2;
+      var mpg = $scope.car.mpg;
+      var seats = $scope.car.seats;
+      $scope.initGasMap(lat1, lat2, long1, long2, mpg, seats, averagePrice);
+    }
+
+  }
+
+  $scope.distanceInfo = function(distance, mpg, seats, averagePrice){
+    distance = distance/1609.34;
+    var cost = distance/mpg*averagePrice;
+    var seatCost = cost/seats;
+    console.log("Miles: "+distance.toFixed(2));
+    console.log("Total Cost: $"+cost.toFixed(2));
+    console.log("Cost per seat: $"+seatCost.toFixed(2));
+  }
+
+  $scope.setSeats = function(){
+
+  }
 
   $scope.showReviewForm = function(ev, fid){
     $scope.initReview = $firebaseObject(userRef.child(fid));
@@ -197,6 +371,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
       clickOutsideToClose: true
     });
   };
+
 
 }]);
 
