@@ -3,26 +3,19 @@
 
     <div layout="column" flex="75" layout-align="center center" >
       <div id="dashboard-home-grid" layout="row">
-        <div class="dashboard-button">
-            <a ui-sref="^.find">
+        <div class="dashboard-button" ui-sref="^.find">
               <h3>FIND A RIDE</h3>
-            </a>
         </div>
-        <div class="dashboard-button md-accent">
-          <a ui-sref="^.post.info">
+        <div class="dashboard-button md-accent" ui-sref="^.find">
             <h3>POST A RIDE</h3>
-          </a>
         </div>
       </div>
     </div>
-  <md-button ng-click="showReviewForm($event)">Review</md-button>
-  
-</div>
-          
+
 
     <div layout="column" flex="25" layout-align="top">
       <md-list style="y-overflow: auto;">
-        <md-subheader style="background-color: #424242; color: white;">Upcoming Rides</md-subheader>
+        <md-subheader style="background-color: #424242; color: white;">Your Rides</md-subheader>
         <md-list-item class="md-2-line" ng-repeat="trip in tripData">
           <div layout="row">
             <img ng-src="{{trip.img_url}}" class="md-avatar" />
@@ -31,6 +24,7 @@
               <h6 style="margin:2px;">Departing: {{trip.start_time}}</h4>
               <h6 style="margin:2px;">From: {{trip.from}}</h4>
               <h6 style="margin:2px;">To: {{trip.to}}</h4>
+              <md-button ng-click="showReviewForm($event)" class="md-accent md-raised">Review</md-button>
             </div>
           </div>
           <md-divider ></md-divider>
