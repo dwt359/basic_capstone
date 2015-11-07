@@ -186,6 +186,21 @@ theApp.factory('GoogleMaps', function(){
       return city;
     },
 
+    getPrice: function (url){
+       var price;
+       $.getJSON(url, function(station){
+         var stations = station.stations;
+         for (i = 0; i<stations.length; i++) {
+           price = station.stations[i].reg_price;
+           if (price != "N/A"){
+             break;
+           }
+         }
+
+       });
+       return price;
+     },
+
     initMap: function(lat1, lat2, lng1, lng2) {
       var LocationStart = {lat: lat1, lng: lng1};
       var LocationEnd = {lat: lat2, lng: lng2};
@@ -216,7 +231,7 @@ theApp.factory('GoogleMaps', function(){
           //distance
 
           //var distance = response.routes[0].legs[0].distance.value;
-          //displayInfo(distance);
+          //distanceInfo(distance);
 
         }
       });
