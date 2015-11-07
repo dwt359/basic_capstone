@@ -93,7 +93,7 @@ md-content.md-padding {
   height: 225px;
   padding: 25px;
   text-decoration: none;
-  color: black;
+  color: white;
 }
 
 md-icon.md-default-theme{
@@ -113,10 +113,13 @@ md-icon.md-default-theme{
   width: 200px;
   height: 175px;
   margin: 0px 25px 25px 25px;
-  border-radius: 10px;
+  border-radius: 5px;
   box-shadow: -3px 2px 1px 0px
   rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);
   text-align:center;
+  background-color: rgb(1,87,155);
+  color: white;
+  cursor: pointer;
 }
 
 #dashboard-start{
@@ -172,7 +175,7 @@ md-icon.md-default-theme{
 }
 
 .hitch_button {
-    font-size: 20px;   
+    font-size: 20px;
 }
 
 .profilePicture{
@@ -187,13 +190,13 @@ md-icon.md-default-theme{
     vertical-align: middle;
     position: relative;
     height: 64px;
-    width: 64px; 
+    width: 64px;
     margin-right: 10px;
-  
+
 }
 
 .dialogColumns {
-    margin: 15px;   
+    margin: 15px;
 }
 
 #profile_dialog {
@@ -202,11 +205,11 @@ md-icon.md-default-theme{
 
 #review_dialog {
     width: 400px;
-    
+
 }
 
 .sidenav_btn {
-    text-align: left; 
+    text-align: left;
     margin: 0px 0px;
 }
 
