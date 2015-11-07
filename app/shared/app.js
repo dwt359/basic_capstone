@@ -29,23 +29,23 @@ theApp.config(function($stateProvider, $urlRouterProvider){
 
       .state('dashboard.find', {
         url: '/find',
-        templateUrl: 'app/components/dashboard/views/searchRide.html'
+        templateUrl: 'app/components/dashboard/views/find/findRide.html'
       })
 
-      .state('dashboard.give', {
-        url: '/give',
+      .state('dashboard.post', {
+        url: '/post',
         abstract: true,
-        templateUrl: 'app/components/dashboard/views/createRide.html'
+        templateUrl: 'app/components/dashboard/views/post/postRide.html'
       })
 
-        .state('dashboard.give.info', {
+        .state('dashboard.post.info', {
           url: '',
-          templateUrl: 'app/components/dashboard/views/createRideInfo.html'
+          templateUrl: 'app/components/dashboard/views/post/postRideInfo.html'
         })
 
-        .state('dashboard.give.pricing',{
+        .state('dashboard.post.pricing',{
           url:'/pricing',
-          templateUrl: 'app/components/dashboard/views/createRidePricing.html'
+          templateUrl: 'app/components/dashboard/views/post/postRidePricing.html'
         })
 
 
@@ -65,19 +65,27 @@ theApp.config(function($mdThemingProvider){
       });
 });
 
-theApp.factory('UserData', function(){
+theApp.factory('UserData', ['$firebaseObject', function($firebaseObject){
+  var ref = new Firebase("https://hitchdatabase.firebaseio.com");
+
   var data;
-  var savedData = localStorage.getItem('user');
+  var profileData;
+  var savedData = localStorage.getItem('firebase:session::hitchdatabase');
   var loggedIn = false;
 
   if(savedData != null){
     data = JSON.parse(savedData);
+    profileData = $firebaseObject(ref.child('users').child(data.facebook.id));
     loggedIn = true;
   }
 
   return{
     getData: function(){
       return data;
+    },
+
+    getProfileData: function(){
+      return profileData;
     },
 
     isLoggedIn: function(){
@@ -87,16 +95,17 @@ theApp.factory('UserData', function(){
     setData: function(newData){
       data = newData;
 
-      if(localStorage.getItem('user') != null){
+      if(localStorage.getItem('firebase:session::hitchdatabase') != null){
         localStorage.clear();
       }
 
-      localStorage.setItem('user', JSON.stringify(data));
+      localStorage.setItem('firebase:session::hitchdatabase', JSON.stringify(data));
+      profileData = $firebaseObject(ref.child('firebase:session::hitchdatabase').child(data.facebook.id));
       loggedIn = true;
     },
 
     clearData: function(){
-      if(localStorage.getItem('user') != null){
+      if(localStorage.getItem('firebase:session::hitchdatabase') != null){
         loggedIn = false;
         localStorage.clear();
       }
@@ -104,7 +113,7 @@ theApp.factory('UserData', function(){
 
   }
 
-});
+}]);
 
 //This is for the facebook login stuff
 theApp.factory('LoginAuth', ['$state', '$mdDialog', 'UserData', function($state, $mdDialog, UserData){
