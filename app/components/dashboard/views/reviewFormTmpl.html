@@ -1,5 +1,5 @@
 <md-dialog aria-label="test">
-  <form name="profileForm" ng-controller="profileCtrl">
+  <form name="reviewForm" ng-controller="dashboardCtrl">
     <md-dialog-content>
         <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
             <h1 id="profileDisplayName" layout-align="left" class="md-toolbar-tools">REVIEW YOUR RIDE</h1>
@@ -8,28 +8,38 @@
 
         <div layout="column" style="height:450px;">
             <section layout="column" flex>
-            
-            
-                <md-input-container>
-                    <label>Starting City</label>
-                    <input type="text" ng-model="starting.city">
-                </md-input-container>
-                <md-input-container>
-                    <label>Ending City</label>
-                    <input type="text" ng-model="ending.city">
-                </md-input-container>
-                <md-input-container>
-                    <label>Date</label>
-                    <input type="date" ng-model="departureDate">
-                </md-input-container>
                 <md-input-container>
                     <label>Driver</label>
-                    <input type="text" ng-model="driverInfo">
+                    <input type="text" disabled ng-model="driverInfo">
                 </md-input-container>
-                <md-input-container>
-                    <label>Rating</label>
-                    <input type="text" ng-model="driverInfo">
-                </md-input-container>
+                <md-select placeholder="DRIVER ABILITY" aria-label="driver_abilities" ng-model="driver.rating">
+                    <md-option value="1">1</md-option>
+                    <md-option value="2">2</md-option>
+                    <md-option value="3">3</md-option>
+                    <md-option value="4">4</md-option>
+                    <md-option value="5">5</md-option>
+                </md-select>
+                <md-select placeholder="COMFORT" aria-label="comfort" ng-model="comfort.rating">
+                    <md-option value="1">1</md-option>
+                    <md-option value="2">2</md-option>
+                    <md-option value="3">3</md-option>
+                    <md-option value="4">4</md-option>
+                    <md-option value="5">5</md-option>
+                </md-select>
+                <md-select placeholder="PRICE FAIRNESS" aria-label="price_fairness" ng-model="price.rating">
+                    <md-option value="1">1</md-option>
+                    <md-option value="2">2</md-option>
+                    <md-option value="3">3</md-option>
+                    <md-option value="4">4</md-option>
+                    <md-option value="5">5</md-option>
+                </md-select>
+                <md-select placeholder="OVERALL" aria-label="overall" ng-model="overall.rating">
+                    <md-option value="1">1</md-option>
+                    <md-option value="2">2</md-option>
+                    <md-option value="3">3</md-option>
+                    <md-option value="4">4</md-option>
+                    <md-option value="5">5</md-option>
+                </md-select>
                 <md-input-container>
                     <label>Comments</label>
                     <textarea ng-model="comment"></textarea>

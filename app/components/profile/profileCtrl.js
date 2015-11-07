@@ -2,6 +2,7 @@ theApp.controller('profileCtrl', ['$scope', '$state', 'UserData', 'LoginAuth', '
                                   function($scope, $state, UserData, LoginAuth, $window, $mdDialog){
 var tabClasses;
 
+    
                                       
     $scope.viewProfile = function() {
         $state.go('profile');

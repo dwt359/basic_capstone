@@ -7,7 +7,9 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
             'MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI ' +
             'WY').split(' ').map(function (state) { return { abbrev: state }; });
 
-    
+
+  $scope.rating = [1, 2, 3, 4, 5]; 
+
   $scope.starting = {city: "", state: ""};
   $scope.ending = {city: "", state: ""};
 
