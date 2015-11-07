@@ -171,18 +171,17 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   }
 
 
-
-  $scope.setSeats = function(){
-
-  }
-  
-  $scope.showReviewForm = function(ev){
+  $scope.showReviewForm = function(ev, fid){
+    $scope.initReview = $firebaseObject(userRef.child(fid));
+    $scope.reviewOptions = [1,2,3,4,5];
     $mdDialog.show({
-    controller: DialogController,
-    templateUrl: 'app/components/dashboard/views/reviewFormTmpl.html',
-    parent: angular.element(document.body),
-    targetEvent: ev,
-    clickOutsideToClose: true,
+      controller: DialogController,
+      scope: $scope,
+      preserveScope: true,
+      templateUrl: 'app/components/dashboard/views/reviewFormTmpl.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true
     });
   };
 

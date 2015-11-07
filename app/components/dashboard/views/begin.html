@@ -24,7 +24,7 @@
               <h6 style="margin:2px;">Departing: {{trip.start_time}}</h4>
               <h6 style="margin:2px;">From: {{trip.from}}</h4>
               <h6 style="margin:2px;">To: {{trip.to}}</h4>
-              <md-button ng-click="showReviewForm($event)" class="md-accent md-raised">Review</md-button>
+              <md-button ng-click="showReviewForm($event, trip.user)" class="md-accent md-raised">Review</md-button>
             </div>
           </div>
           <md-divider ></md-divider>

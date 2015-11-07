@@ -1,5 +1,5 @@
-<md-dialog aria-label="test" data-ng-init="">
-  <form name="reviewForm" ng-controller="dashboardCtrl">
+<md-dialog aria-label="test" data-ng-init="initReviewInfo()">
+  <form name="reviewForm">
     <md-dialog-content>
         <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
             <h1 id="profileDisplayName" layout-align="left" class="md-toolbar-tools">REVIEW YOUR RIDE</h1>
@@ -9,37 +9,21 @@
         <div layout="column" style="height:450px;">
             <section layout="column" flex>
                 <md-input-container>
-                    <img ng-src="{{trip.img_url}}" class="md-avatar" />
-                    <h5 style="margin:2px;">Driver: {{trip.name}}</h4>
+                    <img ng-src="{{initReview.img_url}}" class="md-avatar" />
+                    <h5 style="margin:2px;">Driver: {{initReview.name}}</h4>
 
                     </md-input-container>
                 <md-select placeholder="DRIVER ABILITY" aria-label="driver_abilities" ng-model="review.driver">
-                    <md-option value="1">1</md-option>
-                    <md-option value="2">2</md-option>
-                    <md-option value="3">3</md-option>
-                    <md-option value="4">4</md-option>
-                    <md-option value="5">5</md-option>
+                    <md-option ng-repeat="option in reviewOptions" value="{{option}}">{{option}}</md-option>
                 </md-select>
                 <md-select placeholder="COMFORT" aria-label="comfort" ng-model="review.comfort">
-                    <md-option value="1">1</md-option>
-                    <md-option value="2">2</md-option>
-                    <md-option value="3">3</md-option>
-                    <md-option value="4">4</md-option>
-                    <md-option value="5">5</md-option>
+                    <md-option ng-repeat="option in reviewOptions" value="{{option}}">{{option}}</md-option>
                 </md-select>
                 <md-select placeholder="PRICE FAIRNESS" aria-label="price_fairness" ng-model="review.price">
-                    <md-option value="1">1</md-option>
-                    <md-option value="2">2</md-option>
-                    <md-option value="3">3</md-option>
-                    <md-option value="4">4</md-option>
-                    <md-option value="5">5</md-option>
+                    <md-option ng-repeat="option in reviewOptions" value="{{option}}">{{option}}</md-option>
                 </md-select>
                 <md-select placeholder="OVERALL" aria-label="overall" ng-model="review.overall">
-                    <md-option value="1">1</md-option>
-                    <md-option value="2">2</md-option>
-                    <md-option value="3">3</md-option>
-                    <md-option value="4">4</md-option>
-                    <md-option value="5">5</md-option>
+                    <md-option ng-repeat="option in reviewOptions" value="{{option}}">{{option}}</md-option>
                 </md-select>
                 <md-input-container>
                     <label>Comments</label>
