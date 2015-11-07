@@ -11,7 +11,7 @@
 
     <!-- Rando dependencies -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 
     <!-- Angular Material Dependencies -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
@@ -20,10 +20,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/1.1.3/angularfire.min.js"></script>
 
     <!-- The app and its services! -->
     <script src="app/shared/app.js"></script>
-    
+
     <!-- Project controllers -->
     <script src="app/shared/app.js"></script>
     <script src="app/components/home/HomeCtrl.js"></script>
