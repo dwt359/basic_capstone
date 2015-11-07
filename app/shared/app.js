@@ -59,9 +59,9 @@ theApp.config(function($mdThemingProvider){
         'default': '800',
         'hue-1': '500'
       })
-    .accentPalette('orange',
+    .accentPalette('light-blue',
       {
-        'default': '400',
+        'default': '900',
       });
 });
 
@@ -94,13 +94,13 @@ theApp.factory('UserData', ['$firebaseObject', function($firebaseObject){
 
     setData: function(newData){
       data = newData;
+      profileData = $firebaseObject(ref.child('users').child(data.facebook.id));
 
       if(localStorage.getItem('firebase:session::hitchdatabase') != null){
         localStorage.clear();
       }
 
       localStorage.setItem('firebase:session::hitchdatabase', JSON.stringify(data));
-      profileData = $firebaseObject(ref.child('firebase:session::hitchdatabase').child(data.facebook.id));
       loggedIn = true;
     },
 

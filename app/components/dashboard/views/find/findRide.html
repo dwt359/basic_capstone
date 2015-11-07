@@ -2,7 +2,7 @@
   <div class="section" id="dashboard-start" layout="column" layout-align="center top">
 
     <div layout="row" layout-align="center">
-      <div layout="column" layout-align="top" style="overflow-y: auto;">
+      <div layout="column" layout-align="top">
         <div layout="row">
         <md-card flex="100">
           <md-card-content id="find-ride-form">
@@ -50,7 +50,7 @@
         </md-card>
         </div>
 
-        <div id="ride-list-container">
+        <div layout="row" id = "ride-list-container">
           <md-list>
             <!--<md-subheader>Rides! :D</md-subheader>-->
             <md-list-item class="md-2-line" ng-repeat="ride in rides">
@@ -64,8 +64,10 @@
                 </div>
                 <div layout="column" flex="40" >
                   <div layout="row">
-                    <div layout="column" flex="50"  style="word-wrap: break-word;">
-                      <h4>${{ride.seat_price}}</h4>
+                    <div layout="column" flex="50" style="word-wrap: break-word;">
+                      <div layout="row" layout-align="end">
+                        <h4 >${{ride.seat_price}}</h4>
+                      </div>
                     </div>
                     <div layout="column" flex="50">
                       <md-button class="md-accent md-raised" >

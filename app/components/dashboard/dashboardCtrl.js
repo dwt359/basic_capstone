@@ -1,5 +1,5 @@
-theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth', 'UserData', 'GoogleMaps', '$firebaseArray',
-                                    function($scope, $timeout, $state, LoginAuth, UserData, GoogleMaps, $firebaseArray){
+
+theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth', 'UserData', 'GoogleMaps', '$firebaseArray', '$firebaseObject', '$mdDialog',                                    function($scope, $timeout, $state, LoginAuth, UserData, GoogleMaps, $firebaseArray, $firebaseObject, $mdDialog){
 
   //$timeout(GoogleMaps.loadDefault(), 3000);
 
@@ -12,8 +12,9 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   $scope.seats = [{name: 'Seat', description:'', price: 0.00}];
   $scope.seatLimit = 6;
 
-  var ref = new Firebase('https://hitchdatabase.firebaseio.com/trips');
-  //This will be queried! (for testing purposes)
+  var ref = new Firebase('https://hitchdatabase.firebaseio.com');
+  var tripRef = ref.child('trips');
+  var userRef = ref.child('users');
   $scope.rides = [];
 
 
@@ -35,8 +36,77 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
       $state.go('^.^.profile');
   }
 
+  $scope.viewDashboard = function() {
+        $state.go('home');
+
+  }
+
+  $scope.showProfile = function(ev){
+    $mdDialog.show({
+      controller: DialogController,
+      templateUrl: 'app/components/profile/views/profileFormTmpl.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true,
+    });
+  }
+
   $scope.getProfileData = function(){
     return UserData.getProfileData();
+  }
+
+  $scope.retrievePassengerTripData = function(){
+    var profileData = $scope.getProfileData();
+    profileData.$loaded().then(function(){
+      $scope.tripData = [];
+      var trips = profileData.passenger_trips;
+      var item = [];
+      var person = [];
+      angular.forEach(trips, function(trip, id){
+        item.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
+        item[id].$loaded().then(function(){
+          var startTime = new Date(item[id].start_time);
+          var pad = '00';
+          item[id].start_time = (startTime.getMonth()+1) + '/' + startTime.getDate() + '/' + startTime.getFullYear() + ' at ' + startTime.getHours() + ':' + pad.substring(0, pad.length - startTime.getMinutes().toString().length) + startTime.getMinutes().toString();
+          item[id].from = trip.from;
+          item[id].to = trip.to;
+          person.push($firebaseObject(userRef.child(item[id].user)));
+          person[id].$loaded().then(function(){
+            item[id].img_url = person[id].img_url;
+            $scope.tripData.push(item[id]);
+          });
+        });
+      });
+    });
+  }
+
+  $scope.getProfileData = function(){
+    return UserData.getProfileData();
+  }
+
+  $scope.retrievePassengerTripData = function(){
+    var profileData = $scope.getProfileData();
+    profileData.$loaded().then(function(){
+      $scope.tripData = [];
+      var trips = profileData.passenger_trips;
+      var item = [];
+      var person = [];
+      angular.forEach(trips, function(trip, id){
+        item.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
+        item[id].$loaded().then(function(){
+          var startTime = new Date(item[id].start_time);
+          var pad = '00';
+          item[id].start_time = (startTime.getMonth()+1) + '/' + startTime.getDate() + '/' + startTime.getFullYear() + ' at ' + startTime.getHours() + ':' + pad.substring(0, pad.length - startTime.getMinutes().toString().length) + startTime.getMinutes().toString();
+          item[id].from = trip.from;
+          item[id].to = trip.to;
+          person.push($firebaseObject(userRef.child(item[id].user)));
+          person[id].$loaded().then(function(){
+            item[id].img_url = person[id].img_url;
+            $scope.tripData.push(item[id]);
+          });
+        });
+      });
+    });
   }
 
   $scope.getUserData = function(){
