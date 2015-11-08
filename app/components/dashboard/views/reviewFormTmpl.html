@@ -16,7 +16,7 @@
                 </div>
 
                 <md-input type="hidden" value="{{initReview.$id}}" ng-model="reviewId"></md-input>
-                <md-select placeholder="DRIVER ABILITY" aria-label="driver_abilities" ng-model="review.driver">
+                <md-select placeholder="DRIVER ABILITY" aria-label="driver_abilities" ng-model="review.driver_ability">
                     <md-option ng-repeat="option in reviewOptions" value="{{option}}">{{option}}</md-option>
                 </md-select>
                 <md-select placeholder="COMFORT" aria-label="comfort" ng-model="review.comfort">
