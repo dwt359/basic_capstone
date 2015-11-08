@@ -107,6 +107,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   }
 
   $scope.retrievePassengerTripData = function(){
+    $scope.now = (new Date()).getTime();
     var profileData = $scope.getProfileData();
     profileData.$loaded().then(function(){
       $scope.tripData = [];
@@ -121,6 +122,9 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
           item[id].start_time = (startTime.getMonth()+1) + '/' + startTime.getDate() + '/' + startTime.getFullYear() + ' at ' + startTime.getHours() + ':' + pad.substring(0, pad.length - startTime.getMinutes().toString().length) + startTime.getMinutes().toString();
           item[id].from = trip.from;
           item[id].to = trip.to;
+          item[id].is_reviewed = trip.is_reviewed;
+          item[id].passenger_trip_id = id;
+          item[id].time_num = startTime.getTime();
           person.push($firebaseObject(userRef.child(item[id].user)));
           person[id].$loaded().then(function(){
             item[id].img_url = person[id].img_url;
@@ -360,9 +364,12 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 
   }
 
-  $scope.showReviewForm = function(ev, fid){
+  $scope.showReviewForm = function(ev, fid, tid){
     $scope.initReview = $firebaseObject(userRef.child(fid));
     $scope.reviewOptions = [1,2,3,4,5];
+    var userId = $scope.getUserData().facebook.id;
+    $scope.review = $firebaseObject(userRef.child(fid).child('reviews').child(userId));
+    $scope.reviewedRide = $firebaseObject(userRef.child(userId).child('passenger_trips').child(tid));
     $mdDialog.show({
       controller: DialogController,
       scope: $scope,
