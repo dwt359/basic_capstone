@@ -55,6 +55,8 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
       clickOutsideToClose: true,
     });
   }
+  
+ 
 
   $scope.showPayment = function(ev, ride, i){
     $mdDialog.show({
