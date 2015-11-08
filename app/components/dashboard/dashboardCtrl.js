@@ -106,6 +106,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
           item[id].from = trip.from;
           item[id].to = trip.to;
           item[id].is_reviewed = trip.is_reviewed;
+          item[id].passenger_trip_id = id;
           person.push($firebaseObject(userRef.child(item[id].user)));
           person[id].$loaded().then(function(){
             item[id].img_url = person[id].img_url;
@@ -172,11 +173,12 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   }
 
 
-  $scope.showReviewForm = function(ev, fid){
+  $scope.showReviewForm = function(ev, fid, tid){
     $scope.initReview = $firebaseObject(userRef.child(fid));
     $scope.reviewOptions = [1,2,3,4,5];
     var userId = $scope.getUserData().facebook.id;
     $scope.review = $firebaseObject(userRef.child(fid).child('reviews').child(userId));
+    $scope.reviewedRide = $firebaseObject(userRef.child(userId).child('passenger_trips').child(tid));
     $mdDialog.show({
       controller: DialogController,
       scope: $scope,
