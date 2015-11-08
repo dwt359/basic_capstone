@@ -20,8 +20,8 @@ var tabClasses;
       return UserData.getData();
     }
     
-    $scope.openFacebook = function(){
-        $window.open($scope.getUserData().facebook.cachedUserProfile.link);        
+    $scope.openFacebook = function(fid){
+        $window.open('http://www.facebook.com/'+fid);
     }
 
     $scope.logout = function(){

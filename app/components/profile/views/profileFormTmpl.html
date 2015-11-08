@@ -1,49 +1,65 @@
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-  
 <md-dialog aria-label="test">
   <form name="profileForm" ng-controller="profileCtrl">
     <md-dialog-content>
         <div layout="row">
-            <img class="md-whiteframe-z4 md-default-theme" id="profileAvatar" src="{{getUserData().facebook.profileImageURL}}" ng-click="openFacebook()"></img>
-
+            <img class="md-whiteframe-z4 md-default-theme" id="profileAvatar" src="{{viewedProfileInfo.img_url}}" ng-click="openFacebook(viewedProfileInfo.$id)"></img>
             <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
-                <h1 id="profileDisplayName" layout-align="left" class="md-toolbar-tools">{{getUserData().facebook.displayName}}             </h1>
+                <h1 id="profileDisplayName" layout-align="left" class="md-toolbar-tools">{{viewedProfileInfo.name}}</h1>
             </md-toolbar>
         </div>
         <div id="profile_dialog">
+            <div layout="column" style="height:400px;">
+                <md-tabs class="tabs-left" md-selected="data.selectedIndex" md-align-tabs="{{data.bottom ? 'bottom' : 'top'}}">
+                    <md-tab id="tab1">
+                        <md-tab-label>REVIEWS</md-tab-label>
+                        <md-tab-body>
 
-        <div layout="column" style="height:400px;">
-          
-            <md-tabs class="tabs-left" md-selected="data.selectedIndex" md-align-tabs="{{data.bottom ? 'bottom' : 'top'}}">
-                        <md-tab id="tab1">
-                            <md-tab-label>REVIEWS</md-tab-label>
-                            <md-tab-body>
-                              View for Item #1 <br/>
-                              data.selectedIndex = 0;
-                            </md-tab-body>
-                        </md-tab>
-                        <md-tab id="tab2">
-                            <md-tab-label>RIDES</md-tab-label>
-                            <md-tab-body>
-                              View for Item #2 <br/>
-                              data.selectedIndex = 1;
-                            </md-tab-body>
-                        </md-tab>
-                        <md-tab id="tab3">
-                            <md-tab-label>VEHICLES</md-tab-label>
-                            <md-tab-body>
-                              View for Item #3 <br/>
-                              data.selectedIndex = 2;
-                            </md-tab-body>
-                        </md-tab>
-                        </md-tabs>
-                
-            <!--    
+                            <md-list>
+                                <md-list-item ng-repeat="review in profileReviews">
+                                    <div layout="row" flex>
+                                        <div layout="column" flex="15">
+                                            <img ng-src="{{review.img_url}}" class="md-avatar" />
+                                            <h4 style="margin:2px;">{{review.name}}</h4>
+                                        </div>
+                                        <div layout="column" flex="85">
+                                            <h5 style="margin:2px;">DRIVER ABILITY {{review.driver_ability}}</h5>
+                                            <h5 style="margin:2px;">COMFORT {{review.comfort}}</h5>
+                                            <h5 style="margin:2px;">PRICE FAIRNESS {{review.price_fairness}}</h5>
+                                            <h5 style="margin:2px;">OVERALL {{review.overall}}</h5>
+                                            <md-input-container>
+                                                <textarea disabled ng-model="review.comment"></textarea>
+                                            </md-input-container>
+                                        </div>
+                                    </div>
+                                </md-list-item>
+                            </md-list>
+                        </md-tab-body>
+                    </md-tab>
+                    <md-tab id="tab2">
+                        <md-tab-label>RIDES</md-tab-label>
+                        <md-tab-body>
+
+                            <div layout="row">
+                                <div layout="column">
+                                    <h4 style="margin:2px;">DESCRIPTION </h4>
+                                    <h5 style="margin:2px;">DEPARTING </h5>
+                                    <h5 style="margin:2px;">FROM </h5>
+                                    <h5 style="margin:2px;">TO </h5>
+                                </div>
+                            </div>
+
+                        </md-tab-body>
+                    </md-tab>
+                    <md-tab id="tab3">
+                        <md-tab-label>VEHICLES</md-tab-label>
+                        <md-tab-body>
+                          View for Item #3 <br/>
+                          data.selectedIndex = 2;
+                        </md-tab-body>
+                    </md-tab>
+                </md-tabs>
             </div>
-            </section>-->
-        </div>
         </div>
     </md-dialog-content>
-
   </form>
 </md-dialog>

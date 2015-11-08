@@ -4,12 +4,19 @@
   <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
       <md-button id="hitch_button" layout-align="left" ng-click="viewDashboard()">Hitch</md-button>
 
-      <div layout="row" layout-align="end" flex>
+      <div layout="row" layout-align="end" hide show-gt-sm flex>
       <img class="profilePicture" src="{{getUserData().facebook.profileImageURL}}">
       </img>
 
-      <md-button ng-click="showProfile($event)">{{getUserData().facebook.displayName}}</md-button>
+      <md-button ng-click="showProfile($event, getUserData().facebook.id)">{{getUserData().facebook.displayName}}</md-button>
       <md-button ng-click="logout()">LOGOUT</md-button>
+      </div>
+
+      <div layout="row" layout-align="end" hide-gt-sm flex>
+        <img class="profilePicture" src="{{getUserData().facebook.profileImageURL}}" ng-click="showProfile($event)" style="cursor: pointer;">
+        </img>
+
+        <md-button ng-click="logout()">LOGOUT</md-button>
       </div>
   </md-toolbar>
   <div id="outer-wrapper">
