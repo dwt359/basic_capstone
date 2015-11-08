@@ -19,12 +19,12 @@ div{
 }
 
 .md-avatar{
-  border-radius: 2px;
-  border: 1px solid #ddd;
-  display: inline-block;
-  margin: 4px 16px;
-  width: 54px;
-  height: 54px;
+    border-radius: 2px;
+/*    border: 1px solid #ddd;*/
+    display: inline-block;
+    margin: 4px 16px;
+    width: 54px;
+    height: 54px;
 }
 
 #map {
@@ -189,7 +189,7 @@ md-icon.md-default-theme{
     border-radius: 4px;
 }
 
-#profileAvatar {
+.profileAvatar {
     vertical-align: middle;
     position: relative;
     height: 64px;
@@ -231,6 +231,7 @@ md-list-item .md-no-style, md-list-item.md-no-proxy {
     padding: 6px 16px;   
 }
 
+
 .section.dashboard_home {
     background: url("../img/blurryLightsCarO75.jpg") no-repeat center center fixed;
     background-size: 100% auto;
@@ -253,4 +254,13 @@ md-sidenav {
 
 md-toolbar {
     background-color: yellow;
+}
+
+.md-avatar.review_avatar {
+    margin: 0px 0px;
+    
+}
+
+#review_tabs {
+    height: 400px;   
 }

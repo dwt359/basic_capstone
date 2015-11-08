@@ -2,38 +2,36 @@
   <form name="profileForm" ng-controller="profileCtrl">
     <md-dialog-content>
         <div layout="row">
-            <img class="md-whiteframe-z4 md-default-theme" id="profileAvatar" src="{{viewedProfileInfo.img_url}}" ng-click="openFacebook(viewedProfileInfo.$id)"></img>
+            <img class="md-whiteframe-z4 md-default-theme profileAvatar" src="{{viewedProfileInfo.img_url}}" ng-click="openFacebook(viewedProfileInfo.$id)"></img>
             <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
                 <h1 id="profileDisplayName" layout-align="left" class="md-toolbar-tools">{{viewedProfileInfo.name}}</h1>
             </md-toolbar>
         </div>
         <div id="profile_dialog">
             <div layout="column" style="height:400px;">
-                <md-tabs class="tabs-left" md-selected="data.selectedIndex" md-align-tabs="{{data.bottom ? 'bottom' : 'top'}}">
+                <md-tabs id="review_tabs" class="tabs-left" md-selected="data.selectedIndex" md-align-tabs="{{data.bottom ? 'bottom' : 'top'}}">
                     <md-tab id="tab1">
                         <md-tab-label>REVIEWS</md-tab-label>
                         <md-tab-body>
-
-                            <md-list>
-                                <md-list-item ng-repeat="review in profileReviews">
-                                    <div layout="row" flex>
+                            <md-list >
+                                <md-list-item style="padding:10px 0px;" ng-repeat="review in profileReviews" class="profile_reviews" layout="row" layout-align="start start" flex>
                                         <div layout="column" flex="15">
-                                            <img ng-src="{{review.img_url}}" class="md-avatar" />
-                                            <h4 style="margin:2px;">{{review.name}}</h4>
+                                            <img ng-src="{{review.img_url}}" class="md-avatar review_avatar" />
+                                            <h5 style="margin:2px; font-weight: normal;">{{review.name}}</h5>
                                         </div>
                                         <div layout="column" flex="85">
-                                            <h5 style="margin:2px;">DRIVER ABILITY {{review.driver_ability}}</h5>
-                                            <h5 style="margin:2px;">COMFORT {{review.comfort}}</h5>
-                                            <h5 style="margin:2px;">PRICE FAIRNESS {{review.price_fairness}}</h5>
-                                            <h5 style="margin:2px;">OVERALL {{review.overall}}</h5>
+                                            <h5 style="margin:0px;"><b>DRIVER ABILITY</b> {{review.driver_ability}}</h5>
+                                            <h5 style="margin:1px;"><b>COMFORT</b> {{review.comfort}}</h5>
+                                            <h5 style="margin:1px;"><b>PRICE FAIRNESS</b> {{review.price_fairness}}</h5>
+                                            <h5 style="margin:1px;"><b>OVERALL</b> {{review.overall}}</h5>
                                             <md-input-container>
                                                 <textarea disabled ng-model="review.comment"></textarea>
                                             </md-input-container>
                                         </div>
-                                    </div>
+                                    <md-divider></md-divider>
                                 </md-list-item>
                             </md-list>
-                        </md-tab-body>
+                            </md-tab-body>
                     </md-tab>
                     <md-tab id="tab2">
                         <md-tab-label>RIDES</md-tab-label>
