@@ -174,8 +174,9 @@ md-icon.md-default-theme{
     color: white;
 }
 
-.hitch_button {
+#hitch_button {
     font-size: 20px;
+    cursor: pointer;
 }
 
 .profilePicture{
@@ -195,9 +196,6 @@ md-icon.md-default-theme{
 
 }
 
-.dialogColumns {
-    margin: 15px;
-}
 
 #profile_dialog {
     width: 650px;
@@ -208,10 +206,7 @@ md-icon.md-default-theme{
 
 }
 
-.sidenav_btn {
-    text-align: left;
-    margin: 0px 0px;
-}
+
 
 #profileDisplayName {
     text-transform: uppercase;

@@ -8,13 +8,15 @@
 
         <div layout="column" style="height:450px;">
             <section layout="column" flex>
-                <md-input-container>
+                <div layout="row">
                     <img ng-src="{{initReview.img_url}}" class="md-avatar" />
-                    <h5 style="margin:2px;">Driver: {{initReview.name}}</h4>
+                    <div layout="column">
+                        <p style="margin:20px;">DRIVER: {{initReview.name}}</p>
+                    </div>
+                </div>
 
-                    </md-input-container>
                 <md-input type="hidden" value="{{initReview.$id}}" ng-model="reviewId"></md-input>
-                <md-select placeholder="DRIVER ABILITY" aria-label="driver_abilities" ng-model="review.driver_ability">
+                <md-select placeholder="DRIVER ABILITY" aria-label="driver_abilities" ng-model="review.driver">
                     <md-option ng-repeat="option in reviewOptions" value="{{option}}">{{option}}</md-option>
                 </md-select>
                 <md-select placeholder="COMFORT" aria-label="comfort" ng-model="review.comfort">
@@ -28,7 +30,7 @@
                 </md-select>
                 <md-input-container>
                     <label>Comments</label>
-                    <textarea ng-model="review.comment"></textarea>
+                    <textarea ng-model="review.comment" md-maxlength="250"></textarea>
                 </md-input-container> 
             <md-button class="md-accent" ng-click="saveReview()">SAVE</md-button>
       

@@ -14,11 +14,11 @@
                       <input type="text" ng-model="starting.city">
                     </md-input-container>
                     <md-input-container id="find-ride-form">
-                      <!--<label>Starting State</label>-->
-                      <md-select aria-label="state" ng-model="starting.state">
+                      <md-select aria-label="state" ng-model="starting.state" placeholder="Starting State">
                         <md-option ng-repeat="state in states" value="{{state.abbrev}}">{{state.abbrev}}</md-option>
 
                     </md-select>
+
                     </md-input-container>
                 </div>
 
@@ -28,8 +28,7 @@
                     <input type="text" ng-model="ending.city">
                   </md-input-container>
                   <md-input-container id="find-ride-form">
-                    <!--<label>State</label>-->
-                    <md-select aria-label="state" ng-model="ending.state">
+                    <md-select aria-label="state" ng-model="ending.state" placeholder="Ending State">
                       <md-option ng-repeat="state in states" value="{{state.abbrev}}">{{state.abbrev}}</md-option>
 
                     </md-select>
@@ -71,7 +70,7 @@
                       </div>
                     </div>
                     <div layout="column" flex="50">
-                      <md-button class="md-accent md-raised" >
+                      <md-button class="md-accent md-raised" ng-click="showPayment($event, ride, $index)">
                         Buy Seat
                       </md-button>
                     </div>
@@ -82,15 +81,19 @@
             </md-list-item>
             <md-list-item class="md-2-line" ng-show="!rides.length">
               <div layout="row" layout-align="left" flex="100">
-                <p>There are no rides between those two specified cities.</p>
+                <p>There are no rides between those specified cities.</p>
+                <p id="error1" style="color:#d9534f"></p>
+                <p id="error2" style="color:#d9534f"></p>
+                <p id="error3" style="color:#d9534f"></p>
+                <p id="error4" style="color:#d9534f"></p>
               </div>
             </md-list-item>
           </md-list>
         </div>
 
       </div>
-    <div hide show-gt-md layout="column" flex="40" layout-align="top" style="max-height: 100%;">
-      <div id="map" flex="100"></div>
+    <div hide show-gt-md layout="column" flex="40" layout-align="top">
+      <div id="map" flex="100" data-ng-init="printUSA()"></div>
     </div>
   </div>
 </md-content>

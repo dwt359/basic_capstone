@@ -4,7 +4,7 @@
   <form name="profileForm" ng-controller="profileCtrl">
     <md-dialog-content>
         <div layout="row">
-            <img id="profileAvatar" src="{{getUserData().facebook.profileImageURL}}" ng-click="openFacebook()"></img>
+            <img class="md-whiteframe-z4 md-default-theme" id="profileAvatar" src="{{getUserData().facebook.profileImageURL}}" ng-click="openFacebook()"></img>
 
             <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
                 <h1 id="profileDisplayName" layout-align="left" class="md-toolbar-tools">{{getUserData().facebook.displayName}}             </h1>
