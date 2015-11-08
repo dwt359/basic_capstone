@@ -38,16 +38,18 @@
                     <md-tab id="tab2">
                         <md-tab-label>RIDES</md-tab-label>
                         <md-tab-body>
-
-                            <div layout="row">
-                                <div layout="column">
-                                    <h4 style="margin:2px;">DESCRIPTION </h4>
-                                    <h5 style="margin:2px;">DEPARTING </h5>
-                                    <h5 style="margin:2px;">FROM </h5>
-                                    <h5 style="margin:2px;">TO </h5>
-                                </div>
-                            </div>
-
+                            <md-list>
+                                <md-list-item ng-repeat="trip in profileTrips">
+                                    <div layout="row">
+                                        <div layout="column">
+                                            <h4 style="margin:2px;">{{trip.comment}}</h4>
+                                            <h5 style="margin:2px;">DEPARTING {{trip.start_time}}</h5>
+                                            <h5 style="margin:2px;">FROM {{trip.from}}</h5>
+                                            <h5 style="margin:2px;">TO {{trip.to}}</h5>
+                                        </div>
+                                    </div>
+                                </md-list-item>
+                            </md-list>
                         </md-tab-body>
                     </md-tab>
                     <md-tab id="tab3">
