@@ -91,6 +91,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   }
 
   $scope.retrievePassengerTripData = function(){
+    $scope.now = (new Date()).getTime();
     var profileData = $scope.getProfileData();
     profileData.$loaded().then(function(){
       $scope.tripData = [];
@@ -107,6 +108,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
           item[id].to = trip.to;
           item[id].is_reviewed = trip.is_reviewed;
           item[id].passenger_trip_id = id;
+          item[id].time_num = startTime.getTime();
           person.push($firebaseObject(userRef.child(item[id].user)));
           person[id].$loaded().then(function(){
             item[id].img_url = person[id].img_url;
