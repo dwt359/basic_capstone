@@ -94,7 +94,13 @@ theApp.factory('UserData', ['$firebaseObject', function($firebaseObject){
 
     setData: function(newData){
       data = newData;
+      console.dir(data);
       profileData = $firebaseObject(ref.child('users').child(data.facebook.id));
+      profileData.$loaded().then(function(){
+        profileData.name = data.facebook.displayName;
+        profileData.img_url = data.facebook.profileImageURL;
+        profileData.$save();
+      });
 
       if(localStorage.getItem('firebase:session::hitchdatabase') != null){
         localStorage.clear();
