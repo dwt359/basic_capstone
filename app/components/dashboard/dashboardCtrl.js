@@ -13,6 +13,9 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   $scope.starting = {city: "", state: ""};
   $scope.ending = {city: "", state: ""};
   $scope.car = {mpg: "", seats: ""};
+  $scope.departure = {date: "", time: ""}
+  $scope.search = {date: ""}
+  $scope.post = {description: ""}
 
   $scope.seats = [{name: 'Seat', description:'', price: 0.00}];
   $scope.seatLimit = 6;
@@ -186,7 +189,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   $scope.printUSA = function(){
 
     var map = new google.maps.Map(document.getElementById("map"), {
-      scrollwheel: false,
+      scrollwheel: false
       //styles: styles,
       //mapTypeId: google.maps.MapTypeId.TERRAIN
     });
@@ -256,35 +259,60 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     var lat2 = GoogleMaps.getLat(gmapurl2);
     var long2 = GoogleMaps.getLng(gmapurl2);
     var error = 1;
+    var today = new Date();
 
     if (mapCity1 == 0){
       document.getElementById("error1").innerHTML = "Starting city is not valid.";
+      $scope.rides = [];
       error = 0;
     }
     else {
       document.getElementById("error1").innerHTML = "";
+      document.getElementById("search").innerHTML = "";
     }
     if (mapCity2 == 0) {
       document.getElementById("error2").innerHTML = "Ending city is not valid.";
+      $scope.rides = [];
       error = 0;
     }
     else {
       document.getElementById("error2").innerHTML = "";
+      document.getElementById("search").innerHTML = "";
     }
     if ($scope.starting.state == ""){
       document.getElementById("error3").innerHTML = "Please select a starting state.";
+      $scope.rides = [];
       error = 0;
     }
     else{
       document.getElementById("error3").innerHTML = "";
+      document.getElementById("search").innerHTML = "";
     }
     if ($scope.ending.state == ""){
       document.getElementById("error4").innerHTML = "Please select an ending state.";
+      $scope.rides = [];
       error = 0;
     }
     else{
       document.getElementById("error4").innerHTML = "";
+      document.getElementById("search").innerHTML = "";
     }
+    if ($scope.search.date < today){
+      if ($scope.search.date == ""){
+        document.getElementById("error5").innerHTML = "Please enter a date.";
+        $scope.rides = [];
+      }
+      else{
+        document.getElementById("error5").innerHTML = "The date entered has already passed.";
+        $scope.rides = [];
+      }
+      error = 0;
+    }
+    else {
+      document.getElementById("error5").innerHTML = "";
+      document.getElementById("search").innerHTML = "";
+    }
+
 
     if (error != 0) {
       GoogleMaps.initMap(lat1, lat2, long1, long2);
@@ -293,6 +321,12 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       var startCity = GoogleMaps.getAdd(gmapurl1).replace(', USA', '').replace('.', '').trim();
       var endCity = GoogleMaps.getAdd(gmapurl2).replace(', USA', '').replace('.', '').trim();
       $scope.rides = $firebaseArray(tripRef.child(startCity).child(endCity));
+      if ($scope.rides.length == 0){
+        document.getElementById("search").innerHTML = "There are no rides between those specified cities.";
+      }
+      else{
+        document.getElementById("search").innerHTML = "";
+      }
     }
 
   }
@@ -316,6 +350,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     var lat2 = GoogleMaps.getLat(gmapurl2);
     var long2 = GoogleMaps.getLng(gmapurl2);
     var error = 1;
+    var today = new Date();
 
     if (mapCity1 == 0){
       document.getElementById("error1").innerHTML = "Starting city is not valid.";
@@ -353,18 +388,38 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       document.getElementById("error5").innerHTML = "";
     }
     if ($scope.car.seats == ""){
-      document.getElementById("error6").innerHTML = "Please select number of seats for your car.";
+      document.getElementById("error6").innerHTML = "Please select the number of seats in your car.";
       error = 0;
     }
     else{
       document.getElementById("error6").innerHTML = "";
     }
+    if ($scope.departure.date < today){
+      if ($scope.departure.date == ""){
+        document.getElementById("error7").innerHTML = "Please enter a date.";
+      }
+      else{
+        document.getElementById("error7").innerHTML = "The date entered has already passed.";
+      }
+      error = 0;
+    }
+    else {
+      document.getElementById("error7").innerHTML = "";
+    }
+    if ($scope.post.description == ""){
+      document.getElementById("error8").innerHTML = "Please enter a description.";
+      error = 0;
+    }
+    else{
+      document.getElementById("error8").innerHTML = "";
+    }
+
 
     if (error != 0) {
       var gasUrl1 = "http://api.mygasfeed.com/stations/radius/"+lat1+"/"+long1+"/1/reg/Distance/1u129mrydk.json?";
       var gasUrl2 = "http://api.mygasfeed.com/stations/radius/"+lat2+"/"+long2+"/1/reg/Distance/1u129mrydk.json?";
-      var price1 = 2.00;//parseFloat(GoogleMaps.getPrice(gasUrl1), 10);
-      var price2 = 3.40;//parseFloat(GoogleMaps.getPrice(gasUrl2), 10);
+      var price1 = 2.72;//parseFloat(GoogleMaps.getPrice(gasUrl1), 10);
+      var price2 = 2.40;//parseFloat(GoogleMaps.getPrice(gasUrl2), 10);
       var averagePrice = (price1+price2)/2;
       var mpg = $scope.car.mpg;
       var seats = $scope.car.seats;
@@ -377,9 +432,9 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     distance = distance/1609.34;
     var cost = distance/mpg*averagePrice;
     var seatCost = cost/seats;
-    console.log("Miles: "+distance.toFixed(2));
-    console.log("Total Cost: $"+cost.toFixed(2));
-    console.log("Cost per seat: $"+seatCost.toFixed(2));
+    document.getElementById("distance").innerHTML = "Trip distance: "+distance.toFixed(2)+" miles";
+    document.getElementById("totalCost").innerHTML = "Total trip cost: $"+cost.toFixed(2);
+    document.getElementById("seatCost").innerHTML ="Suggested price per seat: $"+seatCost.toFixed(2);
   }
 
   $scope.setSeats = function(){
