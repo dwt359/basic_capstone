@@ -125,6 +125,7 @@ md-icon.md-default-theme{
 #dashboard-start{
   background-color: #EEEEEE;
   overflow: auto;
+    padding: 0px 0px 0px 0px;
 }
 
 .md-button.md-default-theme.login-with-facebook{
@@ -205,8 +206,23 @@ md-icon.md-default-theme{
     width: 400px;
 }
 
-
+h5 {
+    font-weight: normal;
+}
 
 #profileDisplayName {
     text-transform: uppercase;
 }
+
+#ride_queue_header {
+    background-color: #070835;
+}
+
+md-list.md-default-theme {
+    padding-top: 0px;   
+}
+
+md-list-item .md-no-style, md-list-item.md-no-proxy {
+    padding: 6px 16px;   
+}
+

@@ -1,5 +1,5 @@
 <md-content layout="row" layout-align="center center" flex class="md-padding" id="home-content" data-ng-init="retrievePassengerTripData()">
-  <div class="section" id="dashboard-start" layout="row" layout-align="left center">
+    <div class="section" id="dashboard-start" layout="row" layout-align="left center">
 
     <div layout="column" flex="75" layout-align="center center" >
       <div id="dashboard-home-grid" layout="row">
@@ -12,18 +12,21 @@
       </div>
     </div>
 
-
-    <div layout="column" flex="25" layout-align="top">
+<md-sidenav flex="25" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+    <div layout="column" layout-align="top">
       <md-list style="y-overflow: auto;">
-        <md-subheader style="background-color: #424242; color: white; margin-right: 0px;">YOUR RIDES</md-subheader>
+        <md-toolbar md-scroll-y class="md-whiteframe-z4" id="ride_queue_header">
+            <h1 layout-align="left" class="md-toolbar-tools">YOUR RIDES</h1>  
+        </md-toolbar>
+        <!--<md-subheader style="background-color: #424242; color: white; margin-right: 0px;">YOUR RIDES</md-subheader>-->
         <md-list-item class="md-2-line" ng-repeat="trip in tripData">
           <div layout="row">
-            <img ng-src="{{trip.img_url}}" class="md-avatar" />
+            <img ng-click="showProfile($event)" ng-src="{{trip.img_url}}" class="md-avatar" />
             <div layout="column">
-              <h5 style="margin:2px;">Driver: {{trip.name}}</h5>
-              <h6 style="margin:2px;">Departing: {{trip.start_time}}</h6>
-              <h6 style="margin:2px;">From: {{trip.from}}</h6>
-              <h6 style="margin:2px;">To: {{trip.to}}</h6>
+              <h5 style="margin:2px;"><b>Driver: {{trip.name}}</b></h5>
+              <h5 style="margin:2px;">Departing: {{trip.start_time}}</h5>
+              <h5 style="margin:2px;">From: {{trip.from}}</h5>
+              <h5 style="margin:2px;">To: {{trip.to}}</h5>
               <md-button ng-click="showReviewForm($event, trip.user)" class="md-accent md-raised">Review</md-button>
             </div>
           </div>
@@ -31,5 +34,8 @@
         </md-list-item>
       </md-list>
     </div>
+</md-sidenav>
+    
   </div>
+    
 </md-content>
