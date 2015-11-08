@@ -20,11 +20,11 @@
           <div layout="row">
             <img ng-src="{{trip.img_url}}" class="md-avatar" />
             <div layout="column">
-              <h5 style="margin:2px;">Driver: {{trip.name}}</h5>
-              <h6 style="margin:2px;">Departing: {{trip.start_time}}</h6>
-              <h6 style="margin:2px;">From: {{trip.from}}</h6>
-              <h6 style="margin:2px;">To: {{trip.to}}</h6>
-              <md-button ng-click="showReviewForm($event, trip.user)" class="md-accent md-raised">Review</md-button>
+              <h5 style="margin:2px;">Driver: {{trip.name}}</h4>
+              <h6 style="margin:2px;">Departing: {{trip.start_time}}</h4>
+              <h6 style="margin:2px;">From: {{trip.from}}</h4>
+              <h6 style="margin:2px;">To: {{trip.to}}</h4>
+              <md-button ng-click="showReviewForm($event, trip.user, trip.passenger_trip_id)" ng-hide="trip.is_reviewed || trip.time_num > now" class="md-accent md-raised">Review</md-button>
             </div>
           </div>
           <md-divider ></md-divider>

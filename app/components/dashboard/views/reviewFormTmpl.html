@@ -14,15 +14,15 @@
                         <p style="margin:20px;">DRIVER: {{initReview.name}}</p>
                     </div>
                 </div>
-              
-                    
+
+                <md-input type="hidden" value="{{initReview.$id}}" ng-model="reviewId"></md-input>
                 <md-select placeholder="DRIVER ABILITY" aria-label="driver_abilities" ng-model="review.driver">
                     <md-option ng-repeat="option in reviewOptions" value="{{option}}">{{option}}</md-option>
                 </md-select>
                 <md-select placeholder="COMFORT" aria-label="comfort" ng-model="review.comfort">
                     <md-option ng-repeat="option in reviewOptions" value="{{option}}">{{option}}</md-option>
                 </md-select>
-                <md-select placeholder="PRICE FAIRNESS" aria-label="price_fairness" ng-model="review.price">
+                <md-select placeholder="PRICE FAIRNESS" aria-label="price_fairness" ng-model="review.price_fairness">
                     <md-option ng-repeat="option in reviewOptions" value="{{option}}">{{option}}</md-option>
                 </md-select>
                 <md-select placeholder="OVERALL" aria-label="overall" ng-model="review.overall">
@@ -30,7 +30,8 @@
                 </md-select>
                 <md-input-container>
                     <label>Comments</label>
-                    <textarea ng-model="comment" md-maxlength="250" maxlength="250"></textarea>
+
+                    <textarea ng-model="review.comment" md-maxlength="250" maxlength="250"></textarea>
                 </md-input-container> 
             <md-button class="md-accent" ng-click="saveReview()">SAVE</md-button>
       

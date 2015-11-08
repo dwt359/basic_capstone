@@ -37,4 +37,18 @@ function DialogController($scope, $mdDialog){
   $scope.answer = function(answer){
     $mdDialog.hide(answer);
   };
+  $scope.saveReview = function(){
+    if($scope.review.comfort && $scope.review.driver_ability && $scope.review.price_fairness && $scope.review.overall) {
+      $scope.review.$save();
+      $scope.reviewedRide.$loaded().then(function(){
+        $scope.reviewedRide.is_reviewed = true;
+        $scope.reviewedRide.$save();
+        $scope.retrievePassengerTripData();
+      });
+      $scope.hide();
+    }
+    else{
+      alert('All fields are required except for the comment.');
+    }
+  };
 };
