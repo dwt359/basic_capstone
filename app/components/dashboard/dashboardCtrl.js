@@ -46,13 +46,16 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
 
   }
 
-  $scope.showProfile = function(ev){
+  $scope.showProfile = function(ev, fid){
+    $scope.viewedProfileInfo = $firebaseObject(userRef.child(fid));
     $mdDialog.show({
       controller: DialogController,
+      scope: $scope,
+      preserveScope: true,
       templateUrl: 'app/components/profile/views/profileFormTmpl.html',
       parent: angular.element(document.body),
       targetEvent: ev,
-      clickOutsideToClose: true,
+      clickOutsideToClose: true
     });
   }
   

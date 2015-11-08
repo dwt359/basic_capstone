@@ -1,10 +1,10 @@
 <md-dialog aria-label="test">
-  <form name="profileForm" ng-controller="profileCtrl">
+  <form name="profileForm">
     <md-dialog-content>
         <div layout="row">
-            <img class="md-whiteframe-z4 md-default-theme" id="profileAvatar" src="{{getUserData().facebook.profileImageURL}}" ng-click="openFacebook()"></img>
+            <img class="md-whiteframe-z4 md-default-theme" id="profileAvatar" src="{{viewedProfileInfo.img_url}}" ng-click="openFacebook()"></img>
             <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
-                <h1 id="profileDisplayName" layout-align="left" class="md-toolbar-tools">{{getUserData().facebook.displayName}}</h1>
+                <h1 id="profileDisplayName" layout-align="left" class="md-toolbar-tools">{{viewedProfileInfo.name}}</h1>
             </md-toolbar>
         </div>
         <div id="profile_dialog">

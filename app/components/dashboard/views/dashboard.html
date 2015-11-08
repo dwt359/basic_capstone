@@ -8,7 +8,7 @@
       <img class="profilePicture" src="{{getUserData().facebook.profileImageURL}}">
       </img>
 
-      <md-button ng-click="showProfile($event)">{{getUserData().facebook.displayName}}</md-button>
+      <md-button ng-click="showProfile($event, getUserData().facebook.id)">{{getUserData().facebook.displayName}}</md-button>
       <md-button ng-click="logout()">LOGOUT</md-button>
       </div>
   </md-toolbar>

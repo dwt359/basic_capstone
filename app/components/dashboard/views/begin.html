@@ -11,7 +11,7 @@
             <!--<md-subheader style="background-color: #424242; color: white; margin-right: 0px;">YOUR RIDES</md-subheader>-->
             <md-list-item class="md-2-line" ng-repeat="trip in tripData">
               <div layout="row">
-                <img ng-click="showProfile($event)" ng-src="{{trip.img_url}}" class="md-avatar" />
+                <img ng-click="showProfile($event, trip.user)" ng-src="{{trip.img_url}}" class="md-avatar" />
                 <div layout="column">
                   <h4 style="margin:2px;">Driver: {{trip.name}}</h4>
                   <h5 style="margin:2px;">Departing: {{trip.start_time}}</h5>
