@@ -48,6 +48,25 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
 
   $scope.showProfile = function(ev, fid){
     $scope.viewedProfileInfo = $firebaseObject(userRef.child(fid));
+    $scope.profileReviews = [];
+    var profileReviews = $firebaseArray(userRef.child(fid).child('reviews'));
+    var reviewerProfiles = [];
+    profileReviews.$loaded().then(function(){
+      angular.forEach(profileReviews, function(review, id){
+        reviewerProfiles.push($firebaseObject(userRef.child(review.$id)));
+        reviewerProfiles[id].$loaded().then(function(){
+          $scope.profileReviews.push({
+            name: reviewerProfiles[id].name,
+            img_url: reviewerProfiles[id].img_url,
+            driver_ability: review.driver_ability,
+            comfort: review.comfort,
+            price_fairness: review.price_fairness,
+            overall: review.overall,
+            comment: review.comment
+          });
+        });
+      });
+    });
     $mdDialog.show({
       controller: DialogController,
       scope: $scope,
