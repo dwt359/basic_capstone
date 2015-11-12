@@ -13,7 +13,7 @@
                     <md-tab id="tab1">
                         <md-tab-label>REVIEWS</md-tab-label>
                         <md-tab-body>
-                            <md-list >
+                            <md-list>
                                 <md-list-item style="padding:10px 0px;" ng-repeat="review in profileReviews" class="profile_reviews" layout="row" layout-align="start start" flex>
                                         <div layout="column" flex="15">
                                             <img ng-src="{{review.img_url}}" class="md-avatar review_avatar" />
@@ -53,8 +53,19 @@
                     <md-tab id="tab3">
                         <md-tab-label>VEHICLES</md-tab-label>
                         <md-tab-body>
-                          View for Item #3 <br/>
-                          data.selectedIndex = 2;
+                            <md-list>
+                                <md-list-item ng-repeat="vehicle in profileVehicles">
+                                    <div layout="row">
+                                        <div layout="column">
+                                            <h4 style="margin:2px;">{{vehicle.make}} {{vehicle.model}}</h4>
+                                            <h5 style="margin:2px;">YEAR {{vehicle.year}}</h5>
+                                            <h5 style="margin:2px;">COLOR {{vehicle.color}}</h5>
+                                            <h5 style="margin:2px;">MPG {{vehicle.mpg}}</h5>
+                                            <h5 style="margin:2px;">SEATS {{vehicle.seats}}</h5>
+                                        </div>
+                                    </div>
+                                </md-list-item>
+                            </md-list>
                         </md-tab-body>
                     </md-tab>
                 </md-tabs>

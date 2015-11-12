@@ -203,7 +203,7 @@ md-icon.md-default-theme{
     width: 550px;
 }
 
-#review_dialog {
+.template_dialog {
     width: 400px;
 }
 
@@ -220,7 +220,7 @@ h5 {
 }
 
 #ride_queue_header {
-    background-color: rgb(66,66,66);
+    background-color: rgba(0,0,0,.45);
 }
 
 md-list.md-default-theme {

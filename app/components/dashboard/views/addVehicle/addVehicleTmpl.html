@@ -1,0 +1,45 @@
+<md-dialog aria-label="test">
+    <form name="vehicleForm">
+        <md-dialog-content>
+            <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
+                <h1 id="profileDisplayName" layout-align="left" class="md-toolbar-tools">ADD A VEHICLE</h1>
+            </md-toolbar>
+            
+             <div class="template_dialog">
+
+                <div layout="column" style="height:450px;">
+                    <section layout="column" flex>
+                        
+                        <md-select placeholder="MAKE" aria-label="make" ng-model="vehicle.make">
+                            <md-option ng-repeat="option in makeOptions" value="{{option}}">{{option}}</md-option>
+                        </md-select>
+                        <md-input-container>
+                            <label>MODEL</label>
+                            <input type="text">
+                        </md-input-container>
+                        <md-select placeholder="YEAR" aria-label="year" ng-model="vehicle.year">
+                            <md-option ng-repeat="option in yearOptions" value="{{option}}">{{option}}</md-option>
+                        </md-select>
+                        <md-input-container>
+                            <label>COLOR</label>
+                            <input type="text">
+                        </md-input-container>
+                        <md-input-container>
+                            <label>MPG</label>
+                            <input type="number">
+                        </md-input-container>
+                        <md-input-container>
+                            <label>SEATS</label>
+                            <input type="number">
+                        </md-input-container>
+                        
+                    <md-button class="md-accent" ng-click="saveVehicle()">SAVE</md-button>
+
+                    </section>
+
+                </div>
+                </div>
+            
+        </md-dialog-content>
+    </form>
+</md-dialog>

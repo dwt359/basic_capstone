@@ -86,6 +86,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
         });
       });
     });
+    
     //kick off dialog
     $mdDialog.show({
       controller: DialogController,
@@ -428,7 +429,19 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
   };
 
 
-}]);
+
+
+$scope.showVehicleForm = function(ev){
+    $scope.makeOptions = ['Acura', 'Alfa Romeo', 'Aston Martin', 'Audi', 'Bentley', 'BMW', 'Bugatti', 'Buick', 'Cadillac', 'Chevrolet', 'Chrysler', 'Dodge', 'Ferrari', 'FIAT', 'Ford', 'GMC', 'Honda', 'Hyundai', 'Infiniti', 'Jaguar', 'Jeep', 'Kia', 'Lamborghini', 'Land Rover', 'Lexus', 'Lincoln', 'Lotus', 'Maserati', 'Mazda', 'McLaren', 'Mercedes-Benz', 'MINI', 'Mitsubishi', 'Nissan', 'Porsche', 'Rolls-Royce', 'Saab', 'Scion', 'Smart', 'Subaru', 'Suzuki', 'Tesla', 'Toyota', 'Volkswagen', 'Volvo'];
+    $mdDialog.show({
+      controller: DialogController,
+      scope: $scope,
+      preserveScope: true,
+      templateUrl: 'app/components/dashboard/views/addVehicle/addVehicleTmpl.html',
+      targetEvent: ev,
+      clickOutsideToClose: true
+    });
+};
 
 function PaymentDialogController($scope, $mdDialog, ride){
   $scope.ride = ride;
@@ -442,3 +455,5 @@ function PaymentDialogController($scope, $mdDialog, ride){
     $mdDialog.hide(answer);
   };
 };
+    
+}]);
