@@ -20,6 +20,8 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   $scope.seats = [{name: 'Seat', description:'', price: 0.00}];
   $scope.seatLimit = 6;
 
+  $scope.postRidePricing = {distance: 0, totalCost: 0, price: 0, showForm: false};
+
   var ref = new Firebase('https://hitchdatabase.firebaseio.com');
   var tripRef = ref.child('trips');
   var userRef = ref.child('users');
@@ -80,8 +82,8 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
       clickOutsideToClose: true
     });
   }
-  
- 
+
+
 
   $scope.showPayment = function(ev, ride, i){
     $mdDialog.show({
@@ -424,6 +426,8 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       var mpg = $scope.car.mpg;
       var seats = $scope.car.seats;
       $scope.initGasMap(lat1, lat2, long1, long2, mpg, seats, averagePrice);
+      $scope.postRidePricing.showForm = true;
+      console.log($scope.postRidePricing);
     }
 
   }
@@ -432,9 +436,14 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     distance = distance/1609.34;
     var cost = distance/mpg*averagePrice;
     var seatCost = cost/seats;
-    document.getElementById("distance").innerHTML = "Trip distance: "+distance.toFixed(2)+" miles";
-    document.getElementById("totalCost").innerHTML = "Total trip cost: $"+cost.toFixed(2);
-    document.getElementById("seatCost").innerHTML ="Suggested price per seat: $"+seatCost.toFixed(2);
+
+    $scope.postRidePricing.distance = distance.toFixed(2);
+    $scope.postRidePricing.totalCost = cost.toFixed(2);
+    $scope.postRidePricing.price = seatCost.toFixed(2);
+
+    //document.getElementById("distance").innerHTML = "Trip distance: "+distance.toFixed(2)+" miles";
+    //document.getElementById("totalCost").innerHTML = "Total trip cost: $"+cost.toFixed(2);
+    //document.getElementById("seatCost").innerHTML ="Suggested price per seat: $"+seatCost.toFixed(2);
   }
 
   $scope.setSeats = function(){
@@ -457,6 +466,10 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       clickOutsideToClose: true
     });
   };
+
+  $scope.postRide = function(){
+    console.log($scope.postRidePricing)
+  }
 
 
 }]);
