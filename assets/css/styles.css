@@ -110,16 +110,16 @@ md-icon.md-default-theme{
 }
 
 .dashboard-button{
-  width: 200px;
-  height: 175px;
-  margin: 0px 15px 25px 15px;
-  border-radius: 2px;
-  box-shadow: -3px 2px 1px 0px
-  rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);
-  text-align:center;
-  background-color: rgba(1,87,155,.9);
-  color: white;
-  cursor: pointer;
+    width: 200px;
+    height: 200px;
+    margin: 0px 15px 25px 15px;
+    border-radius: 2px;
+    box-shadow: -3px 2px 1px 0px
+    rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);
+    text-align:center;
+    background-color: rgba(1,87,155,.9);
+    color: white;
+    cursor: pointer;
 }
 
 #dashboard-start{
