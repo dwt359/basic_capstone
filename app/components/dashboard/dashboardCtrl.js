@@ -97,7 +97,9 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
         });
       });
     });
-    
+    //vehicle information
+    $scope.profileVehicles = $firebaseArray(userRef.child(fid).child('vehicles'));
+
     //kick off dialog
     $mdDialog.show({
       controller: DialogController,
