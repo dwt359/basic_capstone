@@ -51,6 +51,12 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
     $scope.viewedProfileInfo = $firebaseObject(userRef.child(fid));
     //profile reviews
     $scope.profileReviews = [];
+    $scope.avg = {
+      driver_ability: 0,
+      comfort: 0,
+      price_fairness: 0,
+      overall: 0
+    };
     var profileReviews = $firebaseArray(userRef.child(fid).child('reviews'));
     var reviewerProfiles = [];
     profileReviews.$loaded().then(function(){
@@ -66,6 +72,11 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
             overall: review.overall,
             comment: review.comment
           });
+          //compute averages
+          $scope.avg.driver_ability += parseInt(review.driver_ability) / profileReviews.length;
+          $scope.avg.comfort += parseInt(review.comfort) / profileReviews.length;
+          $scope.avg.price_fairness += parseInt(review.price_fairness) / profileReviews.length;
+          $scope.avg.overall += parseInt(review.overall) / profileReviews.length;
         });
       });
     });
