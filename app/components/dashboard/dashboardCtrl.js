@@ -52,8 +52,16 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   }
 
   $scope.showProfile = function(ev, fid){
+    //main profile info
     $scope.viewedProfileInfo = $firebaseObject(userRef.child(fid));
+    //profile reviews
     $scope.profileReviews = [];
+    $scope.avg = {
+      driver_ability: 0,
+      comfort: 0,
+      price_fairness: 0,
+      overall: 0
+    };
     var profileReviews = $firebaseArray(userRef.child(fid).child('reviews'));
     var reviewerProfiles = [];
     profileReviews.$loaded().then(function(){
@@ -69,9 +77,35 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
             overall: review.overall,
             comment: review.comment
           });
+          //compute averages
+          $scope.avg.driver_ability += parseInt(review.driver_ability) / profileReviews.length;
+          $scope.avg.comfort += parseInt(review.comfort) / profileReviews.length;
+          $scope.avg.price_fairness += parseInt(review.price_fairness) / profileReviews.length;
+          $scope.avg.overall += parseInt(review.overall) / profileReviews.length;
         });
       });
     });
+    //profile trips
+    $scope.profileTrips = [];
+    var profileTrips = $firebaseArray(userRef.child(fid).child('trips'));
+    var trips = [];
+    profileTrips.$loaded().then(function(){
+      angular.forEach(profileTrips, function(profileTrip, id){
+        trips.push($firebaseObject(tripRef.child(profileTrip.from).child(profileTrip.to).child(profileTrip.num)));
+        trips[id].$loaded().then(function() {
+          $scope.profileTrips.push({
+            comment: trips[id].comment,
+            start_time: $scope.formatDate(trips[id].start_time),
+            from: profileTrip.from,
+            to: profileTrip.to
+          });
+        });
+      });
+    });
+    //vehicle information
+    $scope.profileVehicles = $firebaseArray(userRef.child(fid).child('vehicles'));
+
+    //kick off dialog
     $mdDialog.show({
       controller: DialogController,
       scope: $scope,
@@ -102,6 +136,12 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
     return UserData.getProfileData();
   }
 
+  $scope.formatDate = function(dateString){
+    var startTime = new Date(dateString);
+    var pad = '00';
+    return (startTime.getMonth() + 1) + '/' + startTime.getDate() + '/' + startTime.getFullYear() + ' at ' + startTime.getHours() + ':' + pad.substring(0, pad.length - startTime.getMinutes().toString().length) + startTime.getMinutes().toString();
+  }
+
   $scope.retrievePassengerTripData = function(){
     var profileData = $scope.getProfileData();
     profileData.$loaded().then(function() {
@@ -113,9 +153,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
         angular.forEach(trips, function (trip, id) {
           item.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
           item[id].$loaded().then(function () {
-            var startTime = new Date(item[id].start_time);
-            var pad = '00';
-            item[id].start_time = (startTime.getMonth() + 1) + '/' + startTime.getDate() + '/' + startTime.getFullYear() + ' at ' + startTime.getHours() + ':' + pad.substring(0, pad.length - startTime.getMinutes().toString().length) + startTime.getMinutes().toString();
+            item[id].start_time = $scope.formatDate(item[id].start_time);
             item[id].from = trip.from;
             item[id].to = trip.to;
             person.push($firebaseObject(userRef.child(item[id].user)));
@@ -472,7 +510,23 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
   }
 
 
-}]);
+
+
+$scope.showVehicleForm = function(ev){
+  $scope.currentVehicles = $firebaseArray(userRef.child(UserData.getData().facebook.id).child('vehicles'));
+  $scope.currentVehicles.$loaded().then(function(){
+    $scope.newVehicle = $firebaseObject(userRef.child(UserData.getData().facebook.id).child('vehicles').child($scope.currentVehicles.length));
+  });
+  $scope.makeOptions = ['Acura', 'Alfa Romeo', 'Aston Martin', 'Audi', 'Bentley', 'BMW', 'Bugatti', 'Buick', 'Cadillac', 'Chevrolet', 'Chrysler', 'Dodge', 'Ferrari', 'FIAT', 'Ford', 'GMC', 'Honda', 'Hyundai', 'Infiniti', 'Jaguar', 'Jeep', 'Kia', 'Lamborghini', 'Land Rover', 'Lexus', 'Lincoln', 'Lotus', 'Maserati', 'Mazda', 'McLaren', 'Mercedes-Benz', 'MINI', 'Mitsubishi', 'Nissan', 'Porsche', 'Rolls-Royce', 'Saab', 'Scion', 'Smart', 'Subaru', 'Suzuki', 'Tesla', 'Toyota', 'Volkswagen', 'Volvo'];
+  $mdDialog.show({
+    controller: DialogController,
+    scope: $scope,
+    preserveScope: true,
+    templateUrl: 'app/components/dashboard/views/addVehicle/addVehicleTmpl.html',
+    targetEvent: ev,
+    clickOutsideToClose: true
+  });
+};
 
 function PaymentDialogController($scope, $mdDialog, ride){
   $scope.ride = ride;
@@ -486,3 +540,5 @@ function PaymentDialogController($scope, $mdDialog, ride){
     $mdDialog.hide(answer);
   };
 };
+    
+}]);

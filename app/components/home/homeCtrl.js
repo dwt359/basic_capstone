@@ -51,4 +51,13 @@ function DialogController($scope, $mdDialog){
       alert('All fields are required except for the comment.');
     }
   };
+  $scope.saveVehicle = function(){
+    if($scope.newVehicle.make && $scope.newVehicle.model && $scope.newVehicle.year && $scope.newVehicle.mpg && $scope.newVehicle.color && $scope.newVehicle.seats){
+      $scope.newVehicle.$save();
+      $scope.hide();
+    }
+    else{
+      alert('All fields are required.');
+    }
+  }
 };
