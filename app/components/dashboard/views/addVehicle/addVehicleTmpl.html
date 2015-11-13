@@ -10,27 +10,28 @@
                 <div layout="column" style="height:450px;">
                     <section layout="column" flex>
                         
-                        <md-select placeholder="MAKE" aria-label="make" ng-model="vehicle.make">
+                        <md-select placeholder="MAKE" aria-label="make" ng-model="newVehicle.make">
                             <md-option ng-repeat="option in makeOptions" value="{{option}}">{{option}}</md-option>
                         </md-select>
                         <md-input-container>
                             <label>MODEL</label>
-                            <input type="text">
+                            <input type="text" ng-model="newVehicle.model"/>
                         </md-input-container>
-                        <md-select placeholder="YEAR" aria-label="year" ng-model="vehicle.year">
-                            <md-option ng-repeat="option in yearOptions" value="{{option}}">{{option}}</md-option>
-                        </md-select>
+                        <md-input-container>
+                            <label>YEAR</label>
+                            <input type="text" ng-model="newVehicle.year" />
+                        </md-input-container>
                         <md-input-container>
                             <label>COLOR</label>
-                            <input type="text">
+                            <input type="text" ng-model="newVehicle.color" />
                         </md-input-container>
                         <md-input-container>
                             <label>MPG</label>
-                            <input type="number">
+                            <input type="number" ng-model="newVehicle.mpg" />
                         </md-input-container>
                         <md-input-container>
                             <label>SEATS</label>
-                            <input type="number">
+                            <input type="number" ng-model="newVehicle.seats" />
                         </md-input-container>
                         
                     <md-button class="md-accent" ng-click="saveVehicle()">SAVE</md-button>
