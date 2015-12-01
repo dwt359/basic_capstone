@@ -6,16 +6,16 @@
         <div layout="column" layout-align="top">
           <md-list style="y-overflow: auto;">
             <md-toolbar md-scroll-y class="md-whiteframe-z4" id="ride_queue_header">
-                <h1 layout-align="left" class="md-toolbar-tools">YOUR RIDES</h1>  
+                <h1 layout-align="left" class="md-toolbar-tools">YOUR RIDES</h1>
             </md-toolbar>
             <md-list-item class="md-2-line" ng-repeat="trip in tripData">
               <div layout="row">
                 <img ng-click="showProfile($event, trip.user)" ng-src="{{trip.img_url}}" class="md-avatar" />
                 <div layout="column">
-                  <h4 style="margin:2px;">Driver: {{trip.name}}</h4>
-                  <h5 style="margin:2px;">Departing: {{trip.start_time}}</h5>
-                  <h5 style="margin:2px;">From: {{trip.from}}</h5>
-                  <h5 style="margin:2px;">To: {{trip.to}}</h5>
+                  <h4 style="margin:2px;">DRIVER: {{trip.name}}</h4>
+                  <h5 style="margin:2px;">DEPARTING: {{trip.start_time}}</h5>
+                  <h5 style="margin:2px;">FROM: {{trip.from}}</h5>
+                  <h5 style="margin:2px;">TO: {{trip.to}}</h5>
                   <md-button ng-click="showReviewForm($event, trip.user, trip.passenger_trip_id)" ng-hide="trip.is_reviewed || trip.time_num > now" class="md-accent md-raised">Review</md-button>
                 </div>
               </div>
@@ -27,16 +27,16 @@
     
     <div layout="column" id="dashboard_background" flex="80" layout-align="center center" >
       <div id="dashboard-home-grid" layout="row">
-        <div class="dashboard-button" ui-sref="^.find">
+            <div ng-click="showVehicleForm($event)" id="dashboard_button_1" class="dashboard-button">
+                <h3>ADD A VEHICLE</h3>
+            </div>
+            <div class="dashboard-button" id="dashboard_button_2" ui-sref="^.find">
               <h3>FIND A RIDE</h3>
+            </div>
+            <div class="dashboard-button" id="dashboard_button_3" ui-sref="^.post.info">
+                <h3>POST A RIDE</h3>
+            </div>
         </div>
-        <div class="dashboard-button md-accent" ui-sref="^.post.info">
-            <h3>POST A RIDE</h3>
-        </div>
-        <div ng-click="showVehicleForm($event)" class="dashboard-button">
-          <h3>ADD A VEHICLE</h3>
-        </div>
-      </div>
     </div>
 
     

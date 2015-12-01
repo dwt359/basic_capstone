@@ -14,18 +14,19 @@
                         <md-tab-label>REVIEWS</md-tab-label>
                         <md-tab-body>
                             <div layout="row" style="padding:10px 0px;">
+
                                 <div layout="column" flex="15">
                                     <h5 style="margin:2px; font-weight: normal;">{{viewedProfileInfo.name}}</h5>
                                 </div>
                                 <div layout="column" flex="85">
-                                    <h4 style="margin:0px;"><b>OVERALL RATING</b></h4>
+                                    <h4 style="margin:0px;"><b>COMPREHENSIVE RATING</b></h4>
                                     <h5 style="margin:1px;"><b>DRIVER ABILITY</b> {{avg.driver_ability}}</h5>
                                     <h5 style="margin:1px;"><b>COMFORT</b> {{avg.comfort}}</h5>
                                     <h5 style="margin:1px;"><b>PRICE FAIRNESS</b> {{avg.price_fairness}}</h5>
                                     <h5 style="margin:1px;"><b>OVERALL</b> {{avg.overall}}</h5>
                                 </div>
                             </div>
-                            <hr>
+                            <md-divider></md-divider>
                             <md-list>
                                 <md-list-item style="padding:10px 0px;" ng-repeat="review in profileReviews" class="profile_reviews" layout="row" layout-align="start start" flex>
                                         <div layout="column" flex="15">
@@ -59,6 +60,7 @@
                                             <h5 style="margin:2px;">TO {{trip.to}}</h5>
                                         </div>
                                     </div>
+                                    <md-divider></md-divider>
                                 </md-list-item>
                             </md-list>
                         </md-tab-body>
@@ -70,13 +72,13 @@
                                 <md-list-item ng-repeat="vehicle in profileVehicles">
                                     <div layout="row">
                                         <div layout="column">
-                                            <h4 style="margin:2px;">{{vehicle.make}} {{vehicle.model}}</h4>
-                                            <h5 style="margin:2px;">YEAR {{vehicle.year}}</h5>
-                                            <h5 style="margin:2px;">COLOR {{vehicle.color}}</h5>
-                                            <h5 style="margin:2px;">MPG {{vehicle.mpg}}</h5>
-                                            <h5 style="margin:2px;">SEATS {{vehicle.seats}}</h5>
+                                            <h4 style="margin:2px;">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</h4>
+                                            <h5 style="margin:2px;"><b>COLOR</b> {{vehicle.color}}</h5>
+                                            <h5 style="margin:2px;"><b>MPG</b> {{vehicle.mpg}}</h5>
+                                            <h5 style="margin:2px;"><b>SEATS</b> {{vehicle.seats}}</h5>
                                         </div>
                                     </div>
+                                    <md-divider></md-divider>
                                 </md-list-item>
                             </md-list>
                         </md-tab-body>

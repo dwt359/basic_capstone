@@ -95,7 +95,7 @@ md-content.md-padding {
   height: 225px;
   padding: 25px;
   text-decoration: none;
-  color: white;
+  color: rgb(237,237,237);
 }
 
 md-icon.md-default-theme{
@@ -114,12 +114,11 @@ md-icon.md-default-theme{
 .dashboard-button{
     width: 200px;
     height: 200px;
-    margin: 0px 15px 25px 15px;
     border-radius: 2px;
     box-shadow: -3px 2px 1px 0px
     rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);
     text-align:center;
-    background-color: rgba(1,87,155,.9);
+    background-color: rgba(19,22,25,.88);
     color: white;
     cursor: pointer;
 }
@@ -265,4 +264,18 @@ md-toolbar {
 
 #review_tabs {
     height: 400px;   
+}
+
+#dashboard-home-grid {
+    background-color: rgba(255,255,255,.73);
+}
+
+#dashboard_button_1 {
+    margin: 15px 7.5px 15px 15px;
+}
+#dashboard_button_2 {
+    margin: 15px 7.5px 15px 7.5px;
+}
+#dashboard_button_3 {
+    margin: 15px 15px 15px 7.5px;
 }
