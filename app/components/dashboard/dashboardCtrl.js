@@ -82,6 +82,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
           $scope.avg.comfort += parseInt(review.comfort) / profileReviews.length;
           $scope.avg.price_fairness += parseInt(review.price_fairness) / profileReviews.length;
           $scope.avg.overall += parseInt(review.overall) / profileReviews.length;
+
         });
       });
     });
@@ -102,6 +103,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
         });
       });
     });
+
     //vehicle information
     $scope.profileVehicles = $firebaseArray(userRef.child(fid).child('vehicles'));
 
@@ -360,26 +362,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       //the rides that match that query
       var startCity = GoogleMaps.getAdd(gmapurl1).replace(', USA', '').replace('.', '').trim();
       var endCity = GoogleMaps.getAdd(gmapurl2).replace(', USA', '').replace('.', '').trim();
-      var rides = $firebaseArray(tripRef.child(startCity).child(endCity));
-      var drivers = [];
-      $scope.rides = [];
-      rides.$loaded().then(function(){
-        angular.forEach(rides, function(ride, id){
-          drivers.push($firebaseObject(userRef.child(ride.user)));
-          drivers[id].$loaded().then(function(){
-            var newRide = {
-              name: drivers[id].name,
-              vehicle: drivers[id].vehicles[ride.vehicle],
-              img_url: drivers[id].img_url,
-              comment: ride.comment,
-              seats_left: ride.seats_left,
-              seat_price: ride.seat_price
-            };
-            $scope.rides.push(newRide);
-            console.dir($scope.rides);
-          });
-        });
-      });
+      $scope.rides = $firebaseArray(tripRef.child(startCity).child(endCity));
       if ($scope.rides.length == 0){
         document.getElementById("search").innerHTML = "There are no rides between those specified cities.";
       }
@@ -394,7 +377,6 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     $.ajaxSetup({
       async: false
     });
-
 
     var gmapurl1 = "https://maps.googleapis.com/maps/api/geocode/json?address="+$scope.starting.city+"+"+$scope.starting.state+"&components=country:US&key=AIzaSyA6xJtLioC6VlWo0JIeq5BBwcqzljpt4Lg";
     var gmapurl2 = "https://maps.googleapis.com/maps/api/geocode/json?address="+$scope.ending.city+"+"+$scope.ending.state+"&components=country:US&key=AIzaSyA6xJtLioC6VlWo0JIeq5BBwcqzljpt4Lg";
@@ -412,7 +394,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     var today = new Date();
 
     if (mapCity1 == 0){
-      document.getElementById("error1").innerHTML = "Starting city is not valid.";
+
       error = 0;
     }
     else {
@@ -475,10 +457,12 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 
 
     if (error != 0) {
+
+
       var gasUrl1 = "http://api.mygasfeed.com/stations/radius/"+lat1+"/"+long1+"/1/reg/Distance/1u129mrydk.json?";
       var gasUrl2 = "http://api.mygasfeed.com/stations/radius/"+lat2+"/"+long2+"/1/reg/Distance/1u129mrydk.json?";
-      var price1 = 2.72;//parseFloat(GoogleMaps.getPrice(gasUrl1), 10);
-      var price2 = 2.40;//parseFloat(GoogleMaps.getPrice(gasUrl2), 10);
+      var price1 = parseFloat($scope.getPrice(gasUrl1), 10);
+      var price2 = parseFloat($scope.getPrice(gasUrl2), 10);
       var averagePrice = (price1+price2)/2;
       var mpg = $scope.car.mpg;
       var seats = $scope.car.seats;
@@ -489,6 +473,21 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 
   }
 
+  $scope.getPrice = function (url){
+     var price;
+     $.getJSON(url, function(station){
+       var stations = station.stations;
+       for (i = 0; i<stations.length; i++) {
+         price = station.stations[i].reg_price;
+         if (price != "N/A"){
+           break;
+         }
+       }
+
+     });
+     return price;
+   }
+
   $scope.distanceInfo = function(distance, mpg, seats, averagePrice){
     distance = distance/1609.34;
     var cost = distance/mpg*averagePrice;
@@ -498,14 +497,14 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     $scope.postRidePricing.totalCost = cost.toFixed(2);
     $scope.postRidePricing.price = seatCost.toFixed(2);
 
-    
-      
-      
+
+
+
     //document.getElementById("distance").innerHTML = "Trip distance: "+distance.toFixed(2)+" miles";
     //document.getElementById("totalCost").innerHTML = "Total trip cost: $"+cost.toFixed(2);
     //document.getElementById("seatCost").innerHTML ="Suggested price per seat: $"+seatCost.toFixed(2);
   }
-  
+
   $scope.showPostForm = function(ev){
     $mdDialog.show({
       controller: DialogController,
@@ -519,7 +518,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 }
 
 
-  
+
   $scope.setSeats = function(){
 
   }
@@ -544,10 +543,6 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
   $scope.postRide = function(){
     console.log($scope.postRidePricing)
   }
-
-
-
-
 
 
 $scope.showVehicleForm = function(ev){
@@ -578,5 +573,5 @@ function PaymentDialogController($scope, $mdDialog, ride){
     $mdDialog.hide(answer);
   };
 };
-    
+
 }]);

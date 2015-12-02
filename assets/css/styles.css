@@ -114,11 +114,14 @@ md-icon.md-default-theme{
 .dashboard-button{
     width: 200px;
     height: 200px;
+
     border-radius: 2px;
     box-shadow: -3px 2px 1px 0px
     rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);
     text-align:center;
+
     background-color: rgba(19,22,25,.88);
+
     color: white;
     cursor: pointer;
 }
@@ -229,11 +232,11 @@ h5 {
 }
 
 md-list.md-default-theme {
-    padding-top: 0px;   
+    padding-top: 0px;
 }
 
 md-list-item .md-no-style, md-list-item.md-no-proxy {
-    padding: 6px 16px;   
+    padding: 6px 16px;
 }
 
 
@@ -263,12 +266,14 @@ md-toolbar {
 
 .md-avatar.review_avatar {
     margin: 0px 0px;
-    
+
+
 }
 
 #review_tabs {
-    height: 400px;   
+    height: 400px;
 }
+
 
 #dashboard-home-grid {
     background-color: rgba(255,255,255,.73);
@@ -282,4 +287,5 @@ md-toolbar {
 }
 #dashboard_button_3 {
     margin: 15px 15px 15px 7.5px;
+
 }

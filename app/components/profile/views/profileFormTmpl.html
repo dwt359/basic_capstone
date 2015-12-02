@@ -15,6 +15,7 @@
                         <md-tab-body>
                             <div layout="row" style="padding:10px 0px;">
 
+
                                 <div layout="column" flex="15">
                                     <h5 style="margin:2px; font-weight: normal;">{{viewedProfileInfo.name}}</h5>
                                 </div>
@@ -60,7 +61,9 @@
                                             <h5 style="margin:2px;">TO {{trip.to}}</h5>
                                         </div>
                                     </div>
+
                                     <md-divider></md-divider>
+
                                 </md-list-item>
                             </md-list>
                         </md-tab-body>
@@ -72,6 +75,7 @@
                                 <md-list-item ng-repeat="vehicle in profileVehicles">
                                     <div layout="row">
                                         <div layout="column">
+
                                             <h4 style="margin:2px;">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</h4>
                                             <h5 style="margin:2px;"><b>COLOR</b> {{vehicle.color}}</h5>
                                             <h5 style="margin:2px;"><b>MPG</b> {{vehicle.mpg}}</h5>
@@ -79,6 +83,7 @@
                                         </div>
                                     </div>
                                     <md-divider></md-divider>
+
                                 </md-list-item>
                             </md-list>
                         </md-tab-body>
