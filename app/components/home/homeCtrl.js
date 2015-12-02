@@ -52,12 +52,25 @@ function DialogController($scope, $mdDialog){
     }
   };
   $scope.saveVehicle = function(){
-    if($scope.newVehicle.make && $scope.newVehicle.model && $scope.newVehicle.year && $scope.newVehicle.mpg && $scope.newVehicle.color && $scope.newVehicle.seats){
-      $scope.newVehicle.$save();
-      $scope.hide();
+
+    if($scope.newVehicle.year < 0){
+      alert('Please enter valid year.');
+    }
+    else if($scope.newVehicle.mpg < 1){
+      alert('Please enter valid MPG.');
+    }
+    else if($scope.newVehicle.seats < 1){
+      alert('Please enter valid number of seats.');
     }
     else{
-      alert('All fields are required.');
+      if($scope.newVehicle.make && $scope.newVehicle.model && $scope.newVehicle.year && $scope.newVehicle.mpg && $scope.newVehicle.color && $scope.newVehicle.seats){
+        $scope.newVehicle.$save();
+        $scope.hide();
+      }
+      else{
+        alert('All fields are required.');
+      }
     }
+
   }
 };
