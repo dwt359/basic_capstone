@@ -376,7 +376,6 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
               seat_price: ride.seat_price
             };
             $scope.rides.push(newRide);
-            console.dir($scope.rides);
           });
         });
       });
@@ -543,11 +542,16 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 
   $scope.postRide = function(){
     console.log($scope.postRidePricing)
-  }
+  };
 
 
+  $scope.initPostRide = function(){
+    $scope.vehicles = $firebaseArray(userRef.child(UserData.getData().facebook.id).child('vehicles'));
+  };
 
-
+  $scope.selectPostVehicle = function(){
+    console.dir($scope.selected_vehicle);
+  };
 
 
 $scope.showVehicleForm = function(ev){
