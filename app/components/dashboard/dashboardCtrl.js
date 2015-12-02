@@ -360,7 +360,26 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       //the rides that match that query
       var startCity = GoogleMaps.getAdd(gmapurl1).replace(', USA', '').replace('.', '').trim();
       var endCity = GoogleMaps.getAdd(gmapurl2).replace(', USA', '').replace('.', '').trim();
-      $scope.rides = $firebaseArray(tripRef.child(startCity).child(endCity));
+      var rides = $firebaseArray(tripRef.child(startCity).child(endCity));
+      var drivers = [];
+      $scope.rides = [];
+      rides.$loaded().then(function(){
+        angular.forEach(rides, function(ride, id){
+          drivers.push($firebaseObject(userRef.child(ride.user)));
+          drivers[id].$loaded().then(function(){
+            var newRide = {
+              name: drivers[id].name,
+              vehicle: drivers[id].vehicles[ride.vehicle],
+              img_url: drivers[id].img_url,
+              comment: ride.comment,
+              seats_left: ride.seats_left,
+              seat_price: ride.seat_price
+            };
+            $scope.rides.push(newRide);
+            console.dir($scope.rides);
+          });
+        });
+      });
       if ($scope.rides.length == 0){
         document.getElementById("search").innerHTML = "There are no rides between those specified cities.";
       }
