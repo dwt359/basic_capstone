@@ -12,7 +12,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
 
   $scope.starting = {city: "", state: ""};
   $scope.ending = {city: "", state: ""};
-  $scope.car = {mpg: "", seats: ""};
+  $scope.car = {mpg: "", seats: "", vehicle: ""};
   $scope.departure = {date: "", time: ""}
   $scope.search = {date: ""}
   $scope.post = {description: ""}
@@ -421,8 +421,8 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     else{
       document.getElementById("error4").innerHTML = "";
     }
-    if ($scope.car.mpg == "" || isNaN($scope.car.mpg) || $scope.car.mpg < 0.01){
-      document.getElementById("error5").innerHTML = "MPG is not valid.";
+    if ($scope.ending.state == ""){
+      document.getElementById("error5").innerHTML = "Please select a vehicle.";
       error = 0;
     }
     else{
