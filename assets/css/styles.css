@@ -208,6 +208,10 @@ md-icon.md-default-theme{
     width: 400px;
 }
 
+#post_ride_dialog {
+    width: 250px;
+}
+
 h5 {
     font-weight: normal;
 }

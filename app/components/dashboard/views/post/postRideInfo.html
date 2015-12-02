@@ -73,7 +73,7 @@
               <textarea ng-model="post.description" md-maxlength="250" maxlength="250"></textarea>
             </md-input-container>
               <div layout="row" layout-align="center center">
-                <md-button type="submit" class="md-accent md-raised" ng-click="setPrice()">Set Price</md-button>
+                <md-button type="submit" class="md-accent md-raised" ng-click="setPrice(); showPostForm($event)">Set Price</md-button>
               </div>
             </form>
           </md-card-content>
@@ -94,6 +94,7 @@
                 <!--<h3 id="distance"></h3>
                 <h3 id="totalCost"></h3>
                 <h3 id="seatCost"></h3>-->
+<!--
                 <md-form ng-show="postRidePricing.showForm">
 
                     <h3>Trip distance is {{postRidePricing.distance}} miles</h3>
@@ -109,6 +110,7 @@
                     Post Ride
                   </md-button>
                 </md-form>
+-->
           </md-list>
         </div>
 

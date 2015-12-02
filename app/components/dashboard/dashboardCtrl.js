@@ -479,11 +479,28 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     $scope.postRidePricing.totalCost = cost.toFixed(2);
     $scope.postRidePricing.price = seatCost.toFixed(2);
 
+    
+      
+      
     //document.getElementById("distance").innerHTML = "Trip distance: "+distance.toFixed(2)+" miles";
     //document.getElementById("totalCost").innerHTML = "Total trip cost: $"+cost.toFixed(2);
     //document.getElementById("seatCost").innerHTML ="Suggested price per seat: $"+seatCost.toFixed(2);
   }
+  
+  $scope.showPostForm = function(ev){
+    $mdDialog.show({
+      controller: DialogController,
+      scope: $scope,
+      preserveScope: true,
+      templateUrl: 'app/components/dashboard/views/post/postRideTmpl.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true
+    });
+}
 
+
+  
   $scope.setSeats = function(){
 
   }
@@ -508,6 +525,8 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
   $scope.postRide = function(){
     console.log($scope.postRidePricing)
   }
+
+
 
 
 
