@@ -362,7 +362,28 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       //the rides that match that query
       var startCity = GoogleMaps.getAdd(gmapurl1).replace(', USA', '').replace('.', '').trim();
       var endCity = GoogleMaps.getAdd(gmapurl2).replace(', USA', '').replace('.', '').trim();
-      $scope.rides = $firebaseArray(tripRef.child(startCity).child(endCity));
+      var rides = $firebaseArray(tripRef.child(startCity).child(endCity));
+      var drivers = [];
+      $scope.rides = [];
+      rides.$loaded().then(function(){
+        angular.forEach(rides, function(ride, id){
+          drivers.push($firebaseObject(userRef.child(ride.user)));
+          drivers[id].$loaded().then(function(){
+            var newRide = {
+              name: drivers[id].name,
+              user: ride.user,
+              vehicle: drivers[id].vehicles[ride.vehicle],
+              img_url: drivers[id].img_url,
+              comment: ride.comment,
+              seats_left: ride.seats_left,
+              seat_price: ride.seat_price,
+              start_time: $scope.formatDate(ride.start_time)
+            };
+            $scope.rides.push(newRide);
+            console.dir($scope.rides);
+          });
+        });
+      });
       if ($scope.rides.length == 0){
         document.getElementById("search").innerHTML = "There are no rides between those specified cities.";
       }
@@ -460,8 +481,12 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 
       var gasUrl1 = "http://api.mygasfeed.com/stations/radius/"+lat1+"/"+long1+"/1/reg/Distance/1u129mrydk.json?";
       var gasUrl2 = "http://api.mygasfeed.com/stations/radius/"+lat2+"/"+long2+"/1/reg/Distance/1u129mrydk.json?";
-      var price1 = parseFloat($scope.getPrice(gasUrl1), 10);
-      var price2 = parseFloat($scope.getPrice(gasUrl2), 10);
+      var price1 = parseFloat(GoogleMaps.getPrice(gasUrl1), 10);
+      var price2 = parseFloat(GoogleMaps.getPrice(gasUrl2), 10);
+      if (price1 == NaN || price2 == NaN) {
+        price1 = 2;
+        price2 = 2;
+      }    
       var averagePrice = (price1+price2)/2;
       var mpg = $scope.car.mpg;
       var seats = $scope.car.seats;

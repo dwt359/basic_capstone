@@ -13,12 +13,14 @@ div{
   font-family: ProximaNova-Regular;
 }
 
+/*
 #ride-list-container{
   margin: 5px;
   padding: 5px;
   max-height: 65%;
   overflow-y: scroll;
 }
+*/
 
 .md-avatar{
     border-radius: 2px;
@@ -70,6 +72,10 @@ md-content.md-padding {
 .list-text{
   word-wrap: break-word;
   padding-right: 10px;
+}
+
+md-list-item.md-2-line .md-list-item-text h4, md-list-item.md-2-line>.md-no-style .md-list-item-text h4, md-list-item.md-3-line .md-list-item-text h4, md-list-item.md-3-line>.md-no-style .md-list-item-text h4 {
+  line-height: 1.1em;
 }
 
 #find-ride-form{
@@ -239,6 +245,10 @@ md-list-item .md-no-style, md-list-item.md-no-proxy {
     padding: 6px 16px;
 }
 
+md-list-item.md-2-line .md-list-item-text, md-list-item.md-2-line>.md-no-style .md-list-item-text {
+    padding-top: 5px;   
+}
+
 
 .section.dashboard_home {
     background: url("../img/blurryLightsCarO75.jpg") no-repeat center center fixed;
@@ -256,6 +266,10 @@ md-list-item .md-no-style, md-list-item.md-no-proxy {
     background-repeat: no-repeat;
 }
 
+.driver_name {
+    text-transform: uppercase;
+}
+
 md-sidenav {
     background-color: rgba(236,236,236,.85);
 }
@@ -268,6 +282,14 @@ md-toolbar {
     margin: 0px 0px;
 
 
+}
+
+.md-avatar-find {
+    border-radius: 2px;
+    display: inline-block;
+    margin: 4px 16px;
+    width: 75px;
+    height: 75px;
 }
 
 #review_tabs {
