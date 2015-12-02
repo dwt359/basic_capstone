@@ -169,7 +169,7 @@ md-icon.md-default-theme{
 }
 
 #home-section{
-  background: url("../img/city.jpg") no-repeat center center fixed;
+  background: url("../img/city_street_background.png") no-repeat center center fixed;
   background-size: 100% auto;
   background-position: left;
   background-size: cover;
@@ -288,6 +288,14 @@ md-toolbar {
     border-radius: 2px;
     display: inline-block;
     margin: 4px 16px;
+    width: 75px;
+    height: 75px;
+}
+
+.md-avatar-review {
+    border-radius: 2px;
+    display: inline-block;
+    margin: 5px 0px;
     width: 75px;
     height: 75px;
 }
