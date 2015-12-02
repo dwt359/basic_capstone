@@ -1,0 +1,37 @@
+<md-dialog aria-label="test">
+  <form name="postRideForm">
+    <md-dialog-content>
+        <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
+            <h1 id="profileDisplayName" layout-align="left" class="md-toolbar-tools">POST A RIDE</h1>
+        </md-toolbar>
+        <div id="post_ride_dialog">
+
+        <div layout="column" style="height:250px;">
+            <section layout="column" flex>
+            
+                
+            <md-input-container>
+                <label>TRIP DISTANCE</label>
+                <input type="text" disabled ng-model="postRidePricing.distance"/>
+            </md-input-container>    
+            <md-input-container>
+                <label>TRIP COST</label>
+                <input type="text" disabled ng-model="postRidePricing.totalCost"/>
+            </md-input-container> 
+            <md-input-container>
+                <label>PRICE PER SEAT</label>
+                <input type="text" ng-model="postRidePricing.price">
+            </md-input-container> 
+               
+               
+            <md-button class="md-accent" ng-click="saveRide()">POST
+            
+            </md-button>
+      
+            </section>
+          
+        </div>
+        </div>
+        </md-dialog-content>
+    </form>
+</md-dialog>
