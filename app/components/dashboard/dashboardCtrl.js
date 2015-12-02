@@ -369,11 +369,13 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
           drivers[id].$loaded().then(function(){
             var newRide = {
               name: drivers[id].name,
+              user: ride.user,
               vehicle: drivers[id].vehicles[ride.vehicle],
               img_url: drivers[id].img_url,
               comment: ride.comment,
               seats_left: ride.seats_left,
-              seat_price: ride.seat_price
+              seat_price: ride.seat_price,
+              start_time: $scope.formatDate(ride.start_time)
             };
             $scope.rides.push(newRide);
             console.dir($scope.rides);
@@ -477,8 +479,12 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     if (error != 0) {
       var gasUrl1 = "http://api.mygasfeed.com/stations/radius/"+lat1+"/"+long1+"/1/reg/Distance/1u129mrydk.json?";
       var gasUrl2 = "http://api.mygasfeed.com/stations/radius/"+lat2+"/"+long2+"/1/reg/Distance/1u129mrydk.json?";
-      var price1 = 2.72;//parseFloat(GoogleMaps.getPrice(gasUrl1), 10);
-      var price2 = 2.40;//parseFloat(GoogleMaps.getPrice(gasUrl2), 10);
+      var price1 = parseFloat(GoogleMaps.getPrice(gasUrl1), 10);
+      var price2 = parseFloat(GoogleMaps.getPrice(gasUrl2), 10);
+      if (price1 == NaN || price2 == NaN) {
+        price1 = 2;
+        price2 = 2;
+      }    
       var averagePrice = (price1+price2)/2;
       var mpg = $scope.car.mpg;
       var seats = $scope.car.seats;
