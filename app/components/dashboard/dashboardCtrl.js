@@ -13,9 +13,9 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   $scope.starting = {city: "", state: ""};
   $scope.ending = {city: "", state: ""};
   $scope.car = {mpg: "", seats: ""};
-  $scope.departure = {date: "", time: ""}
-  $scope.search = {date: ""}
-  $scope.post = {description: ""}
+  $scope.departure = {date: "", time: ""};
+  $scope.search = {date: ""};
+  $scope.post = {description: ""};
 
   $scope.seats = [{name: 'Seat', description:'', price: 0.00}];
   $scope.seatLimit = 6;
@@ -106,6 +106,8 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
 
     //vehicle information
     $scope.profileVehicles = $firebaseArray(userRef.child(fid).child('vehicles'));
+    //viewing your own profile
+    $scope.isPersonalProfile = (fid == UserData.getData().facebook.id);
 
     //kick off dialog
     $mdDialog.show({
@@ -117,7 +119,33 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
       targetEvent: ev,
       clickOutsideToClose: true
     });
-  }
+  };
+
+  $scope.deleteVehicle = function(vid){
+    //get user's trips as an array
+    var allTrips = [];
+    var trips = $firebaseArray(userRef.child(UserData.getData().facebook.id).child('trips'));
+    trips.$loaded().then(function(){
+      angular.forEach(trips, function(trip, id){
+        allTrips.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
+        allTrips[id].$loaded().then(function(){
+          if(allTrips[id].vehicle == vid){
+            //can't delete
+            alert('You can\'t delete a vehicle you are using in a trip.');
+          }
+          else if(id+1 == trips.length){
+            //delete
+            var user = $firebaseObject(userRef.child(UserData.getData().facebook.id));
+            user.$loaded().then(function(){
+              user.vehicles[vid] = null;
+              user.$save();
+              alert('Successfully deleted vehicle.');
+            });
+          }
+        });
+      });
+    });
+  };
 
 
 
@@ -392,7 +420,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       }
     }
 
-  }
+  };
 
   $scope.setPrice = function(){
     $.ajaxSetup({
@@ -567,7 +595,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 
   $scope.postRide = function(){
     console.log($scope.postRidePricing)
-  }
+  };
 
 
 $scope.showVehicleForm = function(ev){
