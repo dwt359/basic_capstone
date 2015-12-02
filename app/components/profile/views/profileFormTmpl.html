@@ -80,6 +80,7 @@
                                             <h5 style="margin:2px;"><b>COLOR</b> {{vehicle.color}}</h5>
                                             <h5 style="margin:2px;"><b>MPG</b> {{vehicle.mpg}}</h5>
                                             <h5 style="margin:2px;"><b>SEATS</b> {{vehicle.seats}}</h5>
+                                            <md-button class="md-accent" ng-show="isPersonalProfile" ng-click="deleteVehicle(vehicle.$id)">DELETE</md-button>
                                         </div>
                                     </div>
                                     <md-divider></md-divider>
