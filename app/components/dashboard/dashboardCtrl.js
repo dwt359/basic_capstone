@@ -458,7 +458,6 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 
     if (error != 0) {
 
-
       var gasUrl1 = "http://api.mygasfeed.com/stations/radius/"+lat1+"/"+long1+"/1/reg/Distance/1u129mrydk.json?";
       var gasUrl2 = "http://api.mygasfeed.com/stations/radius/"+lat2+"/"+long2+"/1/reg/Distance/1u129mrydk.json?";
       var price1 = parseFloat($scope.getPrice(gasUrl1), 10);
@@ -468,6 +467,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       var seats = $scope.car.seats;
       $scope.initGasMap(lat1, lat2, long1, long2, mpg, seats, averagePrice);
       $scope.postRidePricing.showForm = true;
+      $scope.showPostForm();
       console.log($scope.postRidePricing);
     }
 

@@ -8,28 +8,28 @@
 
         <div layout="column" style="height:250px;">
             <section layout="column" flex>
-            
-                
+
+
             <md-input-container>
                 <label>TRIP DISTANCE</label>
                 <input type="text" disabled ng-model="postRidePricing.distance"/>
-            </md-input-container>    
+            </md-input-container>
             <md-input-container>
                 <label>TRIP COST</label>
                 <input type="text" disabled ng-model="postRidePricing.totalCost"/>
-            </md-input-container> 
+            </md-input-container>
             <md-input-container>
                 <label>PRICE PER SEAT</label>
                 <input type="text" ng-model="postRidePricing.price">
-            </md-input-container> 
-               
-               
-            <md-button class="md-accent" ng-click="saveRide()">POST
-            
+            </md-input-container>
+
+
+            <md-button class="md-accent" ng-click="saveRide()" id="myBtn">POST
+
             </md-button>
-      
+
             </section>
-          
+
         </div>
         </div>
         </md-dialog-content>
