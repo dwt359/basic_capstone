@@ -384,7 +384,6 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
           });
         });
       });
-      $scope.rides = $firebaseArray(tripRef.child(startCity).child(endCity));
       if ($scope.rides.length == 0){
         document.getElementById("search").innerHTML = "There are no rides between those specified cities.";
       }
