@@ -443,7 +443,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       document.getElementById("error4").innerHTML = "";
     }
     if ($scope.ending.state == ""){
-      document.getElementById("error5").innerHTML = "Please select a vehicle.";
+      document.getElementById("error5").innerHTML = "Please select a vehicle. Please add a vehicle on the home page if you do not have a vehicle in the list.";
       error = 0;
     }
     else{
@@ -486,7 +486,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       if (price1 == NaN || price2 == NaN) {
         price1 = 2;
         price2 = 2;
-      }    
+      }
       var averagePrice = (price1+price2)/2;
       var mpg = $scope.car.mpg;
       var seats = $scope.car.seats;
