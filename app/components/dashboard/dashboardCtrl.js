@@ -385,8 +385,8 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       document.getElementById("error5").innerHTML = "";
       document.getElementById("search").innerHTML = "";
     }
-    if ($scope.search.dateE < today){
-      if ($scope.search.dateE == ""){
+    if ($scope.search.date2 < today){
+      if ($scope.search.date2 == ""){
         document.getElementById("error6").innerHTML = "Please enter a date.";
         $scope.rides = [];
       }
