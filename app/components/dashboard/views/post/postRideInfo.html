@@ -20,7 +20,7 @@
                     </md-select>
                     </md-input-container>
                     <md-input-container id="find-ride-form">
-                    <md-select aria-label="vehicle" ng-model="selected_vehicle" ng-change="selectPostVehicle()" placeholder="Vehicle">
+                    <md-select aria-label="vehicle" ng-model="selectedVehicle" ng-change="selectPostVehicle()" placeholder="Vehicle">
                       <md-option ng-repeat="vehicle in vehicles" value="{{vehicle.$id}}">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</md-option>
 
                     </md-select>

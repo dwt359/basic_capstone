@@ -16,6 +16,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   $scope.departure = {date: "", time: ""};
   $scope.search = {date: ""};
   $scope.post = {description: ""};
+  $scope.selectedVehicle = 0;
 
   $scope.seats = [{name: 'Seat', description:'', price: 0.00}];
   $scope.seatLimit = 6;
@@ -610,7 +611,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
   };
 
   $scope.selectPostVehicle = function(){
-    console.dir($scope.selected_vehicle);
+    console.dir($scope.selectedVehicle);
   };
 
 
