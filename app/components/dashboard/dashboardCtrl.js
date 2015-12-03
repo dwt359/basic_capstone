@@ -367,8 +367,8 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       document.getElementById("error4").innerHTML = "";
       document.getElementById("search").innerHTML = "";
     }
-    if ($scope.search.date < today){
-      if ($scope.search.date == ""){
+    if ($scope.search.date1 < today || $scope.search.date2 < today){
+      if ($scope.search.date1 == "" || $scope.search.date2 == ""){
         document.getElementById("error5").innerHTML = "Please enter a date.";
         $scope.rides = [];
       }
@@ -407,8 +407,10 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
               seat_price: ride.seat_price,
               start_time: $scope.formatDate(ride.start_time)
             };
-            $scope.rides.push(newRide);
-            console.dir($scope.rides);
+            var rideDate = new Date(ride.start_time);
+            if(rideDate >= $scope.search.date1 && rideDate <= $scope.search.date2) {
+              $scope.rides.push(newRide);
+            }
           });
         });
       });
