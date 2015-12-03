@@ -1,11 +1,19 @@
 <md-dialog aria-label="test">
-  <md-toolbar md-scroll-y class="md-whiteframe-z4 md-accent" layout="row">
-      <h1 id="profileDisplayName" layout-align="center" class="md-toolbar-tools">Confirmation</h1>
+  <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
+      <h1 id="profileDisplayName" layout-align="center" class="md-toolbar-tools">CONFIRMATION</h1>
   </md-toolbar>
   <md-dialog-content layout="column">
     <div layout="row" layout-align="center">
-      <h4>Pay ${{ride.seat_price}} to {{ride.name}}?</h4>
+        <h2>Pay ${{ride.seat_price}} to {{ride.name}}?</h2>
     </div>
+    <div layout="row">
+        <p>Clicking "Proceed" will redirect you to PayPal to complete your transaction.</p>
+    </div>
+    <div layout="row">
+       
+    </div>
+    
+ 
       <br>
       <?php
 

@@ -10,17 +10,17 @@
               <div layout-gt-sm="row" layout="column">
                 <div layout-gt-sm="column" flex-gt-sm="33" layout="row" layout-align="center">
                     <md-input-container id="find-ride-form">
-                      <label>Starting City</label>
+                      <label>STARTING CITY</label>
                       <input type="text" ng-model="starting.city">
                     </md-input-container>
                     <md-input-container id="find-ride-form">
-                      <md-select aria-label="state" ng-model="starting.state" placeholder="Starting State">
+                      <md-select aria-label="state" ng-model="starting.state" placeholder="STARTING STATE">
                         <md-option ng-repeat="state in states" value="{{state.abbrev}}">{{state.abbrev}}</md-option>
 
                     </md-select>
                     </md-input-container>
                     <md-input-container id="find-ride-form">
-                    <md-select aria-label="vehicle" ng-model="" placeholder="Vehicle">
+                    <md-select aria-label="vehicle" ng-model="" placeholder="VEHICLE">
                       <md-option ng-repeat="vehicle in vehicle" value="">{{state.abbrev}}</md-option>
 
                     </md-select>
@@ -29,17 +29,17 @@
 
                 <div layout-gt-sm="column" flex-gt-sm="33" layout="row" layout-align="center">
                   <md-input-container id="find-ride-form">
-                    <label>Ending City</label>
+                    <label>ENDING CITY</label>
                     <input type="text" ng-model="ending.city">
                   </md-input-container>
                   <md-input-container id="find-ride-form">
-                    <md-select aria-label="state" ng-model="ending.state" placeholder="Ending State">
+                    <md-select aria-label="state" ng-model="ending.state" placeholder="ENDING STATE">
                       <md-option ng-repeat="state in states" value="{{state.abbrev}}">{{state.abbrev}}</md-option>
 
                     </md-select>
                   </md-input-container>
                   <md-input-container id="find-ride-form">
-                    <md-select aria-label="seats" ng-model="car.seats" placeholder="Seats">
+                    <md-select aria-label="seats" ng-model="car.seats" placeholder="SEATS">
                       <md-option value="1">1</md-option>
                       <md-option value="2">2</md-option>
                       <md-option value="3">3</md-option>
@@ -61,17 +61,17 @@
 
                 <div layout-gt-sm="column" layout="row" flex-gt-sm="33" layout-align="center">
                   <md-input-container id="find-ride-form" style="max-height: 171px;">
-                    <label>Date: </label>
+                    <label>DATE</label>
                     <input type="date" ng-model="departure.date">
                   </md-input-container>
                   <md-input-container id="find-ride-form" style="max-height: 171px;">
-                    <label>Time: </label>
+                    <label>TIME</label>
                     <input type="time" ng-model="departure.time">
                   </md-input-container>
                 </div>
             </div>
             <md-input-container id="find-ride-form">
-              <label>Description</label>
+              <label>DESCRIPTION</label>
               <textarea ng-model="post.description" md-maxlength="250" maxlength="250"></textarea>
             </md-input-container>
               <div layout="row" layout-align="center center">
