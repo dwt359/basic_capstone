@@ -125,18 +125,21 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
     //get user's trips as an array
     var allTrips = [];
     var trips = $firebaseArray(userRef.child(UserData.getData().facebook.id).child('trips'));
+    var vehicles = $firebaseArray(userRef.child(UserData.getData().facebook.id).child('vehicles'));
     trips.$loaded().then(function(){
-      angular.forEach(trips, function(trip, id){
+      angular.forEach(trips, function (trip, id) {
         allTrips.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
-        allTrips[id].$loaded().then(function(){
-          if(allTrips[id].vehicle == vid){
+        allTrips[id].$loaded().then(function () {
+          console.log(allTrips.length);
+          console.log(trips.length);
+          if (allTrips[id].vehicle == vid) {
             //can't delete
             alert('You can\'t delete a vehicle you are using in a trip.');
           }
-          else if(id+1 == trips.length){
+          else if (allTrips.length >= trips.length) {
             //delete
             var user = $firebaseObject(userRef.child(UserData.getData().facebook.id));
-            user.$loaded().then(function(){
+            user.$loaded().then(function () {
               user.vehicles[vid] = null;
               user.$save();
               alert('Successfully deleted vehicle.');
@@ -228,11 +231,11 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
         });
       });
     });
-  }
+  };
 
   $scope.getUserData = function(){
     return UserData.getData();
-  }
+  };
 
   $scope.logout = function(){
 
