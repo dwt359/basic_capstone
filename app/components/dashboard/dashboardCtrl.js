@@ -8,7 +8,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
             'WY').split(' ').map(function (state) { return { abbrev: state }; });
 
 
-  $scope.rating = [1, 2, 3, 4, 5];
+  $scope.rating = [5, 4, 3, 2, 1];
 
   $scope.starting = {city: "", state: ""};
   $scope.ending = {city: "", state: ""};
