@@ -20,8 +20,8 @@
                     </md-select>
                     </md-input-container>
                     <md-input-container id="find-ride-form">
-                    <md-select aria-label="vehicle" ng-model="selectedVehicle" ng-change="selectPostVehicle()" placeholder="Vehicle">
-                      <md-option ng-repeat="vehicle in vehicles" value="{{vehicle.$id}}">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</md-option>
+                    <md-select aria-label="vehicle" ng-model="car.vehicle" placeholder="VEHICLE">
+                      <md-option ng-repeat="vehicle in vehicle" value="{{vehicle.$id}}">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</md-option>
 
                     </md-select>
                   </md-input-container>
@@ -75,7 +75,7 @@
               <textarea ng-model="post.description" md-maxlength="250" maxlength="250"></textarea>
             </md-input-container>
               <div layout="row" layout-align="center center">
-                <md-button type="submit" class="md-accent md-raised" ng-click="setPrice(); showPostForm($event)">Set Price</md-button>
+                <md-button type="submit" class="md-accent md-raised" ng-click="setPrice(); ">Set Price</md-button>
               </div>
 
             </form>
