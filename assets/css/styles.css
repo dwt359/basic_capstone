@@ -13,12 +13,14 @@ div{
   font-family: ProximaNova-Regular;
 }
 
+/*
 #ride-list-container{
   margin: 5px;
   padding: 5px;
   max-height: 65%;
   overflow-y: scroll;
 }
+*/
 
 .md-avatar{
     border-radius: 2px;
@@ -72,6 +74,10 @@ md-content.md-padding {
   padding-right: 10px;
 }
 
+md-list-item.md-2-line .md-list-item-text h4, md-list-item.md-2-line>.md-no-style .md-list-item-text h4, md-list-item.md-3-line .md-list-item-text h4, md-list-item.md-3-line>.md-no-style .md-list-item-text h4 {
+  line-height: 1.1em;
+}
+
 #find-ride-form{
   background-color: rgba(233,233,233,0.83);
   padding: 0px 16px 0px 16px;
@@ -114,11 +120,14 @@ md-icon.md-default-theme{
 .dashboard-button{
     width: 200px;
     height: 200px;
+
     border-radius: 2px;
     box-shadow: -3px 2px 1px 0px
     rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);
     text-align:center;
+
     background-color: rgba(19,22,25,.88);
+
     color: white;
     cursor: pointer;
 }
@@ -160,7 +169,7 @@ md-icon.md-default-theme{
 }
 
 #home-section{
-  background: url("../img/city.jpg") no-repeat center center fixed;
+  background: url("../img/city_street_background.png") no-repeat center center fixed;
   background-size: 100% auto;
   background-position: left;
   background-size: cover;
@@ -229,11 +238,15 @@ h5 {
 }
 
 md-list.md-default-theme {
-    padding-top: 0px;   
+    padding-top: 0px;
 }
 
 md-list-item .md-no-style, md-list-item.md-no-proxy {
-    padding: 6px 16px;   
+    padding: 6px 16px;
+}
+
+md-list-item.md-2-line .md-list-item-text, md-list-item.md-2-line>.md-no-style .md-list-item-text {
+    padding-top: 5px;   
 }
 
 
@@ -253,6 +266,10 @@ md-list-item .md-no-style, md-list-item.md-no-proxy {
     background-repeat: no-repeat;
 }
 
+.driver_name {
+    text-transform: uppercase;
+}
+
 md-sidenav {
     background-color: rgba(236,236,236,.85);
 }
@@ -263,12 +280,30 @@ md-toolbar {
 
 .md-avatar.review_avatar {
     margin: 0px 0px;
-    
+
+
+}
+
+.md-avatar-find {
+    border-radius: 2px;
+    display: inline-block;
+    margin: 4px 16px;
+    width: 75px;
+    height: 75px;
+}
+
+.md-avatar-review {
+    border-radius: 2px;
+    display: inline-block;
+    margin: 5px 0px;
+    width: 75px;
+    height: 75px;
 }
 
 #review_tabs {
-    height: 400px;   
+    height: 400px;
 }
+
 
 #dashboard-home-grid {
     background-color: rgba(255,255,255,.73);
@@ -282,4 +317,5 @@ md-toolbar {
 }
 #dashboard_button_3 {
     margin: 15px 15px 15px 7.5px;
+
 }
