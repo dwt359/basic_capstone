@@ -539,12 +539,12 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       var gasUrl2 = "http://api.mygasfeed.com/stations/radius/"+lat2+"/"+long2+"/25/reg/Distance/1u129mrydk.json?";
       var price1 = parseFloat(GoogleMaps.getPrice(gasUrl1), 10);
       var price2 = parseFloat(GoogleMaps.getPrice(gasUrl2), 10);
-      if (price1 == NaN || price2 == NaN) {
+      if (isNaN(price1)|| isNaN(price2)) {
         price1 = 2;
         price2 = 2;
       }
       var averagePrice = (price1+price2)/2;
-      var mpg = $scope.car.mpg;
+      var mpg = $scope.selectedVehicle.mpg;
       var seats = $scope.car.seats;
       $scope.initGasMap(lat1, lat2, long1, long2, mpg, seats, averagePrice);
       $scope.postRidePricing.showForm = true;
@@ -628,9 +628,13 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 
   $scope.initPostRide = function(){
     $scope.vehicles = $firebaseArray(userRef.child(UserData.getData().facebook.id).child('vehicles'));
+    $scope.vehicles.$loaded().then(function(){
+      console.dir($scope.vehicles);
+    });
   };
 
   $scope.selectPostVehicle = function(){
+    $scope.selectedVehicle = $scope.vehicles[$scope.car.vehicle];
     console.dir($scope.selectedVehicle);
   };
 

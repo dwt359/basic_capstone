@@ -20,8 +20,8 @@
                     </md-select>
                     </md-input-container>
                     <md-input-container id="find-ride-form">
-                    <md-select aria-label="vehicle" ng-model="car.vehicle" placeholder="VEHICLE">
-                      <md-option ng-repeat="vehicle in vehicle" value="{{vehicle.$id}}">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</md-option>
+                    <md-select aria-label="vehicle" ng-model="car.vehicle" placeholder="VEHICLE" ng-change="selectPostVehicle()">
+                      <md-option ng-repeat="vehicle in vehicles" value="{{vehicle.$id}}">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</md-option>
 
                     </md-select>
                   </md-input-container>
@@ -41,20 +41,20 @@
                   <md-input-container id="find-ride-form">
                     <md-select aria-label="seats" ng-model="car.seats" placeholder="SEATS">
                       <md-option value="1">1</md-option>
-                      <md-option value="2">2</md-option>
-                      <md-option value="3">3</md-option>
-                      <md-option value="4">4</md-option>
-                      <md-option value="5">5</md-option>
-                      <md-option value="6">6</md-option>
-                      <md-option value="7">7</md-option>
-                      <md-option value="8">8</md-option>
-                      <md-option value="9">9</md-option>
-                      <md-option value="10">10</md-option>
-                      <md-option value="11">11</md-option>
-                      <md-option value="12">12</md-option>
-                      <md-option value="13">13</md-option>
-                      <md-option value="14">14</md-option>
-                      <md-option value="15">15</md-option>
+                      <md-option value="2" ng-hide="2 > selectedVehicle.seats">2</md-option>
+                      <md-option value="3" ng-hide="3 > selectedVehicle.seats">3</md-option>
+                      <md-option value="4" ng-hide="4 > selectedVehicle.seats">4</md-option>
+                      <md-option value="5" ng-hide="5 > selectedVehicle.seats">5</md-option>
+                      <md-option value="6" ng-hide="6 > selectedVehicle.seats">6</md-option>
+                      <md-option value="7" ng-hide="7 > selectedVehicle.seats">7</md-option>
+                      <md-option value="8" ng-hide="8 > selectedVehicle.seats">8</md-option>
+                      <md-option value="9" ng-hide="9 > selectedVehicle.seats">9</md-option>
+                      <md-option value="10" ng-hide="10 > selectedVehicle.seats">10</md-option>
+                      <md-option value="11" ng-hide="11 > selectedVehicle.seats">11</md-option>
+                      <md-option value="12" ng-hide="12 > selectedVehicle.seats">12</md-option>
+                      <md-option value="13" ng-hide="13 > selectedVehicle.seats">13</md-option>
+                      <md-option value="14" ng-hide="14 > selectedVehicle.seats">14</md-option>
+                      <md-option value="15" ng-hide="15 > selectedVehicle.seats">15</md-option>
                     </md-select>
                   </md-input-container>
                 </div>
