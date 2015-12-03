@@ -6,8 +6,13 @@
         <div layout="column" layout-align="top">
           <md-list style="y-overflow: auto;">
             <md-toolbar md-scroll-y class="md-whiteframe-z4" id="ride_queue_header">
-                <h1 layout-align="left" class="md-toolbar-tools">YOUR RIDES</h1>
+                <h1 layout-align="left" class="md-toolbar-tools">RIDE QUEUE</h1>
             </md-toolbar>
+            <h4 layout-align="left" style="margin:10px 0px 10px 16px;">RIDES AS DRIVER</h4>
+            <md-divider></md-divider>
+            
+            <h4 layout-align="left" style="margin:10px 0px 10px 16px;">RIDES AS PASSENGER</h4>
+            <md-divider></md-divider>
             <md-list-item class="md-2-line" ng-repeat="trip in tripData">
               <div layout="row">
                 <img ng-click="showProfile($event, trip.user)" ng-src="{{trip.img_url}}" class="md-avatar" />
