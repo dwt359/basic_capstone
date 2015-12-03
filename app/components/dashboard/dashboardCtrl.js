@@ -332,7 +332,8 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     var lat2 = GoogleMaps.getLat(gmapurl2);
     var long2 = GoogleMaps.getLng(gmapurl2);
     var error = 1;
-    var today = new Date();
+    var yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
 
     if (mapCity1 == 0){
       document.getElementById("error1").innerHTML = "Starting city is not valid.";
@@ -370,7 +371,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       document.getElementById("error4").innerHTML = "";
       document.getElementById("search").innerHTML = "";
     }
-    if ($scope.search.date1 < today || $scope.search.date2 < today){
+    if ($scope.search.date1 < yesterday || $scope.search.date2 < yesterday){
       if ($scope.search.date1 == "" || $scope.search.date2 == ""){
         document.getElementById("error5").innerHTML = "Please enter a date.";
         $scope.rides = [];
@@ -445,7 +446,8 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     var lat2 = GoogleMaps.getLat(gmapurl2);
     var long2 = GoogleMaps.getLng(gmapurl2);
     var error = 1;
-    var today = new Date();
+    var yesterday = new Date();
+    yesterday.setDate(yesterday.getDate()-1);
 
     if (mapCity1 == 0){
 
@@ -489,7 +491,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     else{
       document.getElementById("error6").innerHTML = "";
     }
-    if ($scope.departure.date < today){
+    if ($scope.departure.date < yesterday){
       if ($scope.departure.date == ""){
         document.getElementById("error7").innerHTML = "Please enter a date.";
       }
