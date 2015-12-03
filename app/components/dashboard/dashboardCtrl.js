@@ -12,9 +12,9 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
 
   $scope.starting = {city: "", state: ""};
   $scope.ending = {city: "", state: ""};
-  $scope.car = {mpg: "", seats: ""};
+  $scope.car = {mpg: "", seats: "", vehicle: ""};
   $scope.departure = {date: "", time: ""};
-  $scope.search = {date: ""};
+  $scope.search = {dateS: "", dateE: ""};
   $scope.post = {description: ""};
 
   $scope.seats = [{name: 'Seat', description:'', price: 0.00}];
@@ -125,18 +125,21 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
     //get user's trips as an array
     var allTrips = [];
     var trips = $firebaseArray(userRef.child(UserData.getData().facebook.id).child('trips'));
+    var vehicles = $firebaseArray(userRef.child(UserData.getData().facebook.id).child('vehicles'));
     trips.$loaded().then(function(){
-      angular.forEach(trips, function(trip, id){
+      angular.forEach(trips, function (trip, id) {
         allTrips.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
-        allTrips[id].$loaded().then(function(){
-          if(allTrips[id].vehicle == vid){
+        allTrips[id].$loaded().then(function () {
+          console.log(allTrips.length);
+          console.log(trips.length);
+          if (allTrips[id].vehicle == vid) {
             //can't delete
             alert('You can\'t delete a vehicle you are using in a trip.');
           }
-          else if(id+1 == trips.length){
+          else if (allTrips.length >= trips.length) {
             //delete
             var user = $firebaseObject(userRef.child(UserData.getData().facebook.id));
-            user.$loaded().then(function(){
+            user.$loaded().then(function () {
               user.vehicles[vid] = null;
               user.$save();
               alert('Successfully deleted vehicle.');
@@ -228,11 +231,11 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
         });
       });
     });
-  }
+  };
 
   $scope.getUserData = function(){
     return UserData.getData();
-  }
+  };
 
   $scope.logout = function(){
 
@@ -367,8 +370,8 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       document.getElementById("error4").innerHTML = "";
       document.getElementById("search").innerHTML = "";
     }
-    if ($scope.search.date < today){
-      if ($scope.search.date == ""){
+    if ($scope.search.date1 < today || $scope.search.date2 < today){
+      if ($scope.search.date1 == "" || $scope.search.date2 == ""){
         document.getElementById("error5").innerHTML = "Please enter a date.";
         $scope.rides = [];
       }
@@ -380,6 +383,21 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     }
     else {
       document.getElementById("error5").innerHTML = "";
+      document.getElementById("search").innerHTML = "";
+    }
+    if ($scope.search.date2 < today){
+      if ($scope.search.date2 == ""){
+        document.getElementById("error6").innerHTML = "Please enter a date.";
+        $scope.rides = [];
+      }
+      else{
+        document.getElementById("error6").innerHTML = "The date entered has already passed.";
+        $scope.rides = [];
+      }
+      error = 0;
+    }
+    else {
+      document.getElementById("error6").innerHTML = "";
       document.getElementById("search").innerHTML = "";
     }
 
@@ -407,20 +425,26 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
               seat_price: ride.seat_price,
               start_time: $scope.formatDate(ride.start_time)
             };
-            $scope.rides.push(newRide);
-            console.dir($scope.rides);
+
+            document.getElementById("search").innerHTML = "";
+            var rideDate = new Date(ride.start_time);
+            if(rideDate >= $scope.search.date1 && rideDate <= $scope.search.date2) {
+              $scope.rides.push(newRide);
+            }
           });
         });
       });
+
       if ($scope.rides.length == 0){
         document.getElementById("search").innerHTML = "There are no rides between those specified cities.";
       }
       else{
         document.getElementById("search").innerHTML = "";
       }
-    }
 
+    }
   };
+
 
   $scope.setPrice = function(){
     $.ajaxSetup({
@@ -470,8 +494,8 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     else{
       document.getElementById("error4").innerHTML = "";
     }
-    if ($scope.car.mpg == "" || isNaN($scope.car.mpg) || $scope.car.mpg < 0.01){
-      document.getElementById("error5").innerHTML = "MPG is not valid.";
+    if ($scope.car.vehicle == ""){
+      document.getElementById("error5").innerHTML = "Please select a vehicle. Please add a vehicle from the home page if you have not already.";
       error = 0;
     }
     else{
@@ -508,19 +532,20 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     if (error != 0) {
 
 
-      var gasUrl1 = "http://api.mygasfeed.com/stations/radius/"+lat1+"/"+long1+"/1/reg/Distance/1u129mrydk.json?";
-      var gasUrl2 = "http://api.mygasfeed.com/stations/radius/"+lat2+"/"+long2+"/1/reg/Distance/1u129mrydk.json?";
+      var gasUrl1 = "http://api.mygasfeed.com/stations/radius/"+lat1+"/"+long1+"/25/reg/Distance/1u129mrydk.json?";
+      var gasUrl2 = "http://api.mygasfeed.com/stations/radius/"+lat2+"/"+long2+"/25/reg/Distance/1u129mrydk.json?";
       var price1 = parseFloat(GoogleMaps.getPrice(gasUrl1), 10);
       var price2 = parseFloat(GoogleMaps.getPrice(gasUrl2), 10);
       if (price1 == NaN || price2 == NaN) {
         price1 = 2;
         price2 = 2;
-      }    
+      }
       var averagePrice = (price1+price2)/2;
       var mpg = $scope.car.mpg;
       var seats = $scope.car.seats;
       $scope.initGasMap(lat1, lat2, long1, long2, mpg, seats, averagePrice);
       $scope.postRidePricing.showForm = true;
+      $scope.showPostForm();
       console.log($scope.postRidePricing);
     }
 

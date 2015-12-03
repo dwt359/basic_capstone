@@ -38,11 +38,11 @@
                 <div layout-gt-sm="column" layout="row" flex-gt-sm="33" layout-align="center">
                   <md-input-container id="find-ride-form" style="max-height: 171px;">
                     <label>EARLIEST DEPARTURE DATE</label>
-                    <input type="date" ng-model="search.date">
+                    <input type="date" ng-model="search.date1">
                   </md-input-container>
                   <md-input-container id="find-ride-form" style="max-height: 171px;">
                     <label>LATEST DEPARTURE DATE</label>
-                    <input type="date" ng-model="search.date">
+                    <input type="date" ng-model="search.date2">
                   </md-input-container>
                 </div>
             </div>
@@ -76,13 +76,14 @@
                 </div>
               <md-divider></md-divider>
             </md-list-item>
-              <div layout="row" layout-align="left" ng-show="!rides.length" flex="100" >
+              <div  >
                 <p id="search" style="color:#d9534f"></p>
                 <p id="error1" style="color:#d9534f"></p>
                 <p id="error2" style="color:#d9534f"></p>
                 <p id="error3" style="color:#d9534f"></p>
                 <p id="error4" style="color:#d9534f"></p>
                 <p id="error5" style="color:#d9534f"></p>
+                <p id="error6" style="color:#d9534f"></p>
               </div>
           </md-list>
         </div>
