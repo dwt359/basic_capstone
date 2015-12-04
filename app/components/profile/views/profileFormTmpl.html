@@ -55,10 +55,10 @@
                                 <md-list-item ng-repeat="trip in profileTrips">
                                     <div layout="row">
                                         <div layout="column">
-                                            <h4 style="margin:2px;">{{trip.comment}}</h4>
-                                            <h5 style="margin:2px;"><b>DEPARTING</b> {{trip.start_time}}</h5>
-                                            <h5 style="margin:2px;"><b>FROM</b> {{trip.from}}</h5>
-                                            <h5 style="margin:2px;"><b>TO</b> {{trip.to}}</h5>
+                                            <h4 id="profileDisplayName" style="margin:1px;">{{trip.comment}}</h4>
+                                            <h5 style="margin:1px;"><b>DEPARTING</b> {{trip.start_time}}</h5>
+                                            <h5 style="margin:1px;"><b>FROM</b> {{trip.from}}</h5>
+                                            <h5 style="margin:1px;"><b>TO</b> {{trip.to}}</h5>
                                         </div>
                                     </div>
 
@@ -73,14 +73,17 @@
                         <md-tab-body>
                             <md-list>
                                 <md-list-item ng-repeat="vehicle in profileVehicles">
-                                    <div layout="row">
-                                        <div layout="column">
+                                    <div layout="row" flex>
+                                        <div layout="column" flex="80">
 
-                                            <h4 style="margin:2px;">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</h4>
-                                            <h5 style="margin:2px;"><b>COLOR</b> {{vehicle.color}}</h5>
-                                            <h5 style="margin:2px;"><b>MPG</b> {{vehicle.mpg}}</h5>
-                                            <h5 style="margin:2px;"><b>SEATS</b> {{vehicle.seats}}</h5>
-                                            <md-button class="md-accent" ng-show="isPersonalProfile" ng-click="deleteVehicle(vehicle.$id)">DELETE</md-button>
+                                            <h4 id="profileDisplayName" style="margin:1px;">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</h4>
+                                            <h5 style="margin:1px;"><b>COLOR</b> {{vehicle.color}}</h5>
+                                            <h5 style="margin:1px;"><b>MPG</b> {{vehicle.mpg}}</h5>
+                                            <h5 style="margin:1px;"><b>SEATS</b> {{vehicle.seats}}</h5>
+                                        </div>
+                                        <div layout="column" layout-align="start right" flex="20">
+
+                                            <md-button class="md-accent md-accent-closed" ng-show="isPersonalProfile" ng-click="deleteVehicle(vehicle.$id)">Delete</md-button>
                                         </div>
                                     </div>
                                     <md-divider></md-divider>
