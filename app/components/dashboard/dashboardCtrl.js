@@ -465,8 +465,8 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
         newRide.user = UserData.getData().facebook.id;
         newRide.vehicle = $scope.car.vehicle;
         var newRef = $firebaseObject(userRef.child(UserData.getData().facebook.id).child('trips').child(rideRefs.length));
-        newRef.to = $scope.startCity;
-        newRef.from = $scope.endCity;
+        newRef.to = $scope.endCity;
+        newRef.from = $scope.startCity;
         newRef.num = currentRides.length;
         newRide.$save();
         newRef.$save();
