@@ -16,6 +16,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   $scope.departure = {date: "", time: ""};
   $scope.search = {dateS: "", dateE: ""};
   $scope.post = {description: ""};
+  $scope.selectedVehicle = 0;
 
   $scope.seats = [{name: 'Seat', description:'', price: 0.00}];
   $scope.seatLimit = 6;
@@ -332,7 +333,8 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     var lat2 = GoogleMaps.getLat(gmapurl2);
     var long2 = GoogleMaps.getLng(gmapurl2);
     var error = 1;
-    var today = new Date();
+    var yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
 
     if (mapCity1 == 0){
       document.getElementById("error1").innerHTML = "Starting city is not valid.";
@@ -370,7 +372,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       document.getElementById("error4").innerHTML = "";
       document.getElementById("search").innerHTML = "";
     }
-    if ($scope.search.date1 < today || $scope.search.date2 < today){
+    if ($scope.search.date1 < yesterday || $scope.search.date2 < yesterday){
       if ($scope.search.date1 == "" || $scope.search.date2 == ""){
         document.getElementById("error5").innerHTML = "Please enter a date.";
         $scope.rides = [];
@@ -445,6 +447,18 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     }
   };
 
+  $scope.saveRide = function(){
+    console.dir($scope.postRidePricing);
+    console.dir($scope.car);
+    console.dir($scope.selectedVehicle);
+    console.dir($scope.starting);
+    console.dir($scope.ending);
+    console.dir($scope.departure);
+    var departureTime = new Date($scope.departure.date.getTime() + $scope.departure.time.getTime());
+    console.dir(departureTime);
+    console.dir($scope.post);
+
+  };
 
   $scope.setPrice = function(){
     $.ajaxSetup({
@@ -464,7 +478,8 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     var lat2 = GoogleMaps.getLat(gmapurl2);
     var long2 = GoogleMaps.getLng(gmapurl2);
     var error = 1;
-    var today = new Date();
+    var yesterday = new Date();
+    yesterday.setDate(yesterday.getDate()-1);
 
     if (mapCity1 == 0){
 
@@ -508,7 +523,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     else{
       document.getElementById("error6").innerHTML = "";
     }
-    if ($scope.departure.date < today){
+    if ($scope.departure.date < yesterday){
       if ($scope.departure.date == ""){
         document.getElementById("error7").innerHTML = "Please enter a date.";
       }
@@ -536,12 +551,12 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       var gasUrl2 = "http://api.mygasfeed.com/stations/radius/"+lat2+"/"+long2+"/25/reg/Distance/1u129mrydk.json?";
       var price1 = parseFloat(GoogleMaps.getPrice(gasUrl1), 10);
       var price2 = parseFloat(GoogleMaps.getPrice(gasUrl2), 10);
-      if (price1 == NaN || price2 == NaN) {
+      if (isNaN(price1)|| isNaN(price2)) {
         price1 = 2;
         price2 = 2;
       }
       var averagePrice = (price1+price2)/2;
-      var mpg = $scope.car.mpg;
+      var mpg = $scope.selectedVehicle.mpg;
       var seats = $scope.car.seats;
       $scope.initGasMap(lat1, lat2, long1, long2, mpg, seats, averagePrice);
       $scope.postRidePricing.showForm = true;
@@ -620,6 +635,18 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 
   $scope.postRide = function(){
     console.log($scope.postRidePricing)
+  };
+
+
+  $scope.initPostRide = function(){
+    $scope.vehicles = $firebaseArray(userRef.child(UserData.getData().facebook.id).child('vehicles'));
+  };
+
+  $scope.selectPostVehicle = function(){
+    $scope.selectedVehicle = $scope.vehicles[$scope.car.vehicle];
+    if($scope.car.seats > $scope.selectedVehicle.seats){
+      $scope.car.seats = $scope.selectedVehicle.seats;
+    }
   };
 
 
