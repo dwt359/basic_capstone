@@ -6,12 +6,49 @@
         <div layout="column" layout-align="top">
           <md-list style="y-overflow: auto;">
             <md-toolbar md-scroll-y class="md-whiteframe-z4" id="ride_queue_header">
-                <h1 layout-align="left" class="md-toolbar-tools">YOUR RIDES</h1>
+                <h1 layout-align="left" class="md-toolbar-tools">UPCOMING TRIPS</h1>
             </md-toolbar>
+            <h4 layout-align="left" style="margin:10px 0px 10px 16px;">RIDES AS DRIVER</h4>
+            <md-divider></md-divider>
             <md-list-item class="md-2-line" ng-repeat="trip in tripData">
-              <div layout="row">
-                <img ng-click="showProfile($event, trip.user)" ng-src="{{trip.img_url}}" class="md-avatar" />
-                <div layout="column">
+              <div layout="row" flex>
+                <div layout="column" flex="25">
+                    <md-button class="md-accent md-raised">Passengers</md-button>
+                </div>
+                <div layout="column" flex="75">
+                  <h4 style="margin:2px;"><b>{{trip.description}}</b></h4>
+                  <h5 style="margin:2px;"><b>DEPARTING</b> {{trip.start_time}}</h5>
+                  <h5 style="margin:2px;"><b>FROM</b> {{trip.from}}</h5>
+                  <h5 style="margin:2px;"><b>TO</b> {{trip.to}}</h5>
+                  <h5 style="margin:2px;">{{trip.from}} to {{trip.to}}</h5>
+                </div>
+              </div>
+              </md-list-item>
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+            <h4 layout-align="left" style="margin:10px 0px 10px 16px;">RIDES AS PASSENGER</h4>
+            <md-divider></md-divider>
+            <md-list-item class="md-2-line" ng-repeat="trip in tripData">
+              <div layout="row" flex>
+                <div layout="column" flex="25">
+                  <img ng-click="showProfile($event, trip.user)" ng-src="{{trip.img_url}}" class="md-avatar-queue" />
+                </div>
+                <div layout="column" flex="75">
                   <h4 style="margin:2px;">DRIVER: {{trip.name}}</h4>
                   <h5 style="margin:2px;">DEPARTING: {{trip.start_time}}</h5>
                   <h5 style="margin:2px;">FROM: {{trip.from}}</h5>
