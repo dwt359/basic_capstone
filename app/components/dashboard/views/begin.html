@@ -12,17 +12,25 @@
             <md-divider></md-divider>
             <md-list-item class="md-2-line" ng-repeat="trip in tripData">
               <div layout="row" flex>
-                <div layout="column" flex="25">
-                    <md-button class="md-accent md-raised">Passengers</md-button>
+                <div layout="column" flex="12.5">
+                    <img ng-click="showProfile($event, trip.user)" ng-src="{{trip.img_url}}" class="md-avatar-grid"/>
+                    <img ng-click="showProfile($event, trip.user)" ng-src="{{trip.img_url}}" class="md-avatar-grid"/>
+                       
+                </div>
+                <div layout="column" flex="12.5">
+                    <img ng-click="showProfile($event, trip.user)" ng-src="{{trip.img_url}}" class="md-avatar-grid"/>
+                    <img ng-click="showProfile($event, trip.user)" ng-src="{{trip.img_url}}" class="md-avatar-grid"/>
+                    
                 </div>
                 <div layout="column" flex="75">
-                  <h4 style="margin:2px;"><b>{{trip.description}}</b></h4>
+                  <h5 style="margin:2px;"><b>{{trip.description}}</b></h5>
                   <h5 style="margin:2px;"><b>DEPARTING</b> {{trip.start_time}}</h5>
                   <h5 style="margin:2px;"><b>FROM</b> {{trip.from}}</h5>
                   <h5 style="margin:2px;"><b>TO</b> {{trip.to}}</h5>
-                  <h5 style="margin:2px;">{{trip.from}} to {{trip.to}}</h5>
+                  
                 </div>
               </div>
+              <md-divider></md-divider>
               </md-list-item>
               
               
@@ -49,10 +57,10 @@
                   <img ng-click="showProfile($event, trip.user)" ng-src="{{trip.img_url}}" class="md-avatar-queue" />
                 </div>
                 <div layout="column" flex="75">
-                  <h4 style="margin:2px;">DRIVER: {{trip.name}}</h4>
-                  <h5 style="margin:2px;">DEPARTING: {{trip.start_time}}</h5>
-                  <h5 style="margin:2px;">FROM: {{trip.from}}</h5>
-                  <h5 style="margin:2px;">TO: {{trip.to}}</h5>
+                    <h5 style="margin:2px;"><b>DRIVER</b> {{trip.name}}</h5>
+                    <h5 style="margin:2px;"><b>DEPARTING</b> {{trip.start_time}}</h5>
+                    <h5 style="margin:2px;"><b>FROM</b> {{trip.from}}</h5>
+                    <h5 style="margin:2px;"><b>TO</b> {{trip.to}}</h5>
                   <md-button ng-click="showReviewForm($event, trip.user, trip.passenger_trip_id)" ng-hide="trip.is_reviewed || trip.time_num > now" class="md-accent md-raised">Review</md-button>
                 </div>
               </div>
