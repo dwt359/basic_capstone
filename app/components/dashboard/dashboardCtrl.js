@@ -663,7 +663,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
   $scope.selectPostVehicle = function(){
     $scope.selectedVehicle = $scope.vehicles[$scope.car.vehicle];
     if($scope.car.seats > $scope.selectedVehicle.seats){
-      $scope.car.seats = $scope.selectedVehicle.seats;
+        $scope.car.seats = $scope.selectedVehicle.seats;
     }
   };
 

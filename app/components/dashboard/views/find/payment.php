@@ -1,8 +1,9 @@
 <md-dialog aria-label="test">
-  <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
-      <h1 id="profileDisplayName" layout-align="center" class="md-toolbar-tools">PAYMENT CONFIRMATION</h1>
-  </md-toolbar>
   <md-dialog-content layout="column">
+    <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
+      <h1 id="profileDisplayName" layout-align="center" class="md-toolbar-tools">PAYMENT CONFIRMATION</h1>
+    </md-toolbar>
+  
     <div layout="row" layout-align="center">
         <h2>Pay ${{ride.seat_price}} to {{ride.name}}?</h2>
     </div>
