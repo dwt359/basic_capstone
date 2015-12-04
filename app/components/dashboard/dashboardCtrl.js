@@ -447,6 +447,18 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     }
   };
 
+  $scope.saveRide = function(){
+    console.dir($scope.postRidePricing);
+    console.dir($scope.car);
+    console.dir($scope.selectedVehicle);
+    console.dir($scope.starting);
+    console.dir($scope.ending);
+    console.dir($scope.departure);
+    var departureTime = new Date($scope.departure.date.getTime() + $scope.departure.time.getTime());
+    console.dir(departureTime);
+    console.dir($scope.post);
+
+  };
 
   $scope.setPrice = function(){
     $.ajaxSetup({
@@ -628,14 +640,13 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 
   $scope.initPostRide = function(){
     $scope.vehicles = $firebaseArray(userRef.child(UserData.getData().facebook.id).child('vehicles'));
-    $scope.vehicles.$loaded().then(function(){
-      console.dir($scope.vehicles);
-    });
   };
 
   $scope.selectPostVehicle = function(){
     $scope.selectedVehicle = $scope.vehicles[$scope.car.vehicle];
-    console.dir($scope.selectedVehicle);
+    if($scope.car.seats > $scope.selectedVehicle.seats){
+      $scope.car.seats = $scope.selectedVehicle.seats;
+    }
   };
 
 
