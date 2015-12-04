@@ -10,20 +10,18 @@
             </md-toolbar>
             <h4 layout-align="left" style="margin:10px 0px 10px 16px;">RIDES AS DRIVER</h4>
             <md-divider></md-divider>
-            <md-list-item class="md-2-line" ng-repeat="trip in tripData">
+            <md-list-item class="md-2-line" ng-repeat="trip in driverTripData">
               <div layout="row" flex>
                 <div layout="column" flex="12.5">
-                    <img ng-click="showProfile($event, trip.user)" ng-src="{{trip.img_url}}" class="md-avatar-grid"/>
-                    <img ng-click="showProfile($event, trip.user)" ng-src="{{trip.img_url}}" class="md-avatar-grid"/>
-                       
+                    <img ng-repeat="passenger in trip.passengers" ng-click="showProfile($event, passenger.$id)" ng-src="{{passenger.img_url}}" class="md-avatar-grid"/>
                 </div>
-                <div layout="column" flex="12.5">
-                    <img ng-click="showProfile($event, trip.user)" ng-src="{{trip.img_url}}" class="md-avatar-grid"/>
-                    <img ng-click="showProfile($event, trip.user)" ng-src="{{trip.img_url}}" class="md-avatar-grid"/>
-                    
-                </div>
+                <!--<div layout="column" flex="12.5">-->
+                    <!--<img ng-click="showProfile($event, trip.user)" ng-src="{{trip.img_url}}" class="md-avatar-grid"/>-->
+                    <!--<img ng-click="showProfile($event, trip.user)" ng-src="{{trip.img_url}}" class="md-avatar-grid"/>-->
+                    <!---->
+                <!--</div>-->
                 <div layout="column" flex="75">
-                  <h5 style="margin:2px;"><b>{{trip.description}}</b></h5>
+                  <h5 style="margin:2px;"><b>{{trip.comment}}</b></h5>
                   <h5 style="margin:2px;"><b>DEPARTING</b> {{trip.start_time}}</h5>
                   <h5 style="margin:2px;"><b>FROM</b> {{trip.from}}</h5>
                   <h5 style="margin:2px;"><b>TO</b> {{trip.to}}</h5>
