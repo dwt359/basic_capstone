@@ -1,6 +1,6 @@
 <md-dialog aria-label="test">
   <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
-      <h1 id="profileDisplayName" layout-align="center" class="md-toolbar-tools">CONFIRMATION</h1>
+      <h1 id="profileDisplayName" layout-align="center" class="md-toolbar-tools">PAYMENT CONFIRMATION</h1>
   </md-toolbar>
   <md-dialog-content layout="column">
     <div layout="row" layout-align="center">
@@ -9,8 +9,9 @@
     <div layout="row">
         <p>Clicking "Proceed" will redirect you to PayPal to complete your transaction.</p>
     </div>
-    <div layout="row">
-       
+    <div layout="row" layout-align="center">
+        <md-button class="md-accent md-raised">PROCEED</md-button>
+        <md-button class="md-accent md-raised">CANCEL</md-button>
     </div>
     
  

@@ -31,6 +31,15 @@ div{
     height: 54px;
 }
 
+.md-avatar-queue{
+    border-radius: 2px;
+/*    border: 1px solid #ddd;*/
+    display: block;
+    max-width: 90%;
+    height: 60px;
+    margin-top: 5px;
+}
+
 #map {
   margin: 5px;
   padding: 5px;
