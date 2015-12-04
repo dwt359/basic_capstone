@@ -73,14 +73,17 @@
                         <md-tab-body>
                             <md-list>
                                 <md-list-item ng-repeat="vehicle in profileVehicles">
-                                    <div layout="row">
-                                        <div layout="column">
+                                    <div layout="row" flex>
+                                        <div layout="column" flex="80">
 
                                             <h4 style="margin:2px;">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</h4>
                                             <h5 style="margin:2px;"><b>COLOR</b> {{vehicle.color}}</h5>
                                             <h5 style="margin:2px;"><b>MPG</b> {{vehicle.mpg}}</h5>
                                             <h5 style="margin:2px;"><b>SEATS</b> {{vehicle.seats}}</h5>
-                                            <md-button class="md-accent" ng-show="isPersonalProfile" ng-click="deleteVehicle(vehicle.$id)">DELETE</md-button>
+                                        </div>
+                                        <div layout="column" layout-align="start right" flex="20">
+
+                                            <md-button class="md-accent md-accent-closed" ng-show="isPersonalProfile" ng-click="deleteVehicle(vehicle.$id)">Delete</md-button>
                                         </div>
                                     </div>
                                     <md-divider></md-divider>
