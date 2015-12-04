@@ -40,6 +40,15 @@ div{
     margin-top: 5px;
 }
 
+.md-avatar-grid {
+    border-radius: 2px;
+/*    border: 1px solid #ddd;*/
+    display: block;
+    max-width: 95%;
+    height: 30px;
+    margin-top: 5px;
+}
+
 #map {
   margin: 5px;
   padding: 5px;
