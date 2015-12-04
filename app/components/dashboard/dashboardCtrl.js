@@ -387,7 +387,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       document.getElementById("error5").innerHTML = "";
       document.getElementById("search").innerHTML = "";
     }
-    if ($scope.search.date2 < today){
+    if ($scope.search.date2 < yesterday){
       if ($scope.search.date2 == ""){
         document.getElementById("error6").innerHTML = "Please enter a date.";
         $scope.rides = [];
@@ -448,16 +448,30 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
   };
 
   $scope.saveRide = function(){
-    console.dir($scope.postRidePricing);
-    console.dir($scope.car);
-    console.dir($scope.selectedVehicle);
-    console.dir($scope.starting);
-    console.dir($scope.ending);
-    console.dir($scope.departure);
-    var departureTime = new Date($scope.departure.date.getTime() + $scope.departure.time.getTime());
-    console.dir(departureTime);
-    console.dir($scope.post);
+    var departureTime = new Date();
+    departureTime.setTime($scope.departure.date.getTime() + $scope.departure.time.getTime() - departureTime.getTimezoneOffset()*60000);
 
+    //get current rides with these locations
+    var currentRides = $firebaseArray(tripRef.child($scope.startCity).child($scope.endCity));
+    var rideRefs = $firebaseArray(userRef.child(UserData.getData().facebook.id).child('trips'));
+    currentRides.$loaded().then(function() {
+      rideRefs.$loaded().then(function () {
+        var newRide = $firebaseObject(tripRef.child($scope.startCity).child($scope.endCity).child(currentRides.length));
+        newRide.comment = $scope.post.description;
+        newRide.seat_price = $scope.postRidePricing.price;
+        newRide.seats = $scope.car.seats;
+        newRide.seats_left = $scope.car.seats;
+        newRide.start_time = departureTime.getFullYear() + '-' + (departureTime.getMonth() + 1) + '-' + departureTime.getDate() + ' ' + departureTime.getHours() + ':' + departureTime.getMinutes() + ':' + departureTime.getSeconds();
+        newRide.user = UserData.getData().facebook.id;
+        newRide.vehicle = $scope.car.vehicle;
+        var newRef = $firebaseObject(userRef.child(UserData.getData().facebook.id).child('trips').child(rideRefs.length));
+        newRef.to = $scope.startCity;
+        newRef.from = $scope.endCity;
+        newRef.num = currentRides.length;
+        newRide.$save();
+        newRef.$save();
+      });
+    });
   };
 
   $scope.setPrice = function(){
@@ -470,6 +484,9 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 
     var mapCity1 = GoogleMaps.getCity(gmapurl1);
     var mapCity2 = GoogleMaps.getCity(gmapurl2);
+    $scope.startCity = GoogleMaps.getAdd(gmapurl1).replace(', USA', '').replace('.', '').trim();
+    $scope.endCity = GoogleMaps.getAdd(gmapurl2).replace(', USA', '').replace('.', '').trim();
+
     //Do error checking
 
     //If there aren't errors:
