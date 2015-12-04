@@ -470,6 +470,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
         newRef.num = currentRides.length;
         newRide.$save();
         newRef.$save();
+        $scope.hide();
       });
     });
   };
