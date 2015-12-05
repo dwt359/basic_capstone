@@ -46,7 +46,8 @@ div{
     display: block;
     max-width: 45%;
     height: 30px;
-    margin-top: 5px;
+    margin: 2px; 2px;
+    
 }
 
 #map {
