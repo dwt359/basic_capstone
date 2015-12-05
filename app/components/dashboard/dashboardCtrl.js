@@ -460,7 +460,13 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 
             document.getElementById("search").innerHTML = "";
             var rideDate = new Date(ride.start_time);
-            if(rideDate >= $scope.search.date1 && rideDate <= $scope.search.date2) {
+            var isOnRide = false;
+            angular.forEach(ride.passengers, function(passenger, pid){
+              if(passenger == UserData.getData().facebook.id){
+                isOnRide = true;
+              }
+            });
+            if(rideDate >= $scope.search.date1 && rideDate <= $scope.search.date2 && newRide.seats_left != 0 && newRide.user != UserData.getData().facebook.id && !isOnRide) {
               $scope.rides.push(newRide);
             }
           });
