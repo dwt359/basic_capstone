@@ -221,17 +221,20 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
         item.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
         item[id].$loaded().then(function(){
           var startTime = new Date(item[id].start_time);
-          item[id].start_time = $scope.formatDate(item[id].start_time);
-          item[id].from = trip.from;
-          item[id].to = trip.to;
-          item[id].is_reviewed = trip.is_reviewed;
-          item[id].passenger_trip_id = id;
-          item[id].time_num = startTime.getTime();
+          var newTrip = {
+            start_time: $scope.formatDate(item[id].start_time),
+            user: item[id].user,
+            from: trip.from,
+            to: trip.to,
+            is_reviewed: trip.is_reviewed,
+            passenger_trip_id: id,
+            time_num: startTime.getTime()
+          };
           person.push($firebaseObject(userRef.child(item[id].user)));
           person[id].$loaded().then(function(){
-            item[id].img_url = person[id].img_url;
-            item[id].name = person[id].name;
-            $scope.tripData.push(item[id]);
+            newTrip.img_url = person[id].img_url;
+            newTrip.name = person[id].name;
+            $scope.tripData.push(newTrip);
           });
         });
       });
