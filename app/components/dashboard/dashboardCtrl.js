@@ -340,22 +340,16 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 
 
   $scope.findRides = function(){
-    $.ajaxSetup({
-      async: false
-    });
 
     var gmapurl1 = "https://maps.googleapis.com/maps/api/geocode/json?address="+$scope.starting.city+"+"+$scope.starting.state+"&components=country:US&key=AIzaSyA6xJtLioC6VlWo0JIeq5BBwcqzljpt4Lg";
     var gmapurl2 = "https://maps.googleapis.com/maps/api/geocode/json?address="+$scope.ending.city+"+"+$scope.ending.state+"&components=country:US&key=AIzaSyA6xJtLioC6VlWo0JIeq5BBwcqzljpt4Lg";
 
-    var mapCity1 = GoogleMaps.getCity(gmapurl1);
-    var mapCity2 = GoogleMaps.getCity(gmapurl2);
-    //Do error checking
-
-    //If there aren't errors:
-    var lat1 = GoogleMaps.getLat(gmapurl1);
-    var long1 = GoogleMaps.getLng(gmapurl1);
-    var lat2 = GoogleMaps.getLat(gmapurl2);
-    var long2 = GoogleMaps.getLng(gmapurl2);
+    var mapCity1;
+    var mapCity2;
+    var lat1;;
+    var long1;
+    var lat2;;
+    var long2;
     var error = 1;
     var today = new Date();
     var yesterday = new Date();
@@ -430,56 +424,81 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 
 
     if (error != 0) {
-      GoogleMaps.initMap(lat1, lat2, long1, long2);
 
-      //the rides that match that query
-      var startCity = GoogleMaps.getAdd(gmapurl1).replace(', USA', '').replace('.', '').trim();
-      var endCity = GoogleMaps.getAdd(gmapurl2).replace(', USA', '').replace('.', '').trim();
-      $scope.route = {
-        from: startCity,
-        to: endCity
-      };
-      var rides = $firebaseArray(tripRef.child(startCity).child(endCity));
-      var drivers = [];
-      $scope.rides = [];
-      rides.$loaded().then(function(){
-        angular.forEach(rides, function(ride, id){
-          drivers.push($firebaseObject(userRef.child(ride.user)));
-          drivers[id].$loaded().then(function(){
-            var newRide = {
-              id: ride.$id,
-              name: drivers[id].name,
-              user: ride.user,
-              vehicle: drivers[id].vehicles[ride.vehicle],
-              img_url: drivers[id].img_url,
-              comment: ride.comment,
-              seats_left: ride.seats_left,
-              seat_price: ride.seat_price,
-              start_time: $scope.formatDate(ride.start_time)
-            };
+      $.getJSON(gmapurl1).then(function(geocode1){
+        mapCity1 = GoogleMaps.convertCity(geocode1);
+        $.getJSON(gmapurl2).then(function(geocode2){
+          mapCity2 = GoogleMaps.convertCity(geocode2);
+          $.getJSON(gmapurl1).then(function(geocode3){
+            lat1 = GoogleMaps.convertLat(geocode3);
+            $.getJSON(gmapurl1).then(function(geocode4){
+              long1 = GoogleMaps.convertLng(geocode4);
+              $.getJSON(gmapurl2).then(function(geocode5){
+                lat2 = GoogleMaps.convertLat(geocode5);
+                $.getJSON(gmapurl2).then(function(geocode6){
+                  long2 = GoogleMaps.convertLng(geocode6);
+                  GoogleMaps.initMap(lat1, lat2, long1, long2);
+                  var startCity;
+                  var endCity;
+                  $.getJSON(gmapurl1).then(function(geocode7){
+                    startCity = GoogleMaps.convertAdd(geocode7).replace(', USA', '').replace('.', '').trim();
+                    $.getJSON(gmapurl2).then(function(geocode8){
+                      endCity = GoogleMaps.convertAdd(geocode8).replace(', USA', '').replace('.', '').trim();
 
-            document.getElementById("search").innerHTML = "";
-            var rideDate = new Date(ride.start_time);
-            var isOnRide = false;
-            angular.forEach(ride.passengers, function(passenger, pid){
-              if(passenger == UserData.getData().facebook.id){
-                isOnRide = true;
-              }
+                      //the rides that match that query
+                      $scope.route = {
+                        from: startCity,
+                        to: endCity
+                      };
+                      var rides = $firebaseArray(tripRef.child(startCity).child(endCity));
+                      var drivers = [];
+                      $scope.rides = [];
+                      rides.$loaded().then(function(){
+                        angular.forEach(rides, function(ride, id){
+                          drivers.push($firebaseObject(userRef.child(ride.user)));
+                          drivers[id].$loaded().then(function(){
+                            var newRide = {
+                              id: ride.$id,
+                              name: drivers[id].name,
+                              user: ride.user,
+                              vehicle: drivers[id].vehicles[ride.vehicle],
+                              img_url: drivers[id].img_url,
+                              comment: ride.comment,
+                              seats_left: ride.seats_left,
+                              seat_price: ride.seat_price,
+                              start_time: $scope.formatDate(ride.start_time)
+                            };
+
+                            document.getElementById("search").innerHTML = "";
+                            var rideDate = new Date(ride.start_time);
+                            var isOnRide = false;
+                            angular.forEach(ride.passengers, function(passenger, pid){
+                              if(passenger == UserData.getData().facebook.id){
+                                isOnRide = true;
+                              }
+                            });
+                            if(rideDate >= $scope.search.date1 && rideDate <= $scope.search.date2 && newRide.seats_left != 0 && newRide.user != UserData.getData().facebook.id && !isOnRide) {
+                              $scope.rides.push(newRide);
+                            }
+
+
+                            if ($scope.rides.length == 0){
+                              document.getElementById("search").innerHTML = "There are no rides between those specified cities.";
+                            }
+                            else{
+                              document.getElementById("search").innerHTML = "";
+                            }
+                            });
+                          });
+                        });
+                      });
+                    });
+                  });
+                });
+              });
             });
-            if(rideDate >= $scope.search.date1 && rideDate <= $scope.search.date2 && newRide.seats_left != 0 && newRide.user != UserData.getData().facebook.id && !isOnRide) {
-              $scope.rides.push(newRide);
-            }
           });
         });
-      });
-
-      if ($scope.rides.length == 0){
-        document.getElementById("search").innerHTML = "There are no rides between those specified cities.";
-      }
-      else{
-        document.getElementById("search").innerHTML = "";
-      }
-
     }
   };
 
@@ -525,6 +544,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 
       var gmapurl1 = "https://maps.googleapis.com/maps/api/geocode/json?address="+$scope.starting.city+"+"+$scope.starting.state+"&components=country:US&key=AIzaSyA6xJtLioC6VlWo0JIeq5BBwcqzljpt4Lg";
       var gmapurl2 = "https://maps.googleapis.com/maps/api/geocode/json?address="+$scope.ending.city+"+"+$scope.ending.state+"&components=country:US&key=AIzaSyA6xJtLioC6VlWo0JIeq5BBwcqzljpt4Lg";
+
 
       //If there aren't errors:
       var error = 1;
@@ -597,39 +617,43 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 
       if (error != 0) {
         $scope.showLoading = true;
-        $.getJSON(gmapurl1).then(function(geocode1){
-          mapCity1 = GoogleMaps.convertCity(geocode1);
-          $scope.starting.city = mapCity1;
-          $.getJSON(gmapurl2).then(function(geocode2){
-            mapCity2 = GoogleMaps.convertCity(geocode2);
-            $scope.ending.city = mapCity2;
-            $.getJSON(gmapurl1).then(function(geocode3){
-              lat1 = GoogleMaps.convertLat(geocode3);
-              $.getJSON(gmapurl1).then(function(geocode4){
-                long1 = GoogleMaps.convertLng(geocode4);
-                $.getJSON(gmapurl2).then(function(geocode5){
-                  lat2 = GoogleMaps.convertLat(geocode5);
-                  $.getJSON(gmapurl2).then(function(geocode6){
-                    long2 = GoogleMaps.convertLng(geocode6);
-                    gasUrl1 = "http://api.mygasfeed.com/stations/radius/"+lat1+"/"+long1+"/25/reg/Distance/1u129mrydk.json?";
-                    gasUrl2 = "http://api.mygasfeed.com/stations/radius/"+lat2+"/"+long2+"/25/reg/Distance/1u129mrydk.json?";
+        $.getJSON(gmapurl1).then(function(geocode7){
+          $scope.startCity = GoogleMaps.convertAdd(geocode7);
+          $.getJSON(gmapurl2).then(function(geocode8){
+            $scope.endCity = GoogleMaps.convertAdd(geocode8);
+            $.getJSON(gmapurl1).then(function(geocode1){
+              mapCity1 = GoogleMaps.convertCity(geocode1);
+              $.getJSON(gmapurl2).then(function(geocode2){
+                mapCity2 = GoogleMaps.convertCity(geocode2);
+                $.getJSON(gmapurl1).then(function(geocode3){
+                  lat1 = GoogleMaps.convertLat(geocode3);
+                  $.getJSON(gmapurl1).then(function(geocode4){
+                    long1 = GoogleMaps.convertLng(geocode4);
+                    $.getJSON(gmapurl2).then(function(geocode5){
+                      lat2 = GoogleMaps.convertLat(geocode5);
+                      $.getJSON(gmapurl2).then(function(geocode6){
+                        long2 = GoogleMaps.convertLng(geocode6);
+                        gasUrl1 = "http://api.mygasfeed.com/stations/radius/"+lat1+"/"+long1+"/25/reg/Distance/1u129mrydk.json?";
+                        gasUrl2 = "http://api.mygasfeed.com/stations/radius/"+lat2+"/"+long2+"/25/reg/Distance/1u129mrydk.json?";
 
-                    $.getJSON(gasUrl1).then(function(station1){
-                      price1 = parseFloat(GoogleMaps.convertPrice(station1), 10);
-                      $.getJSON(gasUrl2).then(function(station2){
-                        price2 = parseFloat(GoogleMaps.convertPrice(station2), 10);
+                        $.getJSON(gasUrl1).then(function(station1){
+                          price1 = parseFloat(GoogleMaps.convertPrice(station1), 10);
+                          $.getJSON(gasUrl2).then(function(station2){
+                            price2 = parseFloat(GoogleMaps.convertPrice(station2), 10);
 
-                        if (isNaN(price1)|| isNaN(price2)) {
-                          price1 = 2;
-                          price2 = 2;
-                        }
-                        var averagePrice = (price1+price2)/2;
-                        var mpg = $scope.selectedVehicle.mpg;
-                        var seats = $scope.car.seats;
-                        $scope.initGasMap(lat1, lat2, long1, long2, mpg, seats, averagePrice);
+                            if (isNaN(price1)|| isNaN(price2)) {
+                              price1 = 2;
+                              price2 = 2;
+                            }
+                            var averagePrice = (price1+price2)/2;
+                            var mpg = $scope.selectedVehicle.mpg;
+                            var seats = $scope.car.seats;
+                            $scope.initGasMap(lat1, lat2, long1, long2, mpg, seats, averagePrice);
 
-                        $scope.showLoading = false;
-                        $scope.showPostForm(ev);
+                            $scope.showLoading = false;
+                            $scope.showPostForm(ev);
+                          });
+                        });
                       });
                     });
                   });

@@ -160,6 +160,18 @@ theApp.factory('GoogleMaps', function(){
       return lat;
     },
 
+    getAdd: function(url){
+      var address;
+      $.getJSON(url, function(geocode){
+        address = geocode.results[0].formatted_address;
+      });
+      return address;
+    },
+
+    convertAdd: function(geocode){
+      return geocode.results[0].formatted_address;
+    },
+
     getLng: function(url){
       var lng;
       $.getJSON(url, function(geocode){
