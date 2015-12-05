@@ -511,7 +511,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     });
   };
 
-  $scope.setPrice = function(){
+  $scope.setPrice = function(ev){
       var mapCity1;
       var mapCity2;
       var lat1;
@@ -596,9 +596,8 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       }
 
       if (error != 0) {
-
+        $scope.showLoading = true;
         $.getJSON(gmapurl1).then(function(geocode1){
-          $scope.showLoading = true;
           mapCity1 = GoogleMaps.convertCity(geocode1);
           $.getJSON(gmapurl2).then(function(geocode2){
             mapCity2 = GoogleMaps.convertCity(geocode2);
@@ -626,10 +625,9 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
                         var mpg = $scope.selectedVehicle.mpg;
                         var seats = $scope.car.seats;
                         $scope.initGasMap(lat1, lat2, long1, long2, mpg, seats, averagePrice);
-                        $scope.postRidePricing.showForm = true;
-                        $scope.showPostForm();
 
                         $scope.showLoading = false;
+                        $scope.showPostForm(ev);
                       });
                     });
                   });
@@ -639,27 +637,6 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
           });
         });
       }
-
-      $scope.showLoading = false;
-
-<<<<<<< HEAD
-=======
-      var gasUrl1 = "http://api.mygasfeed.com/stations/radius/"+lat1+"/"+long1+"/25/reg/Distance/1u129mrydk.json?";
-      var gasUrl2 = "http://api.mygasfeed.com/stations/radius/"+lat2+"/"+long2+"/25/reg/Distance/1u129mrydk.json?";
-      var price1 = parseFloat(GoogleMaps.getPrice(gasUrl1), 10);
-      var price2 = parseFloat(GoogleMaps.getPrice(gasUrl2), 10);
-      if (isNaN(price1)|| isNaN(price2)) {
-        price1 = 2;
-        price2 = 2;
-      }
-      var averagePrice = (price1+price2)/2;
-      var mpg = $scope.selectedVehicle.mpg;
-      var seats = $scope.car.seats;
-      $scope.initGasMap(lat1, lat2, long1, long2, mpg, seats, averagePrice);
-      $scope.postRidePricing.showForm = true;
-      $scope.showPostForm();
-    }
->>>>>>> origin/master
 
   };
 
@@ -696,6 +673,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
   };
 
   $scope.showPostForm = function(ev){
+    //$scope.postRidePricing.showForm = true;
     $mdDialog.show({
       controller: DialogController,
       scope: $scope,
