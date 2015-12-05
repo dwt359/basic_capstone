@@ -54,20 +54,19 @@
         </md-card>
         </div>
 
-        <div layout="row" id = "ride-list-container" flex>
+        <div layout="row" id="ride-list-container" flex>
           <md-list flex="100">
-            <md-list-item class="md-2-line" ng-repeat="ride in rides" ng-cloak>
+            <md-list-item class="found_rides" style="background-color:#ECECEC;" class="md-2-line" ng-repeat="ride in rides" ng-cloak>
                 <div layout="row" layout-align="right" flex="100">
                     <div layout="column" flex="15">
                         <img ng-click="showProfile($event, ride.user)" ng-src="{{ride.img_url}}" class="md-avatar-find"/>
                     </div>
                     <div class="md-list-item-text" layout-align="left" layout="column" flex="70">
-                        <h3 style="margin-bottom:2px; font-weight:bold; line-height: 1.1em;" id="profileDisplayName">{{ride.comment}}</h3>
-                        <h4 style="margin:1px;"><b>SEATS</b> {{ride.seats_left}}</h4>
-                        <h4 style="margin:1px;"><b>PRICE</b> ${{ride.seat_price}}</h4>
-                        <h4 style="margin:1px;"><b>DATE</b> {{ride.start_time}}</h4>
-                        <h4 style="margin:1px;"><b>VEHICLE</b> {{ride.vehicle.year}} {{ride.vehicle.make}} {{ride.vehicle.model}}</h4>
-<!--                        <h4 style="margin:1px;" class="list-text">{{ride.comment}}</h4>-->
+                        <h3 style="margin:4px 1px 1px 1px; font-weight:bold; line-height: 1.1em;">{{ride.comment}}</h3>
+                        <h4 style="margin:1px; font-weight:normal;"><b>SEATS</b> {{ride.seats_left}}</h4>
+                        <h4 style="margin:1px; font-weight:normal;"><b>PRICE</b> ${{ride.seat_price}}</h4>
+                        <h4 style="margin:1px; font-weight:normal;"><b>DATE</b> {{ride.start_time}}</h4>
+                        <h4 style="margin:1px 4px 1px 1px; font-weight:normal;"><b>VEHICLE</b> {{ride.vehicle.year}} {{ride.vehicle.make}} {{ride.vehicle.model}}</h4>
                     </div>
                     <div layout="column" flex="15">
                       <md-button class="md-accent md-raised" ng-click="showPayment($event, ride, $index, ride.seat_price)">

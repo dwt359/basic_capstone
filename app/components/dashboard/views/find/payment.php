@@ -8,9 +8,10 @@
         <h2>Pay ${{ride.seat_price}} to {{ride.name}}?</h2>
     </div>
     <div layout="row">
-        <p>Clicking "Proceed" will redirect you to PayPal to complete your transaction.</p>
+        <p>Clicking "Pay Now" will redirect you to PayPal to complete your transaction.</p>
     </div>
-
+      <md-divider></md-divider>
+    
 
 
       <br>

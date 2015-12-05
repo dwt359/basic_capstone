@@ -13,14 +13,9 @@ div{
   font-family: ProximaNova-Regular;
 }
 
-/*
-#ride-list-container{
-  margin: 5px;
-  padding: 5px;
-  max-height: 65%;
-  overflow-y: scroll;
-}
-*/
+
+
+
 
 .md-avatar{
     border-radius: 2px;
@@ -264,13 +259,20 @@ md-list.md-default-theme {
     padding-top: 0px;
 }
 
-md-list-item .md-no-style, md-list-item.md-no-proxy {
+/*md-list-item .md-no-style, md-list-item.md-no-proxy {*/
+.found_rides {
     padding: 3px 16px;
+    margin-bottom: 8px;
+    margin-left: 8px;
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);
+
 }
 
+/*
 md-list-item.md-2-line .md-list-item-text, md-list-item.md-2-line>.md-no-style .md-list-item-text {
     padding-top: 5px;   
 }
+*/
 
 
 .section.dashboard_home {
@@ -282,11 +284,7 @@ md-list-item.md-2-line .md-list-item-text, md-list-item.md-2-line>.md-no-style .
 }
 
 .section.find_a_ride {
-    background: url("../img/grid.jpg") repeat center center fixed;
-    background-size: 100% auto;
-    background-position: left;
-    background-size: cover;
-    background-repeat: no-repeat;
+    background: url("../img/tiny_grid.png") repeat center center fixed;   
 }
 
 .driver_name {
