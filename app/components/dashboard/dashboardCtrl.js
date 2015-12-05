@@ -164,46 +164,21 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
         ride: ride
       }
     });
-  }
+  };
 
   $scope.getProfileData = function(){
     return UserData.getProfileData();
-  }
+  };
 
   $scope.formatDate = function(dateString){
     var startTime = new Date(dateString);
     var pad = '00';
     return (startTime.getMonth() + 1) + '/' + startTime.getDate() + '/' + startTime.getFullYear() + ' at ' + startTime.getHours() + ':' + pad.substring(0, pad.length - startTime.getMinutes().toString().length) + startTime.getMinutes().toString();
-  }
-
-  $scope.retrievePassengerTripData = function(){
-    var profileData = $scope.getProfileData();
-    profileData.$loaded().then(function() {
-      $scope.tripData = [];
-      var trips = profileData.passenger_trips;
-      var item = [];
-      var person = [];
-      if (!!trips.length){
-        angular.forEach(trips, function (trip, id) {
-          item.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
-          item[id].$loaded().then(function () {
-            item[id].start_time = $scope.formatDate(item[id].start_time);
-            item[id].from = trip.from;
-            item[id].to = trip.to;
-            person.push($firebaseObject(userRef.child(item[id].user)));
-            person[id].$loaded().then(function () {
-              item[id].img_url = person[id].img_url;
-              $scope.tripData.push(item[id]);
-            });
-          });
-        });
-      }
-    });
-  }
+  };
 
   $scope.getProfileData = function(){
     return UserData.getProfileData();
-  }
+  };
 
   $scope.retrievePassengerTripData = function(){
     $scope.now = (new Date()).getTime();
@@ -217,8 +192,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
         item.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
         item[id].$loaded().then(function(){
           var startTime = new Date(item[id].start_time);
-          var pad = '00';
-          item[id].start_time = (startTime.getMonth()+1) + '/' + startTime.getDate() + '/' + startTime.getFullYear() + ' at ' + startTime.getHours() + ':' + pad.substring(0, pad.length - startTime.getMinutes().toString().length) + startTime.getMinutes().toString();
+          item[id].start_time = $scope.formatDate(item[id].start_time);
           item[id].from = trip.from;
           item[id].to = trip.to;
           item[id].is_reviewed = trip.is_reviewed;
@@ -228,6 +202,26 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
           person[id].$loaded().then(function(){
             item[id].img_url = person[id].img_url;
             $scope.tripData.push(item[id]);
+          });
+        });
+      });
+      //driver trips
+      var driverTripRefs = profileData.trips;
+      var driverTripInfo = [];
+      $scope.driverTripData = [];
+      angular.forEach(driverTripRefs, function(driverTripRef, did){
+        driverTripInfo[did] = ($firebaseObject(tripRef.child(driverTripRef.from).child(driverTripRef.to).child(driverTripRef.num)));
+        driverTripInfo[did].$loaded().then(function(){
+          $scope.driverTripData[did] = {
+            to: driverTripRef.to,
+            from: driverTripRef.from,
+            passengers: [],
+            comment: driverTripInfo[did].comment,
+            start_time: $scope.formatDate(driverTripInfo[did].start_time)
+          };
+          angular.forEach(driverTripInfo[did].passengers, function(passenger, pid){
+            $scope.driverTripData[did].passengers[pid] = $firebaseObject(userRef.child(passenger));
+            console.dir($scope.driverTripData);
           });
         });
       });

@@ -15,8 +15,10 @@
 
       <br>
       <?php
-
-      // Sets config file path(if config file is used) and registers the classloader
+    
+    //error_reporting(E_ALL);
+    //ini_set('display_errors','1');
+    // Sets config file path(if config file is used) and registers the classloader
           require("adaptivepayments-sdk-php-master/samples/PPBootStrap.php");
 
           $config = array(
