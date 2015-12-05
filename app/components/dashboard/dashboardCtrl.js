@@ -64,23 +64,23 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
     if($scope.seats.length > 1){
       $scope.seats.splice(i, 1);
     }
-  }
+  };
 
   $scope.addSeat = function(i){
     if($scope.seats.length < $scope.seatLimit){
       $scope.seats.push({name: 'New Seat', description:'', price: 0.00});
     }
-  }
+  };
 
 
   $scope.viewProfile = function() {
       $state.go('^.^.profile');
-  }
+  };
 
   $scope.viewDashboard = function() {
         $state.go('home');
 
-  }
+  };
 
   $scope.showProfile = function(ev, fid){
     //main profile info
@@ -275,13 +275,13 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
     if($state.is('dashboard.post.info') || $state.is('dashboard.post.pricing')){
       $state.go('^.^.^.home');
     }
-  }
+  };
 
   $scope.verifyInfo = function(){
     //Verify ride info stuff here
 
     $state.go('^.pricing')
-  }
+  };
 
   $scope.printUSA = function(){
 
@@ -299,7 +299,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
        map.fitBounds(results[0].geometry.viewport);
     });
 
-}
+};
 
 $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
   var LocationStart = {lat: lat1, lng: lng1};
@@ -610,7 +610,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       $scope.showPostForm();
     }
 
-  }
+  };
 
   $scope.getPrice = function (url){
      var price;
@@ -625,7 +625,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 
      });
      return price;
-   }
+   };
 
   $scope.distanceInfo = function(distance, mpg, seats, averagePrice){
     distance = distance/1609.34;
@@ -642,7 +642,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     //document.getElementById("distance").innerHTML = "Trip distance: "+distance.toFixed(2)+" miles";
     //document.getElementById("totalCost").innerHTML = "Total trip cost: $"+cost.toFixed(2);
     //document.getElementById("seatCost").innerHTML ="Suggested price per seat: $"+seatCost.toFixed(2);
-  }
+  };
 
   $scope.showPostForm = function(ev){
     $mdDialog.show({
@@ -654,13 +654,13 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       targetEvent: ev,
       clickOutsideToClose: true
     });
-}
+};
 
 
 
   $scope.setSeats = function(){
 
-  }
+  };
 
   $scope.showReviewForm = function(ev, fid, tid){
     $scope.initReview = $firebaseObject(userRef.child(fid));
