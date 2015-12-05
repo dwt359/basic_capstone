@@ -49,7 +49,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
           is_reviewed: false
         };
         self.$save();
-        alert('Successfully purchased ride! Click on your driver\'s profile picture to contact them on facebook.');
+        alert('Successfully purchased ride! Click on your driver\'s profile picture to contact them on Facebook.');
         window.location.assign(window.location.href.substr(0,window.location.href.indexOf('?')));
       });
     });
@@ -57,6 +57,9 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
 
 
   $scope.rides = [];
+
+
+
 
 
 
@@ -125,11 +128,13 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
       angular.forEach(profileTrips, function(profileTrip, id){
         trips.push($firebaseObject(tripRef.child(profileTrip.from).child(profileTrip.to).child(profileTrip.num)));
         trips[id].$loaded().then(function() {
+          var startTime = new Date(trips[id].start_time);
           $scope.profileTrips.push({
             comment: trips[id].comment,
             start_time: $scope.formatDate(trips[id].start_time),
             from: profileTrip.from,
-            to: profileTrip.to
+            to: profileTrip.to,
+            time_num: startTime.getTime()
           });
         });
       });
@@ -157,21 +162,28 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
     var allTrips = [];
     var trips = $firebaseArray(userRef.child(UserData.getData().facebook.id).child('trips'));
     var vehicles = $firebaseArray(userRef.child(UserData.getData().facebook.id).child('vehicles'));
+    var alerted = false;
     trips.$loaded().then(function(){
       angular.forEach(trips, function (trip, id) {
         allTrips.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
         allTrips[id].$loaded().then(function () {
           if (allTrips[id].vehicle == vid) {
             //can't delete
-            alert('You can\'t delete a vehicle you are using in a trip.');
+            if(!alerted) {
+              alert('You can\'t delete a vehicle you are using in a trip.');
+              alerted = true;
+            }
           }
           else if (allTrips.length >= trips.length) {
             //delete
             var user = $firebaseObject(userRef.child(UserData.getData().facebook.id));
             user.$loaded().then(function () {
-              user.vehicles[vid] = null;
-              user.$save();
-              alert('Successfully deleted vehicle.');
+              if(!alerted) {
+                alert('Successfully deleted vehicle.');
+                user.vehicles[vid].deleted = true;
+                user.$save();
+                alerted = true;
+              }
             });
           }
         });
@@ -211,6 +223,8 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
 
   $scope.retrievePassengerTripData = function(){
     $scope.now = (new Date()).getTime();
+    var twoWeeksAgo = new Date();
+    twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
     var profileData = $scope.getProfileData();
     profileData.$loaded().then(function(){
       $scope.tripData = [];
@@ -221,17 +235,22 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
         item.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
         item[id].$loaded().then(function(){
           var startTime = new Date(item[id].start_time);
-          item[id].start_time = $scope.formatDate(item[id].start_time);
-          item[id].from = trip.from;
-          item[id].to = trip.to;
-          item[id].is_reviewed = trip.is_reviewed;
-          item[id].passenger_trip_id = id;
-          item[id].time_num = startTime.getTime();
+          var newTrip = {
+            start_time: $scope.formatDate(item[id].start_time),
+            user: item[id].user,
+            from: trip.from,
+            to: trip.to,
+            is_reviewed: trip.is_reviewed,
+            passenger_trip_id: id,
+            time_num: startTime.getTime()
+          };
           person.push($firebaseObject(userRef.child(item[id].user)));
           person[id].$loaded().then(function(){
-            item[id].img_url = person[id].img_url;
-            item[id].name = person[id].name;
-            $scope.tripData.push(item[id]);
+            newTrip.img_url = person[id].img_url;
+            newTrip.name = person[id].name;
+            if(startTime >= twoWeeksAgo) {
+              $scope.tripData.push(newTrip);
+            }
           });
         });
       });
@@ -239,20 +258,25 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
       var driverTripRefs = profileData.trips;
       var driverTripInfo = [];
       $scope.driverTripData = [];
+      var now = new Date();
       angular.forEach(driverTripRefs, function(driverTripRef, did){
         driverTripInfo[did] = ($firebaseObject(tripRef.child(driverTripRef.from).child(driverTripRef.to).child(driverTripRef.num)));
         driverTripInfo[did].$loaded().then(function(){
-          $scope.driverTripData[did] = {
-            to: driverTripRef.to,
-            from: driverTripRef.from,
-            passengers: [],
-            comment: driverTripInfo[did].comment,
-            seats: driverTripInfo[did].seats_left,
-            start_time: $scope.formatDate(driverTripInfo[did].start_time)
-          };
-          angular.forEach(driverTripInfo[did].passengers, function(passenger, pid){
-            $scope.driverTripData[did].passengers[pid] = $firebaseObject(userRef.child(passenger));
-          });
+          var startDate = new Date(driverTripInfo[did].start_time);
+          if(startDate >= now) {
+            $scope.driverTripData[did] = {
+              to: driverTripRef.to,
+              from: driverTripRef.from,
+              passengers: [],
+              comment: driverTripInfo[did].comment,
+              seats: driverTripInfo[did].seats_left,
+              start_time: $scope.formatDate(driverTripInfo[did].start_time),
+              time_num: startDate.getTime()
+            };
+            angular.forEach(driverTripInfo[did].passengers, function (passenger, pid) {
+              $scope.driverTripData[did].passengers[pid] = $firebaseObject(userRef.child(passenger));
+            });
+          }
         });
       });
     });
@@ -484,32 +508,38 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
   };
 
   $scope.saveRide = function(){
-    var departureTime = new Date();
-    departureTime.setTime($scope.departure.date.getTime() + $scope.departure.time.getTime() - departureTime.getTimezoneOffset()*60000);
 
-    //get current rides with these locations
-    var currentRides = $firebaseArray(tripRef.child($scope.startCity).child($scope.endCity));
-    var rideRefs = $firebaseArray(userRef.child(UserData.getData().facebook.id).child('trips'));
-    currentRides.$loaded().then(function() {
-      rideRefs.$loaded().then(function () {
-        var newRide = $firebaseObject(tripRef.child($scope.startCity).child($scope.endCity).child(currentRides.length));
-        newRide.comment = $scope.post.description;
-        newRide.seat_price = $scope.postRidePricing.price;
-        newRide.seats = $scope.car.seats;
-        newRide.seats_left = $scope.car.seats;
-        newRide.start_time = departureTime.getFullYear() + '-' + (departureTime.getMonth() + 1) + '-' + departureTime.getDate() + ' ' + departureTime.getHours() + ':' + departureTime.getMinutes() + ':' + departureTime.getSeconds();
-        newRide.user = UserData.getData().facebook.id;
-        newRide.vehicle = $scope.car.vehicle;
-        var newRef = $firebaseObject(userRef.child(UserData.getData().facebook.id).child('trips').child(rideRefs.length));
-        newRef.to = $scope.endCity;
-        newRef.from = $scope.startCity;
-        newRef.num = currentRides.length;
-        newRide.$save();
-        newRef.$save();
-        $scope.hide();
-        
+    if(isNaN(parseFloat($scope.postRidePricing.price))){
+      alert("Please enter a valid price");
+    }
+    else{
+      var departureTime = new Date();
+      departureTime.setTime($scope.departure.date.getTime() + $scope.departure.time.getTime() - departureTime.getTimezoneOffset()*60000);
+
+      //get current rides with these locations
+      var currentRides = $firebaseArray(tripRef.child($scope.startCity).child($scope.endCity));
+      var rideRefs = $firebaseArray(userRef.child(UserData.getData().facebook.id).child('trips'));
+      currentRides.$loaded().then(function() {
+        rideRefs.$loaded().then(function () {
+          var newRide = $firebaseObject(tripRef.child($scope.startCity).child($scope.endCity).child(currentRides.length));
+          newRide.comment = $scope.post.description;
+          newRide.seat_price = $scope.postRidePricing.price;
+          newRide.seats = $scope.car.seats;
+          newRide.seats_left = $scope.car.seats;
+          newRide.start_time = departureTime.getFullYear() + '-' + (departureTime.getMonth() + 1) + '-' + departureTime.getDate() + ' ' + departureTime.getHours() + ':' + departureTime.getMinutes() + ':' + departureTime.getSeconds();
+          newRide.user = UserData.getData().facebook.id;
+          newRide.vehicle = $scope.car.vehicle;
+          var newRef = $firebaseObject(userRef.child(UserData.getData().facebook.id).child('trips').child(rideRefs.length));
+          newRef.to = $scope.endCity;
+          newRef.from = $scope.startCity;
+          newRef.num = currentRides.length;
+          newRide.$save();
+          newRef.$save();
+          $scope.hide();
+          alert("You have successfully posted a ride!");
       });
     });
+  }
   };
 
   $scope.setPrice = function(){
