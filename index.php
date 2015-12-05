@@ -9,6 +9,13 @@
   <body layout="column" ng-app="theApp">
     <div ui-view></div>
 
+    <!--  Receiving info from Paypal  -->
+    <script type="text/javascript">
+      window.onload = function(){
+        window.purchasedTripInfo = <?php echo (empty($_GET['trip'])? 'null':$_GET['trip']); ?>;
+      };
+    </script>
+
     <!-- Rando dependencies -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="http://maps.google.com/maps/api/js?"></script>
@@ -34,6 +41,7 @@
 
     <!-- Directives -->
     <script src="app/components/dashboard/dashboardDirectives.js"></script>
+
 
   </body>
 </html>

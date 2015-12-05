@@ -26,6 +26,35 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   var ref = new Firebase('https://hitchdatabase.firebaseio.com');
   var tripRef = ref.child('trips');
   var userRef = ref.child('users');
+
+  //purchased trip stuff
+  if(!!window.purchasedTripInfo){
+    var purchasedTripInfo = window.purchasedTripInfo;
+    window.purchasedTripInfo = null;
+    //add yourself to passengers on the trip
+    var trip = $firebaseObject(tripRef.child(purchasedTripInfo.from).child(purchasedTripInfo.to).child(purchasedTripInfo.num));
+    trip.$loaded().then(function(){
+      trip.seats_left -= 1;
+      if(!trip.passengers){trip.passengers = [];}
+      trip.passengers[trip.passengers.length] = UserData.getData().facebook.id;
+      trip.$save();
+      //add to passenger trip queue
+      var self = $firebaseObject(userRef.child(UserData.getData().facebook.id));
+      self.$loaded().then(function(){
+        if(!self.passenger_trips){self.passenger_trips = [];}
+        self.passenger_trips[self.passenger_trips.length] = {
+          to: purchasedTripInfo.to,
+          from: purchasedTripInfo.from,
+          num: purchasedTripInfo.num,
+          is_reviewed: false
+        };
+        self.$save();
+        window.location.assign(window.location.href.substr(0,window.location.href.indexOf('?')));
+      });
+    });
+  }
+
+
   $scope.rides = [];
 
 
@@ -131,8 +160,6 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
       angular.forEach(trips, function (trip, id) {
         allTrips.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
         allTrips[id].$loaded().then(function () {
-          console.log(allTrips.length);
-          console.log(trips.length);
           if (allTrips[id].vehicle == vid) {
             //can't delete
             alert('You can\'t delete a vehicle you are using in a trip.');
@@ -154,11 +181,10 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
 
 
   $scope.showPayment = function(ev, ride, i){
-    console.dir(ride);
-    console.dir(window.location.href);
+    $scope.route.num = ride.id;
     $mdDialog.show({
       controller: PaymentDialogController,
-      templateUrl: 'app/components/dashboard/views/find/payment.php?price='+ride.seat_price+'&returl='+encodeURIComponent(window.location.href),
+      templateUrl: 'app/components/dashboard/views/find/payment.php?price='+ride.seat_price+'&returl='+encodeURIComponent(window.location.href)+'&trip='+encodeURIComponent(JSON.stringify($scope.route)),
       parent: angular.element(document.body),
       targetEvent: ev,
       clickOutsideToClose: true,
@@ -203,6 +229,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
           person.push($firebaseObject(userRef.child(item[id].user)));
           person[id].$loaded().then(function(){
             item[id].img_url = person[id].img_url;
+            item[id].name = person[id].name;
             $scope.tripData.push(item[id]);
           });
         });
@@ -223,7 +250,6 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
           };
           angular.forEach(driverTripInfo[did].passengers, function(passenger, pid){
             $scope.driverTripData[did].passengers[pid] = $firebaseObject(userRef.child(passenger));
-            console.dir($scope.driverTripData);
           });
         });
       });
@@ -329,6 +355,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     var lat2 = GoogleMaps.getLat(gmapurl2);
     var long2 = GoogleMaps.getLng(gmapurl2);
     var error = 1;
+    var today = new Date();
     var yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
 
@@ -383,7 +410,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       document.getElementById("error5").innerHTML = "";
       document.getElementById("search").innerHTML = "";
     }
-    if ($scope.search.date2 < yesterday){
+    if ($scope.search.date2 < today){
       if ($scope.search.date2 == ""){
         document.getElementById("error6").innerHTML = "Please enter a date.";
         $scope.rides = [];
@@ -406,6 +433,10 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       //the rides that match that query
       var startCity = GoogleMaps.getAdd(gmapurl1).replace(', USA', '').replace('.', '').trim();
       var endCity = GoogleMaps.getAdd(gmapurl2).replace(', USA', '').replace('.', '').trim();
+      $scope.route = {
+        from: startCity,
+        to: endCity
+      };
       var rides = $firebaseArray(tripRef.child(startCity).child(endCity));
       var drivers = [];
       $scope.rides = [];
@@ -414,6 +445,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
           drivers.push($firebaseObject(userRef.child(ride.user)));
           drivers[id].$loaded().then(function(){
             var newRide = {
+              id: ride.$id,
               name: drivers[id].name,
               user: ride.user,
               vehicle: drivers[id].vehicles[ride.vehicle],
@@ -575,7 +607,6 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       $scope.initGasMap(lat1, lat2, long1, long2, mpg, seats, averagePrice);
       $scope.postRidePricing.showForm = true;
       $scope.showPostForm();
-      console.log($scope.postRidePricing);
     }
 
   }
