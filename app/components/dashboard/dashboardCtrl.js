@@ -526,6 +526,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
           newRide.$save();
           newRef.$save();
           $scope.hide();
+          alert("You have successfully posted a ride.");
       });
     });
   }
