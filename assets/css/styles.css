@@ -310,8 +310,9 @@ md-toolbar {
     border-radius: 2px;
     display: inline-block;
     margin: 4px;
-    width: 80%;
-    height: 75px;
+    width: 100px;
+    height: 100px;
+    
 }
 
 .md-avatar-review {
@@ -355,3 +356,4 @@ md-toolbar {
     margin: 15px 15px 15px 7.5px;
 
 }
+
