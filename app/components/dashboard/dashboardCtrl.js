@@ -508,6 +508,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
   };
 
   $scope.saveRide = function(){
+
     if(isNaN(parseFloat($scope.postRidePricing.price))){
       alert("Please enter a valid price");
     }
