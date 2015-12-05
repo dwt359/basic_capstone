@@ -44,7 +44,7 @@ div{
     border-radius: 2px;
 /*    border: 1px solid #ddd;*/
     display: block;
-    max-width: 95%;
+    max-width: 45%;
     height: 30px;
     margin-top: 5px;
 }
@@ -333,6 +333,8 @@ md-toolbar {
 #review_tabs {
     height: 400px;
 }
+
+
 
 .md-accent-closed {
     text-align: right;
