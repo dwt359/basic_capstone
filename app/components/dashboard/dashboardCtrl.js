@@ -173,9 +173,12 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
             //delete
             var user = $firebaseObject(userRef.child(UserData.getData().facebook.id));
             user.$loaded().then(function () {
-              user.vehicles[vid] = null;
-              user.$save();
-              alert('Successfully deleted vehicle.');
+              if(!alerted) {
+                alert('Successfully deleted vehicle.');
+                user.vehicles[vid].deleted = true;
+                user.$save();
+                alerted = true;
+              }
             });
           }
         });
