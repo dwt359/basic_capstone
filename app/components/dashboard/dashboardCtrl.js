@@ -60,6 +60,9 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
 
 
 
+
+
+
   $scope.removeSeat = function(i){
     if($scope.seats.length > 1){
       $scope.seats.splice(i, 1);
@@ -496,31 +499,36 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
   };
 
   $scope.saveRide = function(){
-    var departureTime = new Date();
-    departureTime.setTime($scope.departure.date.getTime() + $scope.departure.time.getTime() - departureTime.getTimezoneOffset()*60000);
+    if(isNaN(parseFloat($scope.postRidePricing.price))){
+      alert("Please enter a valid price");
+    }
+    else{
+      var departureTime = new Date();
+      departureTime.setTime($scope.departure.date.getTime() + $scope.departure.time.getTime() - departureTime.getTimezoneOffset()*60000);
 
-    //get current rides with these locations
-    var currentRides = $firebaseArray(tripRef.child($scope.startCity).child($scope.endCity));
-    var rideRefs = $firebaseArray(userRef.child(UserData.getData().facebook.id).child('trips'));
-    currentRides.$loaded().then(function() {
-      rideRefs.$loaded().then(function () {
-        var newRide = $firebaseObject(tripRef.child($scope.startCity).child($scope.endCity).child(currentRides.length));
-        newRide.comment = $scope.post.description;
-        newRide.seat_price = $scope.postRidePricing.price;
-        newRide.seats = $scope.car.seats;
-        newRide.seats_left = $scope.car.seats;
-        newRide.start_time = departureTime.getFullYear() + '-' + (departureTime.getMonth() + 1) + '-' + departureTime.getDate() + ' ' + departureTime.getHours() + ':' + departureTime.getMinutes() + ':' + departureTime.getSeconds();
-        newRide.user = UserData.getData().facebook.id;
-        newRide.vehicle = $scope.car.vehicle;
-        var newRef = $firebaseObject(userRef.child(UserData.getData().facebook.id).child('trips').child(rideRefs.length));
-        newRef.to = $scope.endCity;
-        newRef.from = $scope.startCity;
-        newRef.num = currentRides.length;
-        newRide.$save();
-        newRef.$save();
-        $scope.hide();
+      //get current rides with these locations
+      var currentRides = $firebaseArray(tripRef.child($scope.startCity).child($scope.endCity));
+      var rideRefs = $firebaseArray(userRef.child(UserData.getData().facebook.id).child('trips'));
+      currentRides.$loaded().then(function() {
+        rideRefs.$loaded().then(function () {
+          var newRide = $firebaseObject(tripRef.child($scope.startCity).child($scope.endCity).child(currentRides.length));
+          newRide.comment = $scope.post.description;
+          newRide.seat_price = $scope.postRidePricing.price;
+          newRide.seats = $scope.car.seats;
+          newRide.seats_left = $scope.car.seats;
+          newRide.start_time = departureTime.getFullYear() + '-' + (departureTime.getMonth() + 1) + '-' + departureTime.getDate() + ' ' + departureTime.getHours() + ':' + departureTime.getMinutes() + ':' + departureTime.getSeconds();
+          newRide.user = UserData.getData().facebook.id;
+          newRide.vehicle = $scope.car.vehicle;
+          var newRef = $firebaseObject(userRef.child(UserData.getData().facebook.id).child('trips').child(rideRefs.length));
+          newRef.to = $scope.endCity;
+          newRef.from = $scope.startCity;
+          newRef.num = currentRides.length;
+          newRide.$save();
+          newRef.$save();
+          $scope.hide();
       });
     });
+  }
   };
 
   $scope.setPrice = function(){
