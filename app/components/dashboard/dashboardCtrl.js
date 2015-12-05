@@ -217,6 +217,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
             from: driverTripRef.from,
             passengers: [],
             comment: driverTripInfo[did].comment,
+            seats: driverTripInfo[did].seats_left,
             start_time: $scope.formatDate(driverTripInfo[did].start_time)
           };
           angular.forEach(driverTripInfo[did].passengers, function(passenger, pid){
