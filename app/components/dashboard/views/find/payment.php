@@ -31,7 +31,7 @@
 
           $requestEnvelope = new RequestEnvelope("en_US");
           $actionType = "PAY";
-          $cancelUrl = "http://mrodgers.info/Cancel.php";
+          $cancelUrl = urldecode($_GET['returl']);
           $returnUrl = "http://mrodgers.info/Success.php";
           $currencyCode = "USD";
           $receiver = array();

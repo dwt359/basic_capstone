@@ -153,10 +153,12 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
 
 
 
-  $scope.showPayment = function(ev, ride, i, price){
+  $scope.showPayment = function(ev, ride, i){
+    console.dir(ride);
+    console.dir(window.location.href);
     $mdDialog.show({
       controller: PaymentDialogController,
-      templateUrl: 'app/components/dashboard/views/find/payment.php?price='+price,
+      templateUrl: 'app/components/dashboard/views/find/payment.php?price='+ride.seat_price+'&returl='+encodeURIComponent(window.location.href),
       parent: angular.element(document.body),
       targetEvent: ev,
       clickOutsideToClose: true,
