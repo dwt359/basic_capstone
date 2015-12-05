@@ -49,7 +49,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
           is_reviewed: false
         };
         self.$save();
-        alert('Successfully purchased ride! Click on your driver\'s profile picture to contact them on facebook.');
+        alert('Successfully purchased ride! Click on your driver\'s profile picture to contact them on Facebook.');
         window.location.assign(window.location.href.substr(0,window.location.href.indexOf('?')));
       });
     });
@@ -258,7 +258,8 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
               passengers: [],
               comment: driverTripInfo[did].comment,
               seats: driverTripInfo[did].seats_left,
-              start_time: $scope.formatDate(driverTripInfo[did].start_time)
+              start_time: $scope.formatDate(driverTripInfo[did].start_time),
+              time_num: startDate.getTime()
             };
             angular.forEach(driverTripInfo[did].passengers, function (passenger, pid) {
               $scope.driverTripData[did].passengers[pid] = $firebaseObject(userRef.child(passenger));
