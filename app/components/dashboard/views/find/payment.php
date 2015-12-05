@@ -34,7 +34,7 @@
           $currencyCode = "USD";
           $receiver = array();
           $receiver[0] = new Receiver();
-          $receiver[0]->amount = 3;
+          $receiver[0]->amount = $_GET['price'];
           $receiver[0]->email = "mar2n4-facilitator@mail.missouri.edu";
           $receiverList = new ReceiverList($receiver);
 
