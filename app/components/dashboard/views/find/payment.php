@@ -29,10 +29,13 @@
              "acct1.AppId" => "APP-80W284485P519543T"
           );
 
+          $url = urldecode($_GET['returl']);
+          $baseUrl = explode('#', $url, 2)[0];
+
           $requestEnvelope = new RequestEnvelope("en_US");
           $actionType = "PAY";
-          $cancelUrl = "http://mrodgers.info/Cancel.php";
-          $returnUrl = "http://mrodgers.info/Success.php";
+          $cancelUrl = $url;
+          $returnUrl = $baseUrl.'?trip='.$_GET['trip'];
           $currencyCode = "USD";
           $receiver = array();
           $receiver[0] = new Receiver();
