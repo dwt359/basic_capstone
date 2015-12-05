@@ -157,13 +157,17 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
     var allTrips = [];
     var trips = $firebaseArray(userRef.child(UserData.getData().facebook.id).child('trips'));
     var vehicles = $firebaseArray(userRef.child(UserData.getData().facebook.id).child('vehicles'));
+    var alerted = false;
     trips.$loaded().then(function(){
       angular.forEach(trips, function (trip, id) {
         allTrips.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
         allTrips[id].$loaded().then(function () {
           if (allTrips[id].vehicle == vid) {
             //can't delete
-            alert('You can\'t delete a vehicle you are using in a trip.');
+            if(!alerted) {
+              alert('You can\'t delete a vehicle you are using in a trip.');
+              alerted = true;
+            }
           }
           else if (allTrips.length >= trips.length) {
             //delete
