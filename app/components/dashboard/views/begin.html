@@ -37,10 +37,10 @@
                   <img ng-click="showProfile($event, trip.user)" ng-src="{{trip.img_url}}" class="md-avatar-queue" />
                 </div>
                 <div layout="column" flex="75">
-                    <h5 style="margin:1px;"><b>DRIVER</b> {{trip.name}}</h5>
-                    <h5 style="margin:1px;"><b>FROM </b>{{trip.from}}</h5>
-                    <h5 style="margin:1px;"><b>TO </b>{{trip.to}}</h5>
-                    <h5 style="margin:1px;"><b>DEPARTING</b> {{trip.start_time}}</h5>
+                    <h5 style="margin:0px;"><b>DRIVER</b> {{trip.name}}</h5>
+                    <h5 style="margin:0px;"><b>FROM </b>{{trip.from}}</h5>
+                    <h5 style="margin:0px;"><b>TO </b>{{trip.to}}</h5>
+                    <h5 style="margin:0px;"><b>DEPARTING</b> {{trip.start_time}}</h5>
                     
                   <md-button ng-click="showReviewForm($event, trip.user, trip.passenger_trip_id)" ng-hide="trip.is_reviewed || trip.time_num > now" class="md-accent md-raised">Review</md-button>
                 </div>
