@@ -618,9 +618,9 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       if (error != 0) {
         $scope.showLoading = true;
         $.getJSON(gmapurl1).then(function(geocode7){
-          $scope.startCity = GoogleMaps.convertAdd(geocode7);
+          $scope.startCity = GoogleMaps.convertAdd(geocode7).replace(', USA', '').replace('.', '').trim();
           $.getJSON(gmapurl2).then(function(geocode8){
-            $scope.endCity = GoogleMaps.convertAdd(geocode8);
+            $scope.endCity = GoogleMaps.convertAdd(geocode8).replace(', USA', '').replace('.', '').trim();
             $.getJSON(gmapurl1).then(function(geocode1){
               mapCity1 = GoogleMaps.convertCity(geocode1);
               $.getJSON(gmapurl2).then(function(geocode2){
