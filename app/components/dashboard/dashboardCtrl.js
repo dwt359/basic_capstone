@@ -26,6 +26,36 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
   var ref = new Firebase('https://hitchdatabase.firebaseio.com');
   var tripRef = ref.child('trips');
   var userRef = ref.child('users');
+
+  //purchased trip stuff
+  if(!!window.purchasedTripInfo){
+    var purchasedTripInfo = window.purchasedTripInfo;
+    window.purchasedTripInfo = null;
+    //add yourself to passengers on the trip
+    var trip = $firebaseObject(tripRef.child(purchasedTripInfo.from).child(purchasedTripInfo.to).child(purchasedTripInfo.num));
+    trip.$loaded().then(function(){
+      trip.seats_left -= 1;
+      if(!trip.passengers){trip.passengers = [];}
+      trip.passengers[trip.passengers.length] = UserData.getData().facebook.id;
+      trip.$save();
+      //add to passenger trip queue
+      var self = $firebaseObject(userRef.child(UserData.getData().facebook.id));
+      self.$loaded().then(function(){
+        if(!self.passenger_trips){self.passenger_trips = [];}
+        self.passenger_trips[self.passenger_trips.length] = {
+          to: purchasedTripInfo.to,
+          from: purchasedTripInfo.from,
+          num: purchasedTripInfo.num,
+          is_reviewed: false
+        };
+        self.$save();
+        alert('Successfully purchased ride! Click on your driver\'s profile picture to contact them on facebook.');
+        window.location.assign(window.location.href.substr(0,window.location.href.indexOf('?')));
+      });
+    });
+  }
+
+
   $scope.rides = [];
 
 
@@ -34,23 +64,23 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
     if($scope.seats.length > 1){
       $scope.seats.splice(i, 1);
     }
-  }
+  };
 
   $scope.addSeat = function(i){
     if($scope.seats.length < $scope.seatLimit){
       $scope.seats.push({name: 'New Seat', description:'', price: 0.00});
     }
-  }
+  };
 
 
   $scope.viewProfile = function() {
       $state.go('^.^.profile');
-  }
+  };
 
   $scope.viewDashboard = function() {
         $state.go('home');
 
-  }
+  };
 
   $scope.showProfile = function(ev, fid){
     //main profile info
@@ -131,8 +161,6 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
       angular.forEach(trips, function (trip, id) {
         allTrips.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
         allTrips[id].$loaded().then(function () {
-          console.log(allTrips.length);
-          console.log(trips.length);
           if (allTrips[id].vehicle == vid) {
             //can't delete
             alert('You can\'t delete a vehicle you are using in a trip.');
@@ -154,9 +182,10 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
 
 
   $scope.showPayment = function(ev, ride, i){
+    $scope.route.num = ride.id;
     $mdDialog.show({
       controller: PaymentDialogController,
-      templateUrl: 'app/components/dashboard/views/find/payment.php',
+      templateUrl: 'app/components/dashboard/views/find/payment.php?price='+ride.seat_price+'&returl='+encodeURIComponent(window.location.href)+'&trip='+encodeURIComponent(JSON.stringify($scope.route)),
       parent: angular.element(document.body),
       targetEvent: ev,
       clickOutsideToClose: true,
@@ -164,46 +193,21 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
         ride: ride
       }
     });
-  }
+  };
 
   $scope.getProfileData = function(){
     return UserData.getProfileData();
-  }
+  };
 
   $scope.formatDate = function(dateString){
     var startTime = new Date(dateString);
     var pad = '00';
     return (startTime.getMonth() + 1) + '/' + startTime.getDate() + '/' + startTime.getFullYear() + ' at ' + startTime.getHours() + ':' + pad.substring(0, pad.length - startTime.getMinutes().toString().length) + startTime.getMinutes().toString();
-  }
-
-  $scope.retrievePassengerTripData = function(){
-    var profileData = $scope.getProfileData();
-    profileData.$loaded().then(function() {
-      $scope.tripData = [];
-      var trips = profileData.passenger_trips;
-      var item = [];
-      var person = [];
-      if (!!trips.length){
-        angular.forEach(trips, function (trip, id) {
-          item.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
-          item[id].$loaded().then(function () {
-            item[id].start_time = $scope.formatDate(item[id].start_time);
-            item[id].from = trip.from;
-            item[id].to = trip.to;
-            person.push($firebaseObject(userRef.child(item[id].user)));
-            person[id].$loaded().then(function () {
-              item[id].img_url = person[id].img_url;
-              $scope.tripData.push(item[id]);
-            });
-          });
-        });
-      }
-    });
-  }
+  };
 
   $scope.getProfileData = function(){
     return UserData.getProfileData();
-  }
+  };
 
   $scope.retrievePassengerTripData = function(){
     $scope.now = (new Date()).getTime();
@@ -217,8 +221,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
         item.push($firebaseObject(tripRef.child(trip.from).child(trip.to).child(trip.num)));
         item[id].$loaded().then(function(){
           var startTime = new Date(item[id].start_time);
-          var pad = '00';
-          item[id].start_time = (startTime.getMonth()+1) + '/' + startTime.getDate() + '/' + startTime.getFullYear() + ' at ' + startTime.getHours() + ':' + pad.substring(0, pad.length - startTime.getMinutes().toString().length) + startTime.getMinutes().toString();
+          item[id].start_time = $scope.formatDate(item[id].start_time);
           item[id].from = trip.from;
           item[id].to = trip.to;
           item[id].is_reviewed = trip.is_reviewed;
@@ -227,7 +230,28 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
           person.push($firebaseObject(userRef.child(item[id].user)));
           person[id].$loaded().then(function(){
             item[id].img_url = person[id].img_url;
+            item[id].name = person[id].name;
             $scope.tripData.push(item[id]);
+          });
+        });
+      });
+      //driver trips
+      var driverTripRefs = profileData.trips;
+      var driverTripInfo = [];
+      $scope.driverTripData = [];
+      angular.forEach(driverTripRefs, function(driverTripRef, did){
+        driverTripInfo[did] = ($firebaseObject(tripRef.child(driverTripRef.from).child(driverTripRef.to).child(driverTripRef.num)));
+        driverTripInfo[did].$loaded().then(function(){
+          $scope.driverTripData[did] = {
+            to: driverTripRef.to,
+            from: driverTripRef.from,
+            passengers: [],
+            comment: driverTripInfo[did].comment,
+            seats: driverTripInfo[did].seats_left,
+            start_time: $scope.formatDate(driverTripInfo[did].start_time)
+          };
+          angular.forEach(driverTripInfo[did].passengers, function(passenger, pid){
+            $scope.driverTripData[did].passengers[pid] = $firebaseObject(userRef.child(passenger));
           });
         });
       });
@@ -252,13 +276,13 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
     if($state.is('dashboard.post.info') || $state.is('dashboard.post.pricing')){
       $state.go('^.^.^.home');
     }
-  }
+  };
 
   $scope.verifyInfo = function(){
     //Verify ride info stuff here
 
     $state.go('^.pricing')
-  }
+  };
 
   $scope.printUSA = function(){
 
@@ -276,7 +300,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
        map.fitBounds(results[0].geometry.viewport);
     });
 
-}
+};
 
 $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
   var LocationStart = {lat: lat1, lng: lng1};
@@ -333,6 +357,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     var lat2 = GoogleMaps.getLat(gmapurl2);
     var long2 = GoogleMaps.getLng(gmapurl2);
     var error = 1;
+    var today = new Date();
     var yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
 
@@ -410,6 +435,10 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       //the rides that match that query
       var startCity = GoogleMaps.getAdd(gmapurl1).replace(', USA', '').replace('.', '').trim();
       var endCity = GoogleMaps.getAdd(gmapurl2).replace(', USA', '').replace('.', '').trim();
+      $scope.route = {
+        from: startCity,
+        to: endCity
+      };
       var rides = $firebaseArray(tripRef.child(startCity).child(endCity));
       var drivers = [];
       $scope.rides = [];
@@ -418,6 +447,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
           drivers.push($firebaseObject(userRef.child(ride.user)));
           drivers[id].$loaded().then(function(){
             var newRide = {
+              id: ride.$id,
               name: drivers[id].name,
               user: ride.user,
               vehicle: drivers[id].vehicles[ride.vehicle],
@@ -430,7 +460,13 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 
             document.getElementById("search").innerHTML = "";
             var rideDate = new Date(ride.start_time);
-            if(rideDate >= $scope.search.date1 && rideDate <= $scope.search.date2) {
+            var isOnRide = false;
+            angular.forEach(ride.passengers, function(passenger, pid){
+              if(passenger == UserData.getData().facebook.id){
+                isOnRide = true;
+              }
+            });
+            if(rideDate >= $scope.search.date1 && rideDate <= $scope.search.date2 && newRide.seats_left != 0 && newRide.user != UserData.getData().facebook.id && !isOnRide) {
               $scope.rides.push(newRide);
             }
           });
@@ -448,16 +484,31 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
   };
 
   $scope.saveRide = function(){
-    console.dir($scope.postRidePricing);
-    console.dir($scope.car);
-    console.dir($scope.selectedVehicle);
-    console.dir($scope.starting);
-    console.dir($scope.ending);
-    console.dir($scope.departure);
-    var departureTime = new Date($scope.departure.date.getTime() + $scope.departure.time.getTime());
-    console.dir(departureTime);
-    console.dir($scope.post);
+    var departureTime = new Date();
+    departureTime.setTime($scope.departure.date.getTime() + $scope.departure.time.getTime() - departureTime.getTimezoneOffset()*60000);
 
+    //get current rides with these locations
+    var currentRides = $firebaseArray(tripRef.child($scope.startCity).child($scope.endCity));
+    var rideRefs = $firebaseArray(userRef.child(UserData.getData().facebook.id).child('trips'));
+    currentRides.$loaded().then(function() {
+      rideRefs.$loaded().then(function () {
+        var newRide = $firebaseObject(tripRef.child($scope.startCity).child($scope.endCity).child(currentRides.length));
+        newRide.comment = $scope.post.description;
+        newRide.seat_price = $scope.postRidePricing.price;
+        newRide.seats = $scope.car.seats;
+        newRide.seats_left = $scope.car.seats;
+        newRide.start_time = departureTime.getFullYear() + '-' + (departureTime.getMonth() + 1) + '-' + departureTime.getDate() + ' ' + departureTime.getHours() + ':' + departureTime.getMinutes() + ':' + departureTime.getSeconds();
+        newRide.user = UserData.getData().facebook.id;
+        newRide.vehicle = $scope.car.vehicle;
+        var newRef = $firebaseObject(userRef.child(UserData.getData().facebook.id).child('trips').child(rideRefs.length));
+        newRef.to = $scope.endCity;
+        newRef.from = $scope.startCity;
+        newRef.num = currentRides.length;
+        newRide.$save();
+        newRef.$save();
+        $scope.hide();
+      });
+    });
   };
 
   $scope.setPrice = function(){
@@ -591,8 +642,26 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 
       $scope.showLoading = false;
 
+<<<<<<< HEAD
+=======
+      var gasUrl1 = "http://api.mygasfeed.com/stations/radius/"+lat1+"/"+long1+"/25/reg/Distance/1u129mrydk.json?";
+      var gasUrl2 = "http://api.mygasfeed.com/stations/radius/"+lat2+"/"+long2+"/25/reg/Distance/1u129mrydk.json?";
+      var price1 = parseFloat(GoogleMaps.getPrice(gasUrl1), 10);
+      var price2 = parseFloat(GoogleMaps.getPrice(gasUrl2), 10);
+      if (isNaN(price1)|| isNaN(price2)) {
+        price1 = 2;
+        price2 = 2;
+      }
+      var averagePrice = (price1+price2)/2;
+      var mpg = $scope.selectedVehicle.mpg;
+      var seats = $scope.car.seats;
+      $scope.initGasMap(lat1, lat2, long1, long2, mpg, seats, averagePrice);
+      $scope.postRidePricing.showForm = true;
+      $scope.showPostForm();
+    }
+>>>>>>> origin/master
 
-  }
+  };
 
   $scope.getPrice = function (url){
      var price;
@@ -607,7 +676,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
 
      });
      return price;
-   }
+   };
 
   $scope.distanceInfo = function(distance, mpg, seats, averagePrice){
     distance = distance/1609.34;
@@ -624,7 +693,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     //document.getElementById("distance").innerHTML = "Trip distance: "+distance.toFixed(2)+" miles";
     //document.getElementById("totalCost").innerHTML = "Total trip cost: $"+cost.toFixed(2);
     //document.getElementById("seatCost").innerHTML ="Suggested price per seat: $"+seatCost.toFixed(2);
-  }
+  };
 
   $scope.showPostForm = function(ev){
     $mdDialog.show({
@@ -636,13 +705,13 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       targetEvent: ev,
       clickOutsideToClose: true
     });
-}
+};
 
 
 
   $scope.setSeats = function(){
 
-  }
+  };
 
   $scope.showReviewForm = function(ev, fid, tid){
     $scope.initReview = $firebaseObject(userRef.child(fid));
@@ -673,7 +742,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
   $scope.selectPostVehicle = function(){
     $scope.selectedVehicle = $scope.vehicles[$scope.car.vehicle];
     if($scope.car.seats > $scope.selectedVehicle.seats){
-      $scope.car.seats = $scope.selectedVehicle.seats;
+        $scope.car.seats = $scope.selectedVehicle.seats;
     }
   };
 

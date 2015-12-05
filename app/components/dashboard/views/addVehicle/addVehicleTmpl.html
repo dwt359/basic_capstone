@@ -9,10 +9,12 @@
 
                 <div layout="column" style="height:450px;">
                     <section layout="column" flex>
-
-                        <md-select placeholder="MAKE" aria-label="make" ng-model="newVehicle.make">
-                            <md-option ng-repeat="option in makeOptions" value="{{option}}">{{option}}</md-option>
-                        </md-select>
+                        
+                        <md-input-container>
+                            <md-select placeholder="MAKE" aria-label="make" ng-model="newVehicle.make">
+                                <md-option ng-repeat="option in makeOptions" value="{{option}}">{{option}}</md-option>
+                            </md-select>
+                        </md-input-container>
                         <md-input-container>
                             <label>MODEL</label>
                             <input type="text" ng-model="newVehicle.model"/>
@@ -32,7 +34,7 @@
                             <input type="number" ng-model="newVehicle.mpg" />
                         </md-input-container>
                         <md-input-container>
-                            <label>SEATS</label>
+                            <label>MAXIMUM NUMBER OF PASSENGERS</label>
                             <input type="number" ng-model="newVehicle.seats" />
                         </md-input-container>
 

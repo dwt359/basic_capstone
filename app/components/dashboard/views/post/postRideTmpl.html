@@ -1,30 +1,31 @@
 <md-dialog aria-label="test">
   <form name="postRideForm">
     <md-dialog-content>
+  
         <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
             <h1 id="profileDisplayName" layout-align="left" class="md-toolbar-tools">POST A RIDE</h1>
         </md-toolbar>
         <div id="post_ride_dialog">
 
-        <div layout="column" style="height:250px;">
+        <div layout="column" style="height:180px;">
             <section layout="column" flex>
 
 
-            <md-input-container>
-                <label>TRIP DISTANCE</label>
-                <input type="text" disabled ng-model="postRidePricing.distance"/>
-            </md-input-container>
-            <md-input-container>
-                <label>TRIP COST</label>
-                <input type="text" disabled ng-model="postRidePricing.totalCost"/>
-            </md-input-container>
-            <md-input-container>
-                <label>PRICE PER SEAT</label>
-                <input type="text" ng-model="postRidePricing.price">
-            </md-input-container>
-
+            <div class="md-list-item-text" layout-align="left" layout="column" flex="100">
+                
+                <label style="margin-top:10px; margin-bottom:3px; margin-left:4px; color:#757575" for="trip_distance">TRIP DISTANCE</label>
+                <md-divider></md-divider>
+                <h4 style="margin-top:3px; margin-bottom:0px; margin-left:4px; font-weight: normal; color:#757575;" name="trip_distance">{{postRidePricing.distance}} miles</h4>
+                <label style="margin-top:10px; margin-bottom:3px; margin-left:4px; color:#757575"  for="trip_total">TRIP COST</label>
+                <md-divider></md-divider>
+                <h4 style="margin-top:3px; margin-bottom:0px; margin-left:4px; font-weight: normal; color:#757575;" name="trip_total">${{postRidePricing.totalCost}}</h4>
+                <md-input-container style="padding:0px">
+                    <label>PRICE PER SEAT</label>
+                    <input type="text" ng-model="postRidePricing.price">
+                </md-input-container> 
                 <md-button class="md-accent" ng-click="saveRide()">POST</md-button>
-
+            </div>
+            
             </section>
 
         </div>
