@@ -49,6 +49,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
           is_reviewed: false
         };
         self.$save();
+        alert('Successfully purchased ride! Click on your driver\'s profile picture to contact them on facebook.');
         window.location.assign(window.location.href.substr(0,window.location.href.indexOf('?')));
       });
     });
