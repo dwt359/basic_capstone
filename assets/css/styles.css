@@ -44,9 +44,10 @@ div{
     border-radius: 2px;
 /*    border: 1px solid #ddd;*/
     display: block;
-    max-width: 95%;
+    width: 30px;
     height: 30px;
-    margin-top: 5px;
+    margin: 2px; 2px;
+    
 }
 
 #map {
@@ -264,7 +265,7 @@ md-list.md-default-theme {
 }
 
 md-list-item .md-no-style, md-list-item.md-no-proxy {
-    padding: 6px 16px;
+    padding: 3px 16px;
 }
 
 md-list-item.md-2-line .md-list-item-text, md-list-item.md-2-line>.md-no-style .md-list-item-text {
@@ -322,9 +323,19 @@ md-toolbar {
     height: 75px;
 }
 
+.md-profile-button {
+    margin: 1px;
+    font-size: 8px;
+    height: 25px;
+    width: 100%;
+    background-color: transparent;
+}
+
 #review_tabs {
     height: 400px;
 }
+
+
 
 .md-accent-closed {
     text-align: right;

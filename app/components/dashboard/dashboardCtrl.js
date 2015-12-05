@@ -153,10 +153,10 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
 
 
 
-  $scope.showPayment = function(ev, ride, i){
+  $scope.showPayment = function(ev, ride, i, price){
     $mdDialog.show({
       controller: PaymentDialogController,
-      templateUrl: 'app/components/dashboard/views/find/payment.php',
+      templateUrl: 'app/components/dashboard/views/find/payment.php?price='+price,
       parent: angular.element(document.body),
       targetEvent: ev,
       clickOutsideToClose: true,
@@ -217,6 +217,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
             from: driverTripRef.from,
             passengers: [],
             comment: driverTripInfo[did].comment,
+            seats: driverTripInfo[did].seats_left,
             start_time: $scope.formatDate(driverTripInfo[did].start_time)
           };
           angular.forEach(driverTripInfo[did].passengers, function(passenger, pid){
@@ -657,7 +658,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
   $scope.selectPostVehicle = function(){
     $scope.selectedVehicle = $scope.vehicles[$scope.car.vehicle];
     if($scope.car.seats > $scope.selectedVehicle.seats){
-      $scope.car.seats = $scope.selectedVehicle.seats;
+        $scope.car.seats = $scope.selectedVehicle.seats;
     }
   };
 

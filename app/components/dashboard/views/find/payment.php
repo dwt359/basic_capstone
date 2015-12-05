@@ -1,24 +1,24 @@
 <md-dialog aria-label="test">
-  <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
-      <h1 id="profileDisplayName" layout-align="center" class="md-toolbar-tools">PAYMENT CONFIRMATION</h1>
-  </md-toolbar>
   <md-dialog-content layout="column">
+    <md-toolbar md-scroll-y class="md-whiteframe-z4" layout="row">
+      <h1 id="profileDisplayName" layout-align="center" class="md-toolbar-tools">PAYMENT CONFIRMATION</h1>
+    </md-toolbar>
+
     <div layout="row" layout-align="center">
         <h2>Pay ${{ride.seat_price}} to {{ride.name}}?</h2>
     </div>
     <div layout="row">
         <p>Clicking "Proceed" will redirect you to PayPal to complete your transaction.</p>
     </div>
-    <div layout="row" layout-align="center">
-        <md-button class="md-accent md-raised">PROCEED</md-button>
-        <md-button class="md-accent md-raised">CANCEL</md-button>
-    </div>
-    
- 
+
+
+
       <br>
       <?php
-
-      // Sets config file path(if config file is used) and registers the classloader
+    
+    //error_reporting(E_ALL);
+    //ini_set('display_errors','1');
+    // Sets config file path(if config file is used) and registers the classloader
           require("adaptivepayments-sdk-php-master/samples/PPBootStrap.php");
 
           $config = array(
@@ -36,7 +36,7 @@
           $currencyCode = "USD";
           $receiver = array();
           $receiver[0] = new Receiver();
-          $receiver[0]->amount = $_POST["Cost"];
+          $receiver[0]->amount = $_GET['price'];
           $receiver[0]->email = "mar2n4-facilitator@mail.missouri.edu";
           $receiverList = new ReceiverList($receiver);
 
