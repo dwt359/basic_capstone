@@ -128,11 +128,13 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
       angular.forEach(profileTrips, function(profileTrip, id){
         trips.push($firebaseObject(tripRef.child(profileTrip.from).child(profileTrip.to).child(profileTrip.num)));
         trips[id].$loaded().then(function() {
+          var startTime = new Date(trips[id].start_time);
           $scope.profileTrips.push({
             comment: trips[id].comment,
             start_time: $scope.formatDate(trips[id].start_time),
             from: profileTrip.from,
-            to: profileTrip.to
+            to: profileTrip.to,
+            time_num: startTime.getTime()
           });
         });
       });
