@@ -211,6 +211,8 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
 
   $scope.retrievePassengerTripData = function(){
     $scope.now = (new Date()).getTime();
+    var twoWeeksAgo = new Date();
+    twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
     var profileData = $scope.getProfileData();
     profileData.$loaded().then(function(){
       $scope.tripData = [];
@@ -234,7 +236,9 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
           person[id].$loaded().then(function(){
             newTrip.img_url = person[id].img_url;
             newTrip.name = person[id].name;
-            $scope.tripData.push(newTrip);
+            if(startTime >= twoWeeksAgo) {
+              $scope.tripData.push(newTrip);
+            }
           });
         });
       });
@@ -242,20 +246,24 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
       var driverTripRefs = profileData.trips;
       var driverTripInfo = [];
       $scope.driverTripData = [];
+      var now = new Date();
       angular.forEach(driverTripRefs, function(driverTripRef, did){
         driverTripInfo[did] = ($firebaseObject(tripRef.child(driverTripRef.from).child(driverTripRef.to).child(driverTripRef.num)));
         driverTripInfo[did].$loaded().then(function(){
-          $scope.driverTripData[did] = {
-            to: driverTripRef.to,
-            from: driverTripRef.from,
-            passengers: [],
-            comment: driverTripInfo[did].comment,
-            seats: driverTripInfo[did].seats_left,
-            start_time: $scope.formatDate(driverTripInfo[did].start_time)
-          };
-          angular.forEach(driverTripInfo[did].passengers, function(passenger, pid){
-            $scope.driverTripData[did].passengers[pid] = $firebaseObject(userRef.child(passenger));
-          });
+          var startDate = new Date(driverTripInfo[did].start_time);
+          if(startDate >= now) {
+            $scope.driverTripData[did] = {
+              to: driverTripRef.to,
+              from: driverTripRef.from,
+              passengers: [],
+              comment: driverTripInfo[did].comment,
+              seats: driverTripInfo[did].seats_left,
+              start_time: $scope.formatDate(driverTripInfo[did].start_time)
+            };
+            angular.forEach(driverTripInfo[did].passengers, function (passenger, pid) {
+              $scope.driverTripData[did].passengers[pid] = $firebaseObject(userRef.child(passenger));
+            });
+          }
         });
       });
     });
