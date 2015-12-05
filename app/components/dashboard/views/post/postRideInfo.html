@@ -75,34 +75,32 @@
               <textarea ng-model="post.description" md-maxlength="250" maxlength="250"></textarea>
             </md-input-container>
               <div layout="row" layout-align="center center">
-                <md-button type="submit" class="md-accent md-raised" ng-click="setPrice(); ">Set Price</md-button>
+                <md-button type="submit" class="md-accent md-raised" ng-click="setPrice()">Set Price</md-button>
               </div>
 
             </form>
           </md-card-content>
         </md-card>
         </div>
+        <div flex>
 
-        <div id="ride-list-container">
-          <md-list>
+            <p id="error1" style="color:#d9534f"></p>
+            <p id="error2" style="color:#d9534f"></p>
+            <p id="error3" style="color:#d9534f"></p>
+            <p id="error4" style="color:#d9534f"></p>
+            <p id="error5" style="color:#d9534f"></p>
+            <p id="error6" style="color:#d9534f"></p>
+            <p id="error7" style="color:#d9534f"></p>
+            <p id="error8" style="color:#d9534f"></p>
 
-                <p id="error1" style="color:#d9534f"></p>
-                <p id="error2" style="color:#d9534f"></p>
-                <p id="error3" style="color:#d9534f"></p>
-                <p id="error4" style="color:#d9534f"></p>
-                <p id="error5" style="color:#d9534f"></p>
-                <p id="error6" style="color:#d9534f"></p>
-                <p id="error7" style="color:#d9534f"></p>
-                <p id="error8" style="color:#d9534f"></p>
-
-          </md-list>
+            <md-progress-circular md-mode="indeterminate" ng-show="showLoading" style="margin: 0 auto;"></md-progress-circular>
+        </div>
         </div>
 
-
-
+      <div hide show-gt-md layout="column" flex="45" layout-align="top">
+        <div id="map" flex="100" data-ng-init="printUSA()"></div>
       </div>
-    <div hide show-gt-md layout="column" flex="45" layout-align="top">
-      <div id="map" flex="100" data-ng-init="printUSA()"></div>
     </div>
   </div>
+
 </md-content>

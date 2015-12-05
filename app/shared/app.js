@@ -151,20 +151,12 @@ theApp.factory('LoginAuth', ['$state', '$mdDialog', 'UserData', function($state,
 theApp.factory('GoogleMaps', function(){
 
   return{
-    getLat: function(url){
-      var lat;
-      $.getJSON(url, function(geocode){
-        lat = geocode.results[0].geometry.location.lat;
-      });
-      return lat;
+    convertLat: function(geocode){
+      return geocode.results[0].geometry.location.lat;
     },
 
-    getLng: function(url){
-      var lng;
-      $.getJSON(url, function(geocode){
-        lng = geocode.results[0].geometry.location.lng;
-      });
-      return lng;
+    convertLng: function(geocode){
+      return geocode.results[0].geometry.location.lng;
     },
 
     getAdd: function(url){
@@ -175,35 +167,25 @@ theApp.factory('GoogleMaps', function(){
       return address;
     },
 
-    getCity: function(url){
-      var type;
-      var city;
-      $.getJSON(url, function(geocode){
-        type = geocode.results[0].address_components[0].types[0];
-        city = geocode.results[0].address_components[0].short_name;
-          if (type == "locality"){
-            return city;
-          }
-          else{
-            city = 0;
-            return city;
-          }
-      });
-      return city;
+    convertCity: function(geocode){
+      var type = geocode.results[0].address_components[0].types[0];
+      var city = geocode.results[0].address_components[0].short_name;
+      if (type == "locality"){
+        return city;
+      }
+      return 0;
     },
 
-    getPrice: function (url){
+    convertPrice: function (station){
        var price;
-       $.getJSON(url, function(station){
-         var stations = station.stations;
-         for (i = 0; i<stations.length; i++) {
-           price = station.stations[i].reg_price;
-           if (price != "N/A"){
-             break;
-           }
+       var stations = station.stations;
+       for (i = 0; i<stations.length; i++) {
+         price = station.stations[i].reg_price;
+         if (price != "N/A"){
+           break;
          }
+       }
 
-       });
        return price;
      },
 

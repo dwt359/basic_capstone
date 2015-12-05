@@ -3,8 +3,6 @@
   src: url(../libs/ProximaNova-Regular.ttf);
 }
 
-
-
 #signup-title{
   text-shadow: 2px 2px 3px #404040, -2px -2px 3px #404040;
 }
@@ -255,7 +253,7 @@ md-list-item .md-no-style, md-list-item.md-no-proxy {
 }
 
 md-list-item.md-2-line .md-list-item-text, md-list-item.md-2-line>.md-no-style .md-list-item-text {
-    padding-top: 5px;   
+    padding-top: 5px;
 }
 
 
@@ -327,4 +325,20 @@ md-toolbar {
 #dashboard_button_3 {
     margin: 15px 15px 15px 7.5px;
 
+}
+
+
+#loading-overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  background-color: rgba(0,0,0,0.5); /*dim the background*/
+}
+
+#loading-circle{
+  position: relative;
+  margin: 0 auto;
 }

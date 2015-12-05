@@ -7,7 +7,7 @@ theApp.controller('dashboardCtrl',  ['$scope', '$timeout', '$state', 'LoginAuth'
             'MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI ' +
             'WY').split(' ').map(function (state) { return { abbrev: state }; });
 
-
+  $scope.showLoading = false;
   $scope.rating = [5, 4, 3, 2, 1];
 
   $scope.starting = {city: "", state: ""};
@@ -461,108 +461,136 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
   };
 
   $scope.setPrice = function(){
-    $.ajaxSetup({
-      async: false
-    });
+      var mapCity1;
+      var mapCity2;
+      var lat1;
+      var lat2;
+      var long1;
+      var long2;
+      var gasUrl1;
+      var gasUrl2;
+      var price1;
+      var price2;
 
-    var gmapurl1 = "https://maps.googleapis.com/maps/api/geocode/json?address="+$scope.starting.city+"+"+$scope.starting.state+"&components=country:US&key=AIzaSyA6xJtLioC6VlWo0JIeq5BBwcqzljpt4Lg";
-    var gmapurl2 = "https://maps.googleapis.com/maps/api/geocode/json?address="+$scope.ending.city+"+"+$scope.ending.state+"&components=country:US&key=AIzaSyA6xJtLioC6VlWo0JIeq5BBwcqzljpt4Lg";
+      var gmapurl1 = "https://maps.googleapis.com/maps/api/geocode/json?address="+$scope.starting.city+"+"+$scope.starting.state+"&components=country:US&key=AIzaSyA6xJtLioC6VlWo0JIeq5BBwcqzljpt4Lg";
+      var gmapurl2 = "https://maps.googleapis.com/maps/api/geocode/json?address="+$scope.ending.city+"+"+$scope.ending.state+"&components=country:US&key=AIzaSyA6xJtLioC6VlWo0JIeq5BBwcqzljpt4Lg";
 
-    var mapCity1 = GoogleMaps.getCity(gmapurl1);
-    var mapCity2 = GoogleMaps.getCity(gmapurl2);
-    //Do error checking
+      //If there aren't errors:
+      var error = 1;
+      var yesterday = new Date();
+      yesterday.setDate(yesterday.getDate()-1);
 
-    //If there aren't errors:
-    var lat1 = GoogleMaps.getLat(gmapurl1);
-    var long1 = GoogleMaps.getLng(gmapurl1);
-    var lat2 = GoogleMaps.getLat(gmapurl2);
-    var long2 = GoogleMaps.getLng(gmapurl2);
-    var error = 1;
-    var yesterday = new Date();
-    yesterday.setDate(yesterday.getDate()-1);
-
-    if (mapCity1 == 0){
-
-      error = 0;
-    }
-    else {
-      document.getElementById("error1").innerHTML = "";
-    }
-    if (mapCity2 == 0) {
-      document.getElementById("error2").innerHTML = "Ending city is not valid.";
-      error = 0;
-    }
-    else {
-      document.getElementById("error2").innerHTML = "";
-    }
-    if ($scope.starting.state == ""){
-      document.getElementById("error3").innerHTML = "Please select a starting state.";
-      error = 0;
-    }
-    else{
-      document.getElementById("error3").innerHTML = "";
-    }
-    if ($scope.ending.state == ""){
-      document.getElementById("error4").innerHTML = "Please select an ending state.";
-      error = 0;
-    }
-    else{
-      document.getElementById("error4").innerHTML = "";
-    }
-    if ($scope.car.vehicle == ""){
-      document.getElementById("error5").innerHTML = "Please select a vehicle. Please add a vehicle from the home page if you have not already.";
-      error = 0;
-    }
-    else{
-      document.getElementById("error5").innerHTML = "";
-    }
-    if ($scope.car.seats == ""){
-      document.getElementById("error6").innerHTML = "Please select the number of seats in your car.";
-      error = 0;
-    }
-    else{
-      document.getElementById("error6").innerHTML = "";
-    }
-    if ($scope.departure.date < yesterday){
-      if ($scope.departure.date == ""){
-        document.getElementById("error7").innerHTML = "Please enter a date.";
+      if($scope.starting.city == ""){
+        document.getElementById("error1").innerHTML = "Please select a starting state.";
+        error = 0;
       }
       else{
-        document.getElementById("error7").innerHTML = "The date entered has already passed.";
+        document.getElementById("error1").innerHTML = "";
       }
-      error = 0;
-    }
-    else {
-      document.getElementById("error7").innerHTML = "";
-    }
-    if ($scope.post.description == ""){
-      document.getElementById("error8").innerHTML = "Please enter a description.";
-      error = 0;
-    }
-    else{
-      document.getElementById("error8").innerHTML = "";
-    }
 
-
-    if (error != 0) {
-
-
-      var gasUrl1 = "http://api.mygasfeed.com/stations/radius/"+lat1+"/"+long1+"/25/reg/Distance/1u129mrydk.json?";
-      var gasUrl2 = "http://api.mygasfeed.com/stations/radius/"+lat2+"/"+long2+"/25/reg/Distance/1u129mrydk.json?";
-      var price1 = parseFloat(GoogleMaps.getPrice(gasUrl1), 10);
-      var price2 = parseFloat(GoogleMaps.getPrice(gasUrl2), 10);
-      if (isNaN(price1)|| isNaN(price2)) {
-        price1 = 2;
-        price2 = 2;
+      if($scope.ending.city == ""){
+        document.getElementById("error2").innerHTML = "Please select a starting state.";
+        error = 0;
       }
-      var averagePrice = (price1+price2)/2;
-      var mpg = $scope.selectedVehicle.mpg;
-      var seats = $scope.car.seats;
-      $scope.initGasMap(lat1, lat2, long1, long2, mpg, seats, averagePrice);
-      $scope.postRidePricing.showForm = true;
-      $scope.showPostForm();
-      console.log($scope.postRidePricing);
-    }
+      else{
+        document.getElementById("error2").innerHTML = "";
+      }
+
+      if ($scope.starting.state == ""){
+        document.getElementById("error3").innerHTML = "Please select a starting state.";
+        error = 0;
+      }
+      else{
+        document.getElementById("error3").innerHTML = "";
+      }
+      if ($scope.ending.state == ""){
+        document.getElementById("error4").innerHTML = "Please select an ending state.";
+        error = 0;
+      }
+      else{
+        document.getElementById("error4").innerHTML = "";
+      }
+      if ($scope.car.vehicle == ""){
+        document.getElementById("error5").innerHTML = "Please select a vehicle. Please add a vehicle from the home page if you have not already.";
+        error = 0;
+      }
+      else{
+        document.getElementById("error5").innerHTML = "";
+      }
+      if ($scope.car.seats == ""){
+        document.getElementById("error6").innerHTML = "Please select the number of seats in your car.";
+        error = 0;
+      }
+      else{
+        document.getElementById("error6").innerHTML = "";
+      }
+      if ($scope.departure.date < yesterday){
+        if ($scope.departure.date == ""){
+          document.getElementById("error7").innerHTML = "Please enter a date.";
+        }
+        else{
+          document.getElementById("error7").innerHTML = "The date entered has already passed.";
+        }
+        error = 0;
+      }
+      else {
+        document.getElementById("error7").innerHTML = "";
+      }
+      if ($scope.post.description == ""){
+        document.getElementById("error8").innerHTML = "Please enter a description.";
+        error = 0;
+      }
+      else{
+        document.getElementById("error8").innerHTML = "";
+      }
+
+      if (error != 0) {
+
+        $.getJSON(gmapurl1).then(function(geocode1){
+          $scope.showLoading = true;
+          mapCity1 = GoogleMaps.convertCity(geocode1);
+          $.getJSON(gmapurl2).then(function(geocode2){
+            mapCity2 = GoogleMaps.convertCity(geocode2);
+            $.getJSON(gmapurl1).then(function(geocode3){
+              lat1 = GoogleMaps.convertLat(geocode3);
+              $.getJSON(gmapurl1).then(function(geocode4){
+                long1 = GoogleMaps.convertLng(geocode4);
+                $.getJSON(gmapurl2).then(function(geocode5){
+                  lat2 = GoogleMaps.convertLat(geocode5);
+                  $.getJSON(gmapurl2).then(function(geocode6){
+                    long2 = GoogleMaps.convertLng(geocode6);
+                    gasUrl1 = "http://api.mygasfeed.com/stations/radius/"+lat1+"/"+long1+"/25/reg/Distance/1u129mrydk.json?";
+                    gasUrl2 = "http://api.mygasfeed.com/stations/radius/"+lat2+"/"+long2+"/25/reg/Distance/1u129mrydk.json?";
+
+                    $.getJSON(gasUrl1).then(function(station1){
+                      price1 = parseFloat(GoogleMaps.convertPrice(station1), 10);
+                      $.getJSON(gasUrl2).then(function(station2){
+                        price2 = parseFloat(GoogleMaps.convertPrice(station2), 10);
+
+                        if (isNaN(price1)|| isNaN(price2)) {
+                          price1 = 2;
+                          price2 = 2;
+                        }
+                        var averagePrice = (price1+price2)/2;
+                        var mpg = $scope.selectedVehicle.mpg;
+                        var seats = $scope.car.seats;
+                        $scope.initGasMap(lat1, lat2, long1, long2, mpg, seats, averagePrice);
+                        $scope.postRidePricing.showForm = true;
+                        $scope.showPostForm();
+
+                        $scope.showLoading = false;
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      }
+
+      $scope.showLoading = false;
+
 
   }
 
