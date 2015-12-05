@@ -32,7 +32,7 @@
             <h4 layout-align="left" style="margin:8px 0px 8px 16px;">RIDES AS PASSENGER</h4>
             <md-divider></md-divider>
             <md-list-item class="md-2-line" ng-repeat="trip in tripData">
-              <div layout="row" flex>
+              <div layout="row" flex style="margin: 4px 0px;">
                 <div layout="column" flex="25">
                   <img ng-click="showProfile($event, trip.user)" ng-src="{{trip.img_url}}" class="md-avatar-queue" />
                 </div>

@@ -11,9 +11,6 @@
         <p>Clicking "Pay Now" will redirect you to PayPal to complete your transaction.</p>
     </div>
       <md-divider></md-divider>
-    
-
-
       <br>
       <?php
     
