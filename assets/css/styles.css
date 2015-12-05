@@ -44,7 +44,7 @@ div{
     border-radius: 2px;
 /*    border: 1px solid #ddd;*/
     display: block;
-    max-width: 45%;
+    width: 30px;
     height: 30px;
     margin: 2px; 2px;
     
@@ -265,7 +265,7 @@ md-list.md-default-theme {
 }
 
 md-list-item .md-no-style, md-list-item.md-no-proxy {
-    padding: 6px 16px;
+    padding: 3px 16px;
 }
 
 md-list-item.md-2-line .md-list-item-text, md-list-item.md-2-line>.md-no-style .md-list-item-text {
