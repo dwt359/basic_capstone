@@ -599,8 +599,10 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
         $scope.showLoading = true;
         $.getJSON(gmapurl1).then(function(geocode1){
           mapCity1 = GoogleMaps.convertCity(geocode1);
+          $scope.starting.city = mapCity1;
           $.getJSON(gmapurl2).then(function(geocode2){
             mapCity2 = GoogleMaps.convertCity(geocode2);
+            $scope.ending.city = mapCity2;
             $.getJSON(gmapurl1).then(function(geocode3){
               lat1 = GoogleMaps.convertLat(geocode3);
               $.getJSON(gmapurl1).then(function(geocode4){
@@ -673,7 +675,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
   };
 
   $scope.showPostForm = function(ev){
-    //$scope.postRidePricing.showForm = true;
+    $scope.postRidePricing.showForm = true;
     $mdDialog.show({
       controller: DialogController,
       scope: $scope,
