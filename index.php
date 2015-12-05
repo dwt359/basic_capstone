@@ -11,9 +11,7 @@
 
     <!--  Receiving info from Paypal  -->
     <script type="text/javascript">
-      window.onload = function(){
         window.purchasedTripInfo = <?php echo (empty($_GET['trip'])? 'null':$_GET['trip']); ?>;
-      };
     </script>
 
     <!-- Rando dependencies -->
