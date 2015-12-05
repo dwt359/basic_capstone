@@ -72,8 +72,8 @@
                         <md-tab-label>VEHICLES</md-tab-label>
                         <md-tab-body>
                             <md-list>
-                                <md-list-item ng-repeat="vehicle in profileVehicles">
-                                    <div layout="row" flex>
+                                <md-list-item ng-repeat="vehicle in profileVehicles" ng-hide="vehicle.deleted">
+                                    <div layout="row" flex >
                                         <div layout="column" flex="80">
 
                                             <h4 id="profileDisplayName" style="margin:1px;">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</h4>
