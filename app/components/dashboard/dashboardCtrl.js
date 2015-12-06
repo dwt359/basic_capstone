@@ -421,14 +421,12 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       document.getElementById("error4").innerHTML = "";
       document.getElementById("search").innerHTML = "";
     }
-    if ($scope.search.date1 < yesterday || $scope.search.date2 < yesterday){
-      if ($scope.search.date1 == "" || $scope.search.date2 == ""){
-        document.getElementById("error5").innerHTML = "Please enter a date.";
-        $scope.rides = [];
+    if ($scope.search.date1 < yesterday){
+      if ($scope.search.date1 == ""){
+        document.getElementById("error5").innerHTML = "Please enter earliest departure date.";
       }
       else{
-        document.getElementById("error5").innerHTML = "The date entered has already passed.";
-        $scope.rides = [];
+        document.getElementById("error5").innerHTML = "The earliest departure date entered has already passed.";
       }
       error = 0;
     }
@@ -436,21 +434,20 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
       document.getElementById("error5").innerHTML = "";
       document.getElementById("search").innerHTML = "";
     }
-    /*if ($scope.search.date2 < today){
+    if ($scope.search.date2 < yesterday){
       if ($scope.search.date2 == ""){
-        document.getElementById("error6").innerHTML = "Please enter a date.";
-        $scope.rides = [];
+        document.getElementById("error6").innerHTML = "Please enter latest departure date.";
       }
       else{
-        document.getElementById("error6").innerHTML = "The date entered has already passed.";
-        $scope.rides = [];
+        document.getElementById("error6").innerHTML = "The latest departure date entered has already passed.";
       }
       error = 0;
     }
     else {
       document.getElementById("error6").innerHTML = "";
       document.getElementById("search").innerHTML = "";
-    }*/
+    }
+
 
 
     if (error != 0) {
@@ -627,6 +624,14 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
     else{
       document.getElementById("error8").innerHTML = "";
     }
+    if ($scope.departure.time == ""){
+      document.getElementById("error9").innerHTML = "Please enter a time.";
+      error = 0;
+    }
+    else{
+      document.getElementById("error9").innerHTML = "";
+    }
+
 
 
     if (error != 0) {
