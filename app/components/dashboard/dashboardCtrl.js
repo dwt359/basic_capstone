@@ -467,6 +467,7 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
         angular.forEach(rides, function(ride, id){
           drivers.push($firebaseObject(userRef.child(ride.user)));
           drivers[id].$loaded().then(function(){
+            var startTime = new Date(ride.start_time);
             var newRide = {
               id: ride.$id,
               name: drivers[id].name,
@@ -476,7 +477,8 @@ $scope.initGasMap =function(lat1, lat2, lng1, lng2, mpg, seats, averagePrice) {
               comment: ride.comment,
               seats_left: ride.seats_left,
               seat_price: ride.seat_price,
-              start_time: $scope.formatDate(ride.start_time)
+              start_time: $scope.formatDate(ride.start_time),
+              time_num: startTime.getTime()
             };
 
             document.getElementById("search").innerHTML = "";
