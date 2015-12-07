@@ -56,7 +56,7 @@
 
         <div layout="row" id="ride-list-container" flex>
           <md-list flex="100">
-            <md-list-item class="found_rides" style="background-color:#ECECEC;" class="md-2-line" ng-repeat="ride in rides" ng-cloak>
+            <md-list-item class="found_rides" style="background-color:#ECECEC;" class="md-2-line" ng-repeat="ride in rides | orderBy:'time_num'" ng-cloak>
                 <div layout="row" flex="100">
                     <div layout="row" flex="85">
                         <img ng-click="showProfile($event, ride.user)" ng-src="{{ride.img_url}}" class="md-avatar-find"/>
